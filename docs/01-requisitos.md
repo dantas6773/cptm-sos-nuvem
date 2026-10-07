@@ -57,7 +57,7 @@ O alarme ficou de fora porque já existe e funciona no app original, e porque ac
 
 As listas aceitas, que tornam o RF-05 verificável:
 
-- **Estações:** as 97 estações das linhas 7 a 13 já mapeadas no CPTM SOS, com o nome oficial de cada uma.
+- **Estações:** as estações das linhas 7 a 13, cada uma pelo nome oficial. A lista de partida é a que o CPTM SOS já usa, com 97 estações; antes de ser usada, ela será conferida com a relação oficial das operadoras.
 - **Tipos de problema:** iluminação precária; área isolada; sem agente de segurança; equipamento de segurança quebrado (câmera, interfone, botão de emergência); outro.
 - **Faixas de horário:** madrugada (0h–6h); manhã (6h–12h); tarde (12h–18h); noite (18h–24h).
 
@@ -164,7 +164,7 @@ Consideramos tirar a ordenação de US-02 e levá-la para US-03, o que deixaria 
 | Usability | A consulta é lida em pé, na plataforma, muitas vezes com uma mão ocupada: tipo do problema, faixa de horário e número de confirmações precisam ser legíveis sem abrir cada relato. |
 | Reliability | Boa parte de uma viagem de trem passa por túnel e estação coberta, e o sinal cai. Se o envio falhar no meio e a passageira tentar de novo, o mesmo relato não pode ser gravado duas vezes: relato duplicado infla a estação e distorce a ordem da consulta. |
 | Performance | A consulta é feita com o trem chegando e o sinal fraco: se a lista demorar mais do que o trem leva para parar, ela não serve para decidir onde esperar. E uma foto pesada não pode atrasar o texto. |
-| Supportability | Estações mudam de nome e de operadora — as linhas 8 e 9 já passaram da CPTM para outra operadora. Quando o nome de exibição de uma estação mudar, os relatos antigos dela não podem ficar perdidos sob o nome anterior. |
+| Supportability | Estações mudam de nome e de operadora — as linhas 8 e 9, antes da CPTM, hoje são operadas pela ViaMobilidade. Quando o nome de exibição de uma estação mudar, os relatos antigos dela não podem ficar perdidos sob o nome anterior. |
 
 Estas cinco linhas viram os requisitos não funcionais da Sprint 2.
 
