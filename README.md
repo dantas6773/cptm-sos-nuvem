@@ -22,7 +22,7 @@ testes/   testes de aceite (Sprint 5)
 
 | Sprint | Entrega | Situação |
 |---|---|---|
-| 1 | [Documento de requisitos](docs/01-requisitos.md) | em revisão |
+| 1 | [Documento de requisitos](docs/01-requisitos.md) | entregue · revisão cruzada em 08/10 |
 | 2 | Arquitetura e requisitos não funcionais | — |
 | 3 | Armazenamento e função de gravação | — |
 | 4 | API e página publicada | — |
