@@ -4,8 +4,8 @@ Entregável da Sprint 1, no formato do Template 1.
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 07/10/2026\
-Versão: 1.0
+Data: 08/10/2026\
+Versão: 1.1
 
 ## 1. O cenário
 
@@ -49,11 +49,13 @@ O alarme ficou de fora porque já existe e funciona no app original, e porque ac
 
 | ID | Requisito | Serviço AWS citado | Prioridade |
 |---|---|---|---|
-| RF-01 | O sistema deve registrar um relato com estação, tipo de problema, faixa de horário e descrição, gerando um protocolo único e guardando a data e a hora do envio. | — | essencial |
+| RF-01 | O sistema deve registrar no Amazon DynamoDB cada relato enviado pela página ao Amazon API Gateway, com estação, tipo de problema, faixa de horário e descrição, gerando um protocolo único e guardando a data e a hora do envio. | Amazon API Gateway, Amazon DynamoDB | essencial |
 | RF-02 | O sistema deve armazenar no Amazon S3 a foto do local anexada a cada relato aceito, deixando no relato o endereço pelo qual a foto pode ser vista. | Amazon S3 | essencial |
-| RF-03 | O sistema deve listar os relatos de uma estação enviados nos últimos 30 dias consultando o Amazon DynamoDB, do mais confirmado para o menos confirmado e, no empate, do mais recente para o mais antigo. | Amazon DynamoDB | essencial |
+| RF-03 | O sistema deve listar os relatos de uma estação enviados nos últimos 30 dias por uma função AWS Lambda que o AWS IAM autoriza apenas a ler o Amazon DynamoDB, do mais confirmado para o menos confirmado e, no empate, do mais recente para o mais antigo. | AWS Lambda, AWS IAM, Amazon DynamoDB | essencial |
 | RF-04 | O sistema deve somar uma confirmação a um relato quando uma passageira indicar que o problema continua, desde que o relato tenha sido enviado há no máximo 30 dias. | — | importante |
-| RF-05 | O sistema deve recusar o envio de um relato sem foto, ou com estação, tipo de problema ou faixa de horário fora das listas aceitas, informando qual campo foi recusado. | — | essencial |
+| RF-05 | O sistema deve recusar, na função AWS Lambda que recebe o envio, um relato sem foto ou com estação, tipo de problema ou faixa de horário fora das listas aceitas, informando qual campo foi recusado e registrando a recusa no Amazon CloudWatch Logs, sem nenhum dado de quem enviou. | AWS Lambda, Amazon CloudWatch Logs | essencial |
+
+Os seis serviços do percurso aparecem nos requisitos, cada um dentro de algo que o sistema faz e que pode ser verificado: o API Gateway recebe o envio (RF-01), o DynamoDB guarda e devolve os relatos (RF-01 e RF-03), o S3 guarda a foto (RF-02), a função Lambda valida e consulta (RF-03 e RF-05), o IAM garante que a consulta não consegue alterar nenhum relato (RF-03) e o CloudWatch Logs registra as recusas sem identificar ninguém (RF-05, em acordo com o RD-01).
 
 As listas aceitas, que tornam o RF-05 verificável:
 
@@ -65,11 +67,11 @@ As listas aceitas, que tornam o RF-05 verificável:
 
 | ID | Verbo | Objeto | Condição |
 |---|---|---|---|
-| RF-01 | registrar | um relato | gerando protocolo único e guardando data e hora do envio |
+| RF-01 | registrar | cada relato enviado ao API Gateway | gerando protocolo único e guardando data e hora do envio |
 | RF-02 | armazenar | a foto do local | a cada relato aceito, deixando no relato o endereço da foto |
-| RF-03 | listar | os relatos de uma estação | dos últimos 30 dias, do mais confirmado ao menos confirmado |
+| RF-03 | listar | os relatos de uma estação | dos últimos 30 dias, por uma função autorizada só a ler, do mais confirmado ao menos confirmado |
 | RF-04 | somar | uma confirmação a um relato | quando a passageira indicar que o problema continua, se o relato tiver até 30 dias |
-| RF-05 | recusar | o envio de um relato inválido | sem foto, ou com estação, tipo ou faixa fora das listas, informando o campo recusado |
+| RF-05 | recusar | o envio de um relato inválido | sem foto, ou com estação, tipo ou faixa fora das listas, informando o campo e registrando a recusa sem identificar quem enviou |
 
 ## 3. Requisitos de domínio
 
@@ -108,7 +110,7 @@ Então o sistema devolve um protocolo e o endereço da foto, a foto abre por ess
 **US-01, cenário 2**\
 Dado que o sistema tem 12 relatos gravados, e eu informo a estação "Barra Funda", que não está na lista aceita (o nome oficial é "Palmeiras-Barra Funda")\
 Quando envio o relato\
-Então o sistema recusa o envio, informa que a estação não foi reconhecida, e continua com 12 relatos gravados e nenhuma foto nova
+Então o sistema recusa o envio, informa que a estação não foi reconhecida, continua com 12 relatos gravados e nenhuma foto nova, e 1 registro da recusa aparece no CloudWatch Logs, sem nenhum dado de quem enviou
 
 **US-02, cenário 1**\
 Dado que a estação Tatuapé tem 4 relatos enviados nos últimos 30 dias — com 5, 2, 2 e 0 confirmações — e 1 relato enviado há 45 dias\
@@ -174,6 +176,7 @@ Estas cinco linhas viram os requisitos não funcionais da Sprint 2.
 |---|---|---|
 | O recorte do cenário | Levar para a nuvem o botão de emergência do CPTM SOS, com alarme e localização em tempo real | Acompanhar posição em tempo real exige serviços que não estão no percurso, e essa parte já existe e funciona no app original. O que falta à passageira não é mais um botão de pânico; é saber onde está o risco antes de precisar dele. |
 | O recorte do cenário | Registrar denúncias de assédio e de roubo, como faz o formulário de denúncia do CPTM SOS | Denúncia descreve uma pessoa, e a foto de um suspeito é dado pessoal de alguém que não está ali para se defender (RD-02). Crime tem canal próprio, a polícia. O relato do local diz o mesmo sobre a estação sem acusar ninguém. |
+| Onde citar os serviços da AWS | Citar só o mínimo do template, S3 e DynamoDB | Na devolutiva de 08/10/2026, a professora orientou que os cinco requisitos citem os seis serviços do percurso. Cada um entrou onde muda algo verificável — o IAM, por exemplo, aparece como a garantia de que a consulta não altera relatos —, e o verbo de cada requisito continua sendo o que o sistema faz, nunca "usar". |
 | Quais cinco requisitos | Trocar a confirmação (RF-04) pela marcação de um relato como resolvido, feita pela segurança da estação | Marcar como resolvido exige saber quem é agente, o que pede autenticação, fora do escopo; sem ela, qualquer pessoa poderia apagar um alerta verdadeiro. A janela de 30 dias resolve o envelhecimento sem depender de alguém lembrar de fechar o relato. |
 | Qual caso de exceção | Tratar só a falta da foto, um caso de dado ausente | Foto ausente continua coberta pelo RF-05, mas é o erro mais fácil de evitar na própria tela. O erro mais provável aqui é o nome da estação: a mesma estação tem vários nomes no uso comum ("Barra Funda" e "Palmeiras-Barra Funda"), e aceitar qualquer texto espalharia os relatos de um mesmo lugar sob nomes diferentes, e a consulta perderia relatos. Daí o valor inválido. A lista vazia entrou porque, numa consulta sobre segurança, "nenhum relato" é facilmente lido como "estação segura". |
 | O campo pelo qual se consulta | Consultar por linha, e não por estação | A passageira decide por onde andar dentro de uma estação, não de uma linha: a Linha 11 tem 16 estações, e a consulta traria relatos de lugares por onde ela não vai passar. E a Brás atende três linhas: por linha, os relatos dela ficariam divididos em três consultas. |
@@ -193,4 +196,6 @@ Data: 08/10/2026
 
 ### 9.1 O que foi ajustado depois da revisão
 
-Pendente: esta seção registra o que mudar no documento por causa do retorno da revisão de 08/10/2026.
+Ajuste após a devolutiva da professora (08/10/2026): os requisitos funcionais passaram a citar os seis serviços do percurso — API Gateway e DynamoDB no RF-01, S3 no RF-02, Lambda, IAM e DynamoDB no RF-03, Lambda e CloudWatch Logs no RF-05. O critério US-01, cenário 2, passou a conferir o registro da recusa no CloudWatch Logs. Versão do documento: 1.1.
+
+Ajustes da revisão cruzada: pendente, registrados aqui depois do retorno da equipe revisora.
