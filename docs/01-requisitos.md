@@ -52,10 +52,10 @@ O alarme ficou de fora porque já existe e funciona no app original, e porque ac
 | RF-01 | O sistema deve registrar no Amazon DynamoDB cada relato enviado pela página ao Amazon API Gateway, com estação, tipo de problema, faixa de horário e descrição, gerando um protocolo único e guardando a data e a hora do envio. | Amazon API Gateway, Amazon DynamoDB | essencial |
 | RF-02 | O sistema deve armazenar no Amazon S3 a foto do local anexada a cada relato aceito, deixando no relato o endereço pelo qual a foto pode ser vista. | Amazon S3 | essencial |
 | RF-03 | O sistema deve listar os relatos de uma estação enviados nos últimos 30 dias por uma função AWS Lambda que o AWS IAM autoriza apenas a ler o Amazon DynamoDB, do mais confirmado para o menos confirmado e, no empate, do mais recente para o mais antigo. | AWS Lambda, AWS IAM, Amazon DynamoDB | essencial |
-| RF-04 | O sistema deve somar uma confirmação a um relato quando uma passageira indicar que o problema continua, desde que o relato tenha sido enviado há no máximo 30 dias. | — | importante |
+| RF-04 | O sistema deve somar uma confirmação ao relato gravado no Amazon DynamoDB quando uma passageira indicar que o problema continua, desde que o relato tenha sido enviado há no máximo 30 dias. | Amazon DynamoDB | importante |
 | RF-05 | O sistema deve recusar, na função AWS Lambda que recebe o envio, um relato sem foto ou com estação, tipo de problema ou faixa de horário fora das listas aceitas, informando qual campo foi recusado e registrando a recusa no Amazon CloudWatch Logs, sem nenhum dado de quem enviou. | AWS Lambda, Amazon CloudWatch Logs | essencial |
 
-Os seis serviços do percurso aparecem nos requisitos, cada um dentro de algo que o sistema faz e que pode ser verificado: o API Gateway recebe o envio (RF-01), o DynamoDB guarda e devolve os relatos (RF-01 e RF-03), o S3 guarda a foto (RF-02), a função Lambda valida e consulta (RF-03 e RF-05), o IAM garante que a consulta não consegue alterar nenhum relato (RF-03) e o CloudWatch Logs registra as recusas sem identificar ninguém (RF-05, em acordo com o RD-01).
+Os seis serviços do percurso aparecem nos requisitos, cada um dentro de algo que o sistema faz e que pode ser verificado: o API Gateway recebe o envio (RF-01), o DynamoDB guarda, atualiza e devolve os relatos (RF-01, RF-04 e RF-03), o S3 guarda a foto (RF-02), a função Lambda valida e consulta (RF-03 e RF-05), o IAM garante que a consulta não consegue alterar nenhum relato (RF-03) e o CloudWatch Logs registra as recusas sem identificar ninguém (RF-05, em acordo com o RD-01).
 
 As listas aceitas, que tornam o RF-05 verificável:
 
@@ -70,7 +70,7 @@ As listas aceitas, que tornam o RF-05 verificável:
 | RF-01 | registrar | cada relato enviado ao API Gateway | gerando protocolo único e guardando data e hora do envio |
 | RF-02 | armazenar | a foto do local | a cada relato aceito, deixando no relato o endereço da foto |
 | RF-03 | listar | os relatos de uma estação | dos últimos 30 dias, por uma função autorizada só a ler, do mais confirmado ao menos confirmado |
-| RF-04 | somar | uma confirmação a um relato | quando a passageira indicar que o problema continua, se o relato tiver até 30 dias |
+| RF-04 | somar | uma confirmação ao relato gravado | quando a passageira indicar que o problema continua, se o relato tiver até 30 dias |
 | RF-05 | recusar | o envio de um relato inválido | sem foto, ou com estação, tipo ou faixa fora das listas, informando o campo e registrando a recusa sem identificar quem enviou |
 
 ## 3. Requisitos de domínio
@@ -196,6 +196,6 @@ Data: 08/10/2026
 
 ### 9.1 O que foi ajustado depois da revisão
 
-Ajuste após a devolutiva da professora (08/10/2026): os requisitos funcionais passaram a citar os seis serviços do percurso — API Gateway e DynamoDB no RF-01, S3 no RF-02, Lambda, IAM e DynamoDB no RF-03, Lambda e CloudWatch Logs no RF-05. O critério US-01, cenário 2, passou a conferir o registro da recusa no CloudWatch Logs. Versão do documento: 1.1.
+Ajuste após a devolutiva da professora (08/10/2026): os requisitos funcionais passaram a citar os seis serviços do percurso — API Gateway e DynamoDB no RF-01, S3 no RF-02, Lambda, IAM e DynamoDB no RF-03, DynamoDB no RF-04, Lambda e CloudWatch Logs no RF-05 — todo requisito cita ao menos um serviço. O critério US-01, cenário 2, passou a conferir o registro da recusa no CloudWatch Logs. Versão do documento: 1.1.
 
 Ajustes da revisão cruzada: pendente, registrados aqui depois do retorno da equipe revisora.
