@@ -7,7 +7,7 @@ desenha como imagem ao abrir este arquivo.
 ```mermaid
 flowchart TB
     subgraph apresentacao["Camada de apresentação"]
-        nav["Navegador<br/>relato, consulta e confirmação<br/>limpa a foto e gera o protocolo"]
+        nav["Navegador<br/>relato, consulta e confirmação<br/>limpa a foto e gera o código de envio"]
         site["Amazon S3<br/>cptm-sos-site<br/>index.html, config.js, estacoes.json"]
     end
 
@@ -25,7 +25,7 @@ flowchart TB
 
     subgraph apoio["Apoio"]
         iam["AWS IAM<br/>um papel por função<br/>consultar só lê: RF-03"]
-        logs["Amazon CloudWatch Logs<br/>sem IP nem EXIF<br/>RF-05 RNF-03"]
+        logs["Amazon CloudWatch Logs<br/>sem dado de quem chamou<br/>RF-05 RNF-03"]
     end
 
     nav -->|"carrega a página"| site
