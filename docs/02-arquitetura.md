@@ -244,7 +244,9 @@ Ele entraria na função `confirmar`, que passaria a gravar um item por confirma
 
 ## 5. Diagrama de arquitetura de ponta a ponta
 
-O diagrama foi feito no Lucidchart e está em [`docs/diagrama.png`](diagrama.png). A mesma versão, em Mermaid, está em [`docs/diagrama.md`](diagrama.md), que o GitHub desenha ao abrir.
+O diagrama está abaixo e no arquivo [`docs/diagrama.png`](diagrama.png). O código que o desenha, em Mermaid, está em [`docs/diagrama.md`](diagrama.md), com a explicação de como ler as setas.
+
+![Diagrama de arquitetura de ponta a ponta do CPTM SOS · Relatos por estação](diagrama.png)
 
 ### 5.1 Legenda das caixas
 

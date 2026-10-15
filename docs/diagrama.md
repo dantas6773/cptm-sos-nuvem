@@ -1,15 +1,15 @@
 # Diagrama de arquitetura — CPTM SOS · Relatos por estação
 
-Entregável da Sprint 2, seção 5. O diagrama foi feito no Lucidchart e está em
-[`diagrama.png`](diagrama.png). Abaixo, a mesma versão em Mermaid, que o GitHub
-desenha como imagem ao abrir este arquivo.
+Entregável da Sprint 2, seção 5. A imagem do diagrama está em
+[`diagrama.png`](diagrama.png). Abaixo, o código em Mermaid que a desenha, e que o
+GitHub também desenha ao abrir este arquivo.
 
 ```mermaid
 %%{init: {"theme": "default"}}%%
 flowchart TB
     subgraph apresentacao["Camada de apresentação"]
         nav["Navegador<br/>relato, consulta e confirmação<br/>limpa a foto e gera os códigos de envio"]
-        site["Amazon S3 · cptm-sos-site<br/>index.html, config.js, estacoes.json"]
+        site["Amazon S3<br/>cptm-sos-site<br/>index.html, config.js, estacoes.json"]
     end
 
     subgraph negocio["Camada de negócio"]
@@ -22,8 +22,8 @@ flowchart TB
     end
 
     subgraph dados["Camada de dados"]
-        fotos["Amazon S3 · cptm-sos-fotos<br/>fotos/estacao_id/protocolo.jpg<br/>público só lê: RNF-02"]
-        tabela["Amazon DynamoDB · cptm-sos-relatos<br/>partição: estacao_id<br/>ordenação: dia_protocolo"]
+        fotos["Amazon S3<br/>cptm-sos-fotos<br/>fotos/estacao_id/protocolo.jpg<br/>público só lê: RNF-02"]
+        tabela["Amazon DynamoDB<br/>cptm-sos-relatos<br/>partição: estacao_id<br/>ordenação: dia_protocolo"]
     end
 
     subgraph apoio["Apoio"]
