@@ -4,14 +4,14 @@ Entregável da Sprint 2, no formato do Template 2. As seções têm os mesmos n�
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 15/10/2026\
-Versão: 1.1
+Data: 22/10/2026\
+Versão: 1.2
 
 ## 1. Requisitos não funcionais
 
 Fórmula obrigatória: `[Categoria] + [Métrica Numérica Mensurável] + [Condição de Execução]`.
 
-Os cinco requisitos não funcionais saem dos cinco requisitos funcionais da Sprint 1, um para um: o RNF-01 diz com que qualidade o RF-01 tem de acontecer, o RNF-02 faz o mesmo com o RF-02, e assim por diante. O requisito funcional diz o que o sistema faz; o não funcional diz com que número isso se confere e em que serviço da AWS esse número se apoia.
+Os cinco requisitos não funcionais saem dos cinco requisitos funcionais da Sprint 1, um para um: o RNF-01 diz com que qualidade o RF-01 tem de acontecer, e assim por diante.
 
 | Requisito funcional da Sprint 1 | Requisito não funcional | A qualidade cobrada |
 |---|---|---|
@@ -37,18 +37,11 @@ pilar do Well-Architected
   3, Confiabilidade
 
 razão
-  O RF-01 promete um protocolo único por relato. No túnel
-  o sinal cai, e o envio pode ter sido gravado com a
-  resposta perdida no caminho. Tentar de novo é o certo a
-  fazer, e só é seguro se o sistema reconhecer o pedido
-  repetido. A página gera um código aleatório para cada
-  envio e repete o mesmo código a cada nova tentativa; a
-  função deriva dele o protocolo. Se o protocolo já
-  existe na tabela, é um reenvio: a função devolve o
-  mesmo protocolo sem tocar na foto nem na tabela.
+  No túnel o sinal cai e a passageira reenvia. A página
+  repete o mesmo código a cada tentativa, e a gravação
+  condicional recusa um segundo relato com o mesmo
+  protocolo.
 ```
-
-O protocolo é um resumo do código, os 16 primeiros caracteres do seu SHA-256, e não o próprio código. O protocolo aparece na consulta, porque é por ele que se confirma um relato; o código, não. Se o protocolo fosse o código, quem o lesse na consulta poderia reenviá-lo com outra foto e trocar a foto de um relato alheio (seção 9). E o código identifica o envio, e não quem enviou: é novo a cada relato, e a página o descarta quando recebe a resposta. Por isso ele não fere o RD-01.
 
 ### RNF-02
 
@@ -66,18 +59,10 @@ pilar do Well-Architected
   2, Segurança
 
 razão
-  O RF-02 exige um endereço pelo qual a foto possa ser
-  vista, e isso torna o bucket público para leitura.
-  Público para ler não pode virar público para o resto.
-  Listar entregaria de uma vez as fotos de todas as
-  estações, sem passar pela consulta nem pela janela de
-  30 dias; gravar permitiria trocar a foto de um relato
-  por outra, inclusive por uma foto de pessoa, que o
-  RD-02 proíbe; apagar faria a foto sumir. Só a função
-  registrar grava no bucket, pelo papel dela no IAM.
+  O RF-02 torna o bucket público para leitura, e isso
+  não pode virar público para listar, trocar ou apagar
+  fotos. Só a função registrar grava nele.
 ```
-
-O endereço de cada foto leva o protocolo, que não se adivinha: quem não recebeu o endereço de uma foto pela consulta não tem como chegar a ela.
 
 ### RNF-03
 
@@ -95,17 +80,12 @@ pilar do Well-Architected
   4, Eficiência de Performance
 
 razão
-  A chave de partição é a estação, e a chave de ordenação
-  começa pelo dia do envio. A consulta vai direto à
-  partição da estação e lê só a fatia dos últimos 30 dias:
-  o relato de dois anos atrás nem chega a ser lido. O
-  tempo cresce com a janela de uma estação, e não com a
-  tabela inteira. E a resposta leva o endereço da foto, e
-  não a foto: a lista chega inteira antes de a primeira
-  imagem começar a baixar.
+  A chave por estação e pelo dia faz a consulta ler só
+  os últimos 30 dias de uma estação, e não a tabela
+  inteira.
 ```
 
-De onde vêm os números. A consulta é feita na plataforma, com o sinal fraco, e a parte da espera que vem da rede da estação não é nossa; a parte que é nossa tem de ser pequena para que a soma das duas caiba no tempo de o trem parar. Os 300 relatos equivalem a dez por dia, todo dia, na mesma estação: muito mais do que qualquer estação terá no começo, e o número precisa continuar valendo quando o uso crescer.
+Os números: 500 ms porque a consulta é feita com o trem chegando; 300 relatos são dez por dia, na mesma estação, durante 30 dias.
 
 ### RNF-04
 
@@ -122,14 +102,9 @@ pilar do Well-Architected
   3, Confiabilidade
 
 razão
-  O RF-04 soma uma confirmação quando a passageira indica
-  que o problema continua. Ela toca em "confirmar" na
-  plataforma, o sinal cai, e ela toca de novo. Sem este
-  requisito, uma confirmação viraria duas, e a ordem da
-  consulta mentiria. A página manda um código para cada
-  confirmação; a tabela guarda o código da última
-  confirmação somada e só soma se o código for outro, na
-  mesma atualização que soma, sem ler o relato antes.
+  A passageira toca em confirmar, o sinal cai e ela toca
+  de novo. A tabela guarda o código da última
+  confirmação e só soma se o código for outro.
 ```
 
 ### RNF-05
@@ -148,19 +123,10 @@ pilar do Well-Architected
   1, Excelência Operacional
 
 razão
-  O RF-05 manda registrar a recusa, sem dizer quando nem
-  como. Sem número, "registrar" pode ser uma linha que
-  aparece minutos depois, duas linhas para a mesma recusa,
-  ou nenhuma. É pelo registro que se descobre se a lista
-  de estações está recusando um jeito de escrever que as
-  passageiras usam: quarenta recusas do campo estação num
-  mesmo dia dizem que a lista precisa mudar, e não que
-  quarenta passageiras erraram. O registro serve para
-  operar e ajustar o sistema, e não para recuperá-lo; por
-  isso o pilar 1, e não o 3.
+  É pelo registro que se descobre, por exemplo, que a
+  lista de estações recusa um nome que as passageiras
+  usam. Ele serve para operar e ajustar o sistema.
 ```
-
-A linha leva o nome do campo recusado, e não o valor: o valor é texto escrito por quem enviou, e o registro não guarda nada de quem enviou, como o próprio RF-05 exige.
 
 ### 1.1 Resumo
 
@@ -178,13 +144,9 @@ Ter dois requisitos no pilar 3 não é acaso: os dois caminhos que gravam, o rel
 
 ### 1.2 O pilar não contemplado
 
-Ficaram de fora dois pilares: o 5 e o 6.
+Ficaram de fora os pilares 5 e 6. O 5, Otimização de Custos, porque em ambiente emulado não existe fatura, e qualquer número de custo seria inventado; mesmo assim, o desenho só usa serviços cobrados por uso, o Lambda e o DynamoDB sob demanda. O 6, Sustentabilidade, pela mesma razão: sem medir o consumo de máquina, o número seria inventado.
 
-O pilar 5, Otimização de Custos, não virou requisito porque em ambiente emulado não existe fatura, e qualquer número de custo seria inventado. Mesmo sem ele, o desenho escolhe serviços cobrados por uso: parado, o Lambda não custa nada, e o DynamoDB em modo sob demanda cobra só o que é lido, gravado e guardado. E a página reduz a foto antes de enviar, o que diminui o que se transfere e o que se guarda.
-
-O pilar 6, Sustentabilidade, fica de fora pela mesma razão: sem medir o consumo de máquina, o número seria inventado. O passo de sustentabilidade que este desenho deixa para depois é não guardar o que ninguém usa: relatos com mais de 30 dias não aparecem em nenhuma consulta, mas continuam na tabela, porque a confirmação precisa dizer que o relato expirou (US-03, cenário 2). Apagá-los depois de um prazo maior caberia ao TTL do próprio DynamoDB, sem dar a nenhuma função permissão de excluir, e fica para quando houver volume que justifique.
-
-A Sprint 1 dizia que as cinco linhas do FURPS virariam os requisitos não funcionais desta sprint. Por orientação da professora, os requisitos não funcionais partiram dos cinco requisitos funcionais, e não do FURPS; mas nenhuma das cinco preocupações ficou para trás:
+A Sprint 1 dizia que as cinco linhas do FURPS virariam os requisitos não funcionais desta sprint. Por orientação da professora, eles partiram dos cinco requisitos funcionais; nenhuma preocupação do FURPS ficou para trás:
 
 | FURPS | Para onde foi |
 |---|---|
@@ -194,7 +156,7 @@ A Sprint 1 dizia que as cinco linhas do FURPS virariam os requisitos não funcio
 | Performance: a lista tem de chegar antes de o trem parar | RNF-03 |
 | Supportability: a estação que muda de nome não pode perder os relatos antigos | resolvida no modelo de dados, pela chave de partição (seção 6.2) |
 
-Duas proteções que o desenho tem não são requisitos não funcionais, porque não são a qualidade de um dos cinco requisitos funcionais: são decisões, e estão na seção 9. A primeira é o anonimato no registro e nas fotos: o RD-01 já é a regra, e o desenho a garante nos pontos em que ela quebraria sem ninguém perceber, o IP que chega à função e o EXIF que vem na foto. A segunda é o limite de uma confirmação a cada 10 minutos por relato, que é a resposta ao risco de confirmações repetidas que a seção 8 da Sprint 1 deixou declarado. A Sprint 1 dizia que esse risco voltaria como requisito não funcional; com os requisitos não funcionais presos aos requisitos funcionais, ele voltou como decisão, e o limite continua no desenho.
+O anonimato no registro e nas fotos e o limite de confirmações não são a qualidade de um requisito funcional só, e por isso viraram decisões (seção 9). A Sprint 1 dizia que o risco de confirmações repetidas voltaria como requisito não funcional; ele voltou como decisão.
 
 ## 2. A arquitetura em três camadas
 
@@ -265,15 +227,17 @@ O diagrama está abaixo e no arquivo [`docs/diagrama.png`](diagrama.png). O cód
 
 ### 5.2 O fluxo de uma requisição
 
-A passageira escolhe a estação na lista, o tipo de problema e a faixa de horário, escreve a descrição, tira ou escolhe a foto e toca em "Enviar relato". Antes de enviar, a página faz duas coisas: redesenha a foto, o que tira dela os metadados EXIF e a reduz para no máximo 1600 pixels no lado maior (RD-01, seção 9), e gera um código aleatório para aquele envio, que ela repete se precisar tentar de novo (RNF-01). Envia tudo em um único POST para a rota `/relatos` do API Gateway, com a foto em base64.
+A passageira escolhe a estação, o tipo de problema e a faixa de horário, escreve a descrição, tira a foto e toca em "Enviar relato". A página redesenha a foto, o que tira dela o EXIF e a reduz para no máximo 1600 pixels (RD-01); gera um código aleatório para aquele envio, que repete se precisar tentar de novo (RNF-01); e envia tudo em um único POST para a rota `/relatos`, com a foto em base64.
 
-O API Gateway invoca a função `registrar`. Ela confere, nesta ordem, a estação na lista aceita, o tipo de problema, a faixa de horário, a foto (presente, com até 2 MB e sem EXIF) e a descrição, se houver, com até 500 caracteres. No primeiro campo recusado, devolve 400 dizendo qual foi, e imprime uma linha com a operação e o nome do campo recusado, sem o valor e sem nada de quem enviou (RF-05 e RNF-05).
+O API Gateway invoca a função `registrar`. Ela confere a estação na lista aceita, o tipo, a faixa e a foto, presente e com até 2 MB. No primeiro campo recusado, devolve 400 dizendo qual foi e imprime uma linha com o nome do campo, sem o valor e sem nada de quem enviou (RF-05 e RNF-05).
 
-Com tudo válido, a função deriva o protocolo do código de envio e confere se ele já existe na tabela. Se existir, é um reenvio: a função não toca na foto nem na tabela e devolve o mesmo protocolo (RNF-01). Se não existir, a foto vai primeiro: ela é gravada no S3, em `fotos/<estacao_id>/<protocolo>.jpg`. Só depois o relato é gravado na tabela, com 0 confirmações, numa gravação condicional que só acontece se o protocolo ainda não existir, o que cobre dois reenvios que cheguem ao mesmo tempo. A ordem é a preocupação de Reliability do FURPS da Sprint 1: não pode existir relato listado apontando para uma foto que nunca subiu. O pior caso no sentido contrário é uma foto sem relato, que nenhuma consulta mostra; e, se a passageira reenviar, a mesma foto é regravada no mesmo endereço.
+Com tudo válido, a função deriva o protocolo do código e confere se ele já existe na tabela. Se existir, é um reenvio, e ela devolve o mesmo protocolo sem gravar nada (RNF-01). Se não, grava primeiro a foto no S3, em `fotos/<estacao_id>/<protocolo>.jpg`, e depois o relato na tabela, com 0 confirmações, numa gravação condicional. A ordem é a preocupação de Reliability do FURPS da Sprint 1: não pode existir relato apontando para uma foto que nunca subiu. A função devolve 201 com o protocolo e o endereço da foto.
 
-Com o relato gravado, a função imprime a linha de registro e devolve 201 com o protocolo e o endereço da foto. A página mostra o protocolo e recarrega a consulta da estação: um GET em `/relatos?estacao=BRS`, que chega à função `consultar`. Ela faz um `query` na partição da estação, só com as chaves de ordenação a partir do dia de 30 dias atrás; descarta o que passou de 30 dias na hora exata; ordena por confirmações e, no empate, do mais recente para o mais antigo; e devolve a lista com o endereço de cada foto. Se a lista vier vazia, a página mostra "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura."
+A página recarrega a consulta: um GET em `/relatos?estacao=BRS` chega à função `consultar`, que faz um `query` na partição da estação a partir do dia de 30 dias atrás, descarta o que passou de 30 dias na hora exata, ordena por confirmações e, no empate, do mais recente para o mais antigo, e devolve a lista. Se ela vier vazia, a página mostra "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura."
 
-A confirmação faz o mesmo caminho até a função `confirmar`, que soma 1 ao relato numa única atualização condicional: a soma só acontece se o relato tiver até 30 dias (RF-04), se o código daquela confirmação não for o da última somada (RNF-04) e se a última confirmação tiver mais de 10 minutos (seção 9). Se a condição falhar, a função lê o relato para dizer o porquê: expirou, foi confirmado há pouco, ou aquela mesma confirmação já tinha sido somada, e então é um reenvio e a resposta é de sucesso.
+A confirmação chega à função `confirmar`, que soma 1 ao relato numa atualização condicional, só se ele tiver até 30 dias (RF-04); se tiver mais, a resposta diz que o relato expirou.
+
+Ficam especificados e fora do recorte das Sprints 3 e 4 (seção 8): a conferência do código da confirmação (RNF-04), o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função.
 
 ### 5.3 O que acontece se uma caixa cair
 
@@ -302,8 +266,8 @@ A confirmação faz o mesmo caminho até a função `confirmar`, que soma 1 ao r
 | Relato | `foto` | texto, caminho do objeto no S3 | sim: relato sem foto é recusado (RF-05) |
 | Relato | `enviado_em` | texto, data e hora em ISO 8601, UTC | sim, gerado |
 | Relato | `confirmacoes` | número | sim, começa em 0 |
-| Relato | `ultima_confirmacao_em` | texto, data e hora em ISO 8601, UTC | não: só depois da primeira confirmação (limite de 10 minutos, seção 9) |
-| Relato | `ultimo_codigo_confirmacao` | texto, UUID gerado pela página para cada confirmação | não: só depois da primeira confirmação (RNF-04) |
+| Relato | `ultima_confirmacao_em` | texto, data e hora em ISO 8601, UTC | não: gravado a cada confirmação |
+| Relato | `ultimo_codigo_confirmacao` | texto, UUID gerado pela página para cada confirmação | não: só com o RNF-04, especificado e fora do recorte (seção 8) |
 
 O relato não guarda o nome da estação, só o código. O nome que aparece na tela vem da lista de estações (seção 6.3).
 
@@ -340,6 +304,8 @@ A chave de partição é o código, e não o nome, por causa da preocupação de
 A consulta por linha também fica cara: não há chave para ela, e a Linha 11 viraria 16 consultas, uma por estação. Isso não é descuido: a Sprint 1 já descartou consultar por linha (seção 8 daquele documento), porque a passageira decide por onde andar dentro de uma estação, e não de uma linha.
 
 O protocolo sozinho também não serve de partição, embora seja único: nenhuma tela busca um relato pelo protocolo, e listar uma estação viraria um `scan`. Ele entra no fim da chave de ordenação, o que dá à chave a unicidade de que ela precisa.
+
+A chave foi conferida no LocalStack em 22/10/2026, com o script [`testes/sprint2-dynamodb.sh`](../testes/sprint2-dynamodb.sh), que usa os critérios de aceite da Sprint 1 como dados: 13 conferências, 13 aprovadas. A tabela foi criada com `estacao_id` e `dia_protocolo`; a consulta da Tatuapé trouxe os 4 relatos da janela e leu só esses 4, sem ler o de 45 dias; a gravação condicional recusou os 5 reenvios do mesmo relato; a confirmação somou no relato de 5 dias e foi recusada no de 31; e a busca por tipo, sem a chave, precisou ler a tabela inteira.
 
 ### 6.3 O que fica no S3 e o que fica no DynamoDB
 
@@ -390,29 +356,27 @@ Prioridade não é ordem de construção. A US-02 está acima da US-03, porque a
 
 | Item | Resposta |
 |---|---|
-| O que será implementado nas Sprints 3 e 4 | Os treze itens do backlog. Na Sprint 3, o caminho da gravação: RF-01, RF-02, RF-05, RNF-01, RNF-02 e RNF-05. Na Sprint 4, o que depende de haver o que listar e de existir a página, nesta ordem: RF-04, US-03 e RNF-04; depois RF-03, US-02 e RNF-03; e a US-01, que só se completa com a página. |
-| O que fica especificado e não implementado | Nenhum item do backlog. Continuam fora do escopo, como declarado na Sprint 1: o botão de emergência, a sirene e a localização em tempo real; conta de usuário e autenticação; denúncia de crime ou de pessoa; moderação e remoção de relatos; e o envio dos relatos à operadora. Também fica de fora a consulta por linha, descartada na Sprint 1 e cara pela chave escolhida aqui. |
-| Por que este corte | Toda a prioridade alta cabe nas duas sprints, porque é o percurso do roteiro: uma função que grava e uma que consulta, atrás de uma API e de uma página. Os itens de média e de baixa entraram por decisão. A US-03 tem custo: obriga a escrever uma terceira função, `confirmar`, que o roteiro não ensina, e a razão está logo abaixo desta tabela. O RNF-03 não custa código, só medição. O RNF-01 e o RNF-04 custam poucas linhas: condições na gravação, que a própria tabela confere. O RNF-05 é uma linha de registro por recusa. |
+| O que será implementado nas Sprints 3 e 4 | Toda a prioridade alta e a confirmação: RF-01 a RF-05, US-01 a US-03, RNF-01, RNF-02, RNF-03 e RNF-05. Na Sprint 3, o caminho da gravação: RF-01, RF-02, RF-05, RNF-01, RNF-02 e RNF-05. Na Sprint 4, nesta ordem: RF-04 e US-03; depois RF-03, US-02 e RNF-03; e a US-01, que só se completa com a página. |
+| O que fica especificado e não implementado | Do backlog, o RNF-04: o reenvio de uma confirmação pode somar duas vezes. Do desenho, duas proteções da seção 9: o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função; a página continua limpando a foto. Continuam fora do escopo, como na Sprint 1: botão de emergência e localização em tempo real; conta e autenticação; denúncia de crime ou de pessoa; moderação; envio dos relatos à operadora; e a consulta por linha. |
+| Por que este corte | Por orientação da professora, o recorte tem de caber no tempo das Sprints 3 e 4. Fica toda a prioridade alta e a confirmação, que é o que separa o problema recorrente do caso isolado. O RNF-01, o RNF-03 e o RNF-05 entram porque custam pouco: uma condição na gravação, nenhum código além da chave, e uma linha de registro. O que saiu protege contra casos raros ou contra abuso deliberado, e volta na matriz de rastreabilidade da Sprint 5. |
 
-A alternativa mais barata seria declarar a confirmação fora do recorte, e é uma resposta legítima. Optamos por implementar porque a confirmação é o que separa o problema recorrente do caso isolado, que é a razão de ela estar no escopo desde a Sprint 1. Sem ela, todo relato teria 0 confirmações, a consulta sairia do mais recente para o mais antigo, e dez passageiras que passaram pela mesma escada escura gerariam dez relatos soltos.
-
-Antes de a função `registrar` ser escrita, na Sprint 3, a lista de estações precisa ser conferida com a relação oficial das operadoras, como a Sprint 1 já tinha previsto, e cada estação recebe o seu código fixo. A partir daí o código não muda; o nome pode mudar.
+Antes de a função `registrar` ser escrita, na Sprint 3, a lista de estações precisa ser conferida com a relação oficial das operadoras, e cada estação recebe o seu código fixo. A partir daí o código não muda; o nome pode mudar.
 
 ## 9. Decisões e alternativas descartadas
 
 | Decisão | Alternativa considerada | Por que não foi escolhida |
 |---|---|---|
-| Estilo arquitetural: Distributed | Implicit Invocation: a chegada da foto ao S3 dispara a função que limpa a foto e grava o relato | Entre a chegada e a limpeza, a foto ficaria guardada com a localização do aparelho, o que o RD-01 não permite; e a passageira não receberia na mesma resposta o protocolo ou o campo recusado, que a US-01 cobra. |
-| Chave de partição: `estacao_id`, o código fixo da estação | O nome da estação como chave de partição | O nome muda: quando uma estação fosse renomeada, os relatos antigos ficariam sob o nome velho, e a consulta pelo nome novo viria vazia numa estação com problemas relatados. |
-| Recorte de implementação: os treze itens | Só a prioridade alta, deixando a confirmação especificada e não implementada | Seria mais barato e é legítimo, mas a consulta perderia o que a diferencia de uma lista de reclamações: saber o que se repete. |
-| Os RNFs são a qualidade dos cinco RFs da Sprint 1, um para um | Escolher os RNFs pelas categorias de nuvem, como Segurança e Observabilidade, independentemente dos RFs | Com um RNF por RF, nenhum requisito funcional fica sem número que o confira, e cada número tem um dono no código. O anonimato e o limite de confirmações, que não são a qualidade de um RF só, ficaram como decisões nesta tabela. |
-| O registro de cada função leva só campos nomeados, e o registro de acesso do API Gateway fica desligado | Registrar o evento inteiro, com `print(event)`, e ligar o registro de acesso do API Gateway | O evento que o API Gateway entrega à função traz o IP e o navegador de quem chamou, e o registro de acesso guarda o IP de cada chamada. As duas coisas gravariam no CloudWatch quem relatou, e o RD-01 seria quebrado sem ninguém perceber. |
-| A página limpa a foto, e a função só confere | A função limpa a foto, com uma biblioteca de imagens | A foto do celular carrega no EXIF a latitude, a longitude e o modelo do aparelho (RD-01). A biblioteca precisaria ser empacotada com a função, o que o percurso das Sprints 3 e 4 não cobre. A página já precisa redesenhar a foto para reduzi-la, e redesenhar tira o EXIF de graça. A função não confia nisso: confere a ausência do EXIF e recusa a foto que o tiver. Por isso, no critério US-01, cenário 1, a foto JPEG de 2 MB tem de chegar sem EXIF: pela página ela chega; mandada direto à API como saiu da câmera, seria recusada. |
-| Contra confirmações repetidas, um intervalo de 10 minutos por relato | Exigir conta, ou guardar um identificador do aparelho, para que cada pessoa confirme uma vez | As duas identificam quem participa e contrariam o RD-01. O intervalo não impede a fraude: torna-a lenta. Cinquenta confirmações falsas, que caberiam em um segundo, passam a exigir mais de oito horas. Quem quiser inflar um relato ainda consegue, com paciência; esse é o risco que a Sprint 1 declarou e que sobra, escrito aqui. Para que o critério US-03, cenário 1, passe, a última confirmação do relato A tem de ter mais de 10 minutos. |
-| O protocolo é derivado do código de envio, por um hash | O protocolo é o próprio código gerado pela página | O protocolo aparece na consulta. Se ele fosse o código, quem o lesse poderia reenviá-lo num outro dia, com outra foto, e a foto nova seria gravada no endereço da foto do relato original. Com o hash, conhecer o protocolo não permite chegar ao código. |
-| A chave de ordenação começa pelo dia do envio | O protocolo como chave de ordenação, com um filtro de 30 dias depois da leitura | O filtro é aplicado depois de ler: a consulta leria todos os relatos que a estação já teve, desde o primeiro dia, e o tempo cresceria para sempre. O preço desta decisão é um defeito conhecido: um reenvio que atravesse a meia-noite em UTC, 21h em Brasília, cai em outro dia, ganha outra chave e duplica o relato. A janela é de segundos, e fica declarada aqui. |
-| A foto tem leitura pública pelo endereço exato | Endereço temporário assinado, gerado pela função `consultar` | Assinar exige que a `consultar` tenha permissão no S3, e o RF-03 a limita a ler a tabela. A foto já é conteúdo público por definição (RF-02). O que não é público é listar o bucket, gravar ou apagar (RNF-02). |
-| A lista de estações é um arquivo | Uma segunda tabela no DynamoDB, com as estações | São 97 estações, que ninguém cadastra pela página e que mudam raramente. Uma tabela custaria uma leitura a mais em cada relato. Se um dia houver uma tela para manter a lista, a tabela passa a ser a escolha certa. |
+| Estilo arquitetural: Distributed | Implicit Invocation: a chegada da foto ao S3 dispara a função que limpa a foto e grava o relato | A foto ficaria guardada com a localização do aparelho até ser limpa (RD-01), e a passageira não receberia o protocolo na mesma resposta (US-01). |
+| Chave de partição: `estacao_id`, o código fixo da estação | O nome da estação como chave de partição | O nome muda: depois de uma renomeação, os relatos antigos ficariam sob o nome velho, e a consulta pelo nome novo viria vazia. |
+| Recorte de implementação: a prioridade alta e a confirmação | Os treze itens do backlog, com o RNF-04 e as proteções desta tabela | Não cabe no tempo das Sprints 3 e 4. O que ficou de fora protege contra casos raros ou contra abuso deliberado. |
+| Os RNFs são a qualidade dos cinco RFs da Sprint 1, um para um | Escolher os RNFs por categoria de nuvem, independentemente dos RFs | Com um RNF por RF, todo requisito funcional tem um número que o confere. Foi a orientação da professora. |
+| O registro leva só campos nomeados, e o registro de acesso do API Gateway fica desligado | Registrar o evento inteiro, com `print(event)` | O evento traz o IP e o navegador de quem chamou; registrá-lo quebraria o RD-01 sem ninguém perceber. |
+| A página limpa a foto antes de enviar | A função limpa a foto, com uma biblioteca de imagens | A biblioteca precisaria ser empacotada com a função, e a página já redesenha a foto para reduzi-la, o que tira o EXIF. A conferência do EXIF na função fica especificada e fora do recorte. |
+| Contra confirmações repetidas, um intervalo de 10 minutos por relato | Exigir conta, ou guardar um identificador do aparelho | As duas identificam quem confirma e contrariam o RD-01. O intervalo só torna a fraude lenta; fica especificado e fora do recorte, e o risco continua declarado, como na Sprint 1. |
+| O protocolo é derivado do código de envio, por um hash | O protocolo é o próprio código da página | O protocolo aparece na consulta: se fosse o código, quem o lesse poderia reenviá-lo com outra foto e trocar a foto de um relato alheio. O código identifica o envio, e não quem enviou. |
+| A chave de ordenação começa pelo dia do envio | O protocolo como chave de ordenação, com filtro de 30 dias depois da leitura | O filtro leria toda a história da estação. O preço é um defeito declarado: um reenvio que atravesse a meia-noite em UTC, 21h em Brasília, duplica o relato. |
+| A foto tem leitura pública pelo endereço exato | Endereço temporário assinado pela função `consultar` | Assinar exige permissão no S3, e o RF-03 limita a `consultar` a ler a tabela. Listar, gravar e apagar continuam proibidos (RNF-02). |
+| A lista de estações é um arquivo | Uma tabela de estações no DynamoDB | São 97 estações, que mudam raramente; uma tabela custaria uma leitura a mais em cada relato. |
 
 ## 10. Revisão cruzada recebida
 
@@ -429,5 +393,7 @@ Data: pendente
 ### 10.1 O que foi ajustado depois da revisão
 
 Ajuste após a orientação da professora (15/10/2026): os requisitos não funcionais passaram de quatro para cinco, um para cada requisito funcional da Sprint 1. O anonimato no registro e nas fotos e o limite de uma confirmação a cada 10 minutos, que eram requisitos não funcionais, passaram a decisões da seção 9, e o pilar 1 passou a ter requisito (RNF-05). Versão do documento: 1.1.
+
+Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi conferido no LocalStack (seção 6.2); as razões dos requisitos não funcionais foram encurtadas para uma ou duas frases; e o recorte passou a deixar especificados e não implementados o RNF-04, o limite de 10 minutos e a conferência do EXIF na função (seção 8). Versão do documento: 1.2.
 
 Ajustes da revisão cruzada: pendente, registrados aqui depois do retorno da equipe revisora.
