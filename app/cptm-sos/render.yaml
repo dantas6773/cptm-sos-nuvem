@@ -1,0 +1,40 @@
+# Configuração para publicar no Render (render.com).
+#
+# Com este arquivo no repositório, o Render lê tudo sozinho: basta criar um
+# "Blueprint" apontando para o repositório. As variáveis marcadas com sync: false
+# precisam ser preenchidas no painel — JWT_SECRET nunca deve ficar em arquivo
+# versionado.
+services:
+  - type: web
+    name: cptm-sos
+    runtime: node
+    plan: free
+    # Oregon é o padrão do Render e fica na costa oeste dos EUA. Ohio corta perto
+    # de 70ms por requisição para quem acessa do Brasil. A região não pode ser
+    # trocada depois: só recriando o serviço.
+    region: ohio
+    buildCommand: npm install
+    startCommand: npm start
+    # O plano gratuito hiberna após um tempo sem acesso. A primeira visita
+    # depois disso demora perto de um minuto para responder.
+    healthCheckPath: /login.html
+    envVars:
+      # Assina os tokens de sessão. Gere no painel com "Generate".
+      - key: JWT_SECRET
+        generateValue: true
+
+      # Sem isto o limitador de tentativas enxerga todo mundo como um IP só:
+      # uma pessoa errando a senha travaria o login de todas as outras, porque
+      # atrás de um proxy reverso o IP que chega é sempre o do proxy.
+      - key: TRUST_PROXY
+        value: "1"
+
+      # Numa demonstração pública isto é proteção, e não risco: quem testa entra
+      # em um toque na conta de demonstração, e ninguém precisa se cadastrar —
+      # então nenhum e-mail de estranho é guardado no servidor. As credenciais
+      # dessa conta são públicas e estão no README.
+      - key: LOGIN_DEMO
+        value: "1"
+
+      - key: NODE_VERSION
+        value: "20"

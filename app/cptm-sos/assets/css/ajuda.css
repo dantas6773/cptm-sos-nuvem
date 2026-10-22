@@ -1,0 +1,121 @@
+/* Folha de ajuda do rodapé. Usa <dialog> nativo: o foco fica preso dentro dela,
+   Esc fecha e o resto da página vira inerte sem nenhuma linha de JavaScript para
+   isso — o que uma div com position:fixed não daria de graça. */
+
+.dialogo-ajuda {
+    /* O reset `* { margin: 0 }` das folhas por tela vence o `margin: auto` que o
+       navegador aplica ao <dialog>, e a folha nascia colada no canto superior
+       esquerdo em vez de centrada. */
+    margin: auto;
+    width: min(92vw, 420px);
+    max-height: 82vh;
+    padding: 0;
+    border: none;
+    border-radius: 22px;
+    background-color: #FFFFFF;
+    color: #141A2E;
+    overflow: hidden;
+}
+
+.dialogo-ajuda::backdrop {
+    background-color: rgba(11, 15, 28, 0.55);
+}
+
+.ajuda-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    background-color: var(--cor-header);
+    color: var(--cor-fonte);
+}
+
+.ajuda-topo h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.ajuda-fechar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.16);
+    color: inherit;
+    cursor: pointer;
+}
+
+.ajuda-fechar svg {
+    width: 18px;
+    height: 18px;
+}
+
+.ajuda-corpo {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 22px 20px 26px;
+    overflow-y: auto;
+    max-height: calc(82vh - 72px);
+}
+
+.ajuda-item h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ajuda-item p {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #4A5162;
+}
+
+.ajuda-acao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ajuda-acao svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Mesmo vermelho do botão de denúncia da tela de pré-denúncia. O #ED1C24 da
+   marca dá 4.38:1 com texto branco, abaixo do mínimo de 4.5:1 — para texto sobre
+   fundo cheio o projeto já usava este tom, que dá 5.41:1. */
+.ajuda-acao.emergencia {
+    background-color: #D3141A;
+    color: #FFFFFF;
+}
+
+.ajuda-acao.denuncia {
+    background-color: var(--cor-header);
+    color: var(--cor-fonte);
+}
+
+.ajuda-nota {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #4A5162;
+    background-color: #F0F1F4;
+    border-radius: 14px;
+    padding: 12px 14px;
+}

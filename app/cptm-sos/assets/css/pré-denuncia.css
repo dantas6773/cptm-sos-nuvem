@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+html, body {
+    height: 100%;
+    background-color: #0B0F1C;
+}
+
+#background-pré-denuncia {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0 auto;
+    background-color: #111111;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(20px, 4vh, 32px) 24px;
+}
+
+#voltar-pré-denuncia {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#setavoltar {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#voltar {
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#miolo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(28px, 6vh, 55px);
+    padding: 20px 0;
+}
+
+#pressione {
+    font-weight: 400;
+    font-size: clamp(22px, 6vw, 32px);
+    text-align: center;
+}
+
+.button-3d {
+    width: clamp(140px, 40vw, 190px);
+    height: clamp(140px, 40vw, 190px);
+    background: radial-gradient(circle at top left, #ff4f56, #ED1C24, #8B0000);
+    border: none;
+    border-radius: 50%;
+    box-shadow:
+        0 0 20px rgba(237, 28, 36, 0.6),
+        inset 0 4px 8px rgba(255, 255, 255, 0.15),
+        0 8px 15px rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: clamp(60px, 16vw, 90px);
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    animation: pulse 1.5s infinite;
+    margin-top: 24px;
+}
+
+.button-3d:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 0 10px rgba(237, 28, 36, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.15),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow:
+            0 0 10px rgba(237, 28, 36, 0.4),
+            inset 0 4px 8px rgba(255, 255, 255, 0.15),
+            0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 25px rgba(237, 28, 36, 0.8),
+            inset 0 4px 8px rgba(255, 255, 255, 0.15),
+            0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+        box-shadow:
+            0 0 10px rgba(237, 28, 36, 0.4),
+            inset 0 4px 8px rgba(255, 255, 255, 0.15),
+            0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+}
+
+#organizador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    cursor: pointer;
+}
+
+#ou {
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#faça-uma-denuncia {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#bt-denuncia {
+    width: 100%;
+    max-width: 296px;
+    padding: 20px 24px;
+    border-radius: 20px;
+    background-color: #D3141A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: white;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+#bt-denuncia h2 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* testado */
+
+/* Elementos que já eram clicáveis viraram <button> para funcionar no teclado.
+   O reset mantém a aparência que tinham como div/a/h2. */
+#voltar, #divvoltar {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-align: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid #ED1C24;
+    outline-offset: 2px;
+}

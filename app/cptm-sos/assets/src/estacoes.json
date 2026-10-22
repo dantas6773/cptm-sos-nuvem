@@ -1,0 +1,614 @@
+[
+  {
+    "id": 1,
+    "nome": "Linha 1 - Azul",
+    "trajeto": [
+      "Jabaquara",
+      "Conceição",
+      "São Judas",
+      "Saúde",
+      "Praça da Árvore",
+      "Santa Cruz",
+      "Vila Mariana",
+      "Ana Rosa",
+      "Paraíso",
+      "Vergueiro",
+      "São Joaquim",
+      "Japão-Liberdade",
+      "Sé",
+      "São Bento",
+      "Luz",
+      "Tiradentes",
+      "Armênia",
+      "Portuguesa-Tietê",
+      "Carandiru",
+      "Santana",
+      "Jardim São Paulo-Ayrton Senna",
+      "Parada Inglesa",
+      "Tucuruvi"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Santa Cruz",
+        "linhas": [
+          5
+        ]
+      },
+      {
+        "estacao": "Ana Rosa",
+        "linhas": [
+          2
+        ]
+      },
+      {
+        "estacao": "Paraíso",
+        "linhas": [
+          2
+        ]
+      },
+      {
+        "estacao": "Sé",
+        "linhas": [
+          3
+        ]
+      },
+      {
+        "estacao": "Luz",
+        "linhas": [
+          4,
+          11,
+          7,
+          10
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Linha 2 - Verde",
+    "trajeto": [
+      "Vila Madalena",
+      "Sumaré",
+      "Clínicas",
+      "Consolação",
+      "Trianon-Masp",
+      "Brigadeiro",
+      "Paraíso",
+      "Ana Rosa",
+      "Chácara Klabin",
+      "Santos-Imigrantes",
+      "Alto do Ipiranga",
+      "Sacomã",
+      "Tamanduateí",
+      "Vila Prudente"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Consolação",
+        "linhas": [
+          4
+        ]
+      },
+      {
+        "estacao": "Paraíso",
+        "linhas": [
+          1
+        ]
+      },
+      {
+        "estacao": "Ana Rosa",
+        "linhas": [
+          1
+        ]
+      },
+      {
+        "estacao": "Chácara Klabin",
+        "linhas": [
+          5
+        ]
+      },
+      {
+        "estacao": "Tamanduateí",
+        "linhas": [
+          10
+        ]
+      },
+      {
+        "estacao": "Vila Prudente",
+        "linhas": [
+          15
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Linha 3 - Vermelha",
+    "trajeto": [
+      "Palmeiras-Barra Funda",
+      "Marechal Deodoro",
+      "Santa Cecília",
+      "República",
+      "Anhangabaú",
+      "Sé",
+      "Pedro II",
+      "Brás",
+      "Bresser-Mooca",
+      "Belém",
+      "Tatuapé",
+      "Carrão",
+      "Penha",
+      "Vila Matilde",
+      "Guilhermina-Esperança",
+      "Patriarca-Vila Ré",
+      "Artur Alvim",
+      "Corinthians-Itaquera"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Palmeiras-Barra Funda",
+        "linhas": [
+          7,
+          8
+        ]
+      },
+      {
+        "estacao": "República",
+        "linhas": [
+          4
+        ]
+      },
+      {
+        "estacao": "Sé",
+        "linhas": [
+          1
+        ]
+      },
+      {
+        "estacao": "Brás",
+        "linhas": [
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "estacao": "Tatuapé",
+        "linhas": [
+          11,
+          12
+        ]
+      },
+      {
+        "estacao": "Corinthians-Itaquera",
+        "linhas": [
+          11
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "Linha 4 - Amarela",
+    "trajeto": [
+      "Luz",
+      "República",
+      "Higienópolis-Mackenzie",
+      "Paulista",
+      "Oscar Freire",
+      "Fradique Coutinho",
+      "Faria Lima",
+      "Pinheiros",
+      "Butantã",
+      "São Paulo-Morumbi",
+      "Vila Sônia",
+      "Taboão da Serra"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Luz",
+        "linhas": [
+          1,
+          7,
+          11,
+          10
+        ]
+      },
+      {
+        "estacao": "República",
+        "linhas": [
+          3
+        ]
+      },
+      {
+        "estacao": "Paulista",
+        "linhas": [
+          2
+        ]
+      },
+      {
+        "estacao": "Pinheiros",
+        "linhas": [
+          9
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nome": "Linha 5 - Lilás",
+    "trajeto": [
+      "Capão Redondo",
+      "Campo Limpo",
+      "Vila das Belezas",
+      "Giovanni Gronchi",
+      "Santo Amaro",
+      "Largo Treze",
+      "Adolfo Pinheiro",
+      "Alto da Boa Vista",
+      "Borba Gato",
+      "Brooklin",
+      "Campo Belo",
+      "Eucaliptos",
+      "Moema",
+      "AACD-Servidor",
+      "Hospital São Paulo",
+      "Santa Cruz",
+      "Chácara Klabin"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Santo Amaro",
+        "linhas": [
+          9
+        ]
+      },
+      {
+        "estacao": "Santa Cruz",
+        "linhas": [
+          1
+        ]
+      },
+      {
+        "estacao": "Chácara Klabin",
+        "linhas": [
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nome": "Linha 7 - Rubi",
+    "trajeto": [
+      "Jundiaí",
+      "Várzea Paulista",
+      "Campo Limpo Paulista",
+      "Botujuru",
+      "Francisco Morato",
+      "Baltazar Fidélis",
+      "Franco da Rocha",
+      "Caieiras",
+      "Perus",
+      "Vila Aurora",
+      "Jaraguá",
+      "Vila Clarice",
+      "Pirituba",
+      "Piqueri",
+      "Lapa",
+      "Água Branca",
+      "Palmeiras-Barra Funda",
+      "Luz"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Palmeiras-Barra Funda",
+        "linhas": [
+          3,
+          8
+        ]
+      },
+      {
+        "estacao": "Luz",
+        "linhas": [
+          1,
+          4,
+          11,
+          10
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "nome": "Linha 8 - Diamante",
+    "trajeto": [
+      "2 Bueno",
+      "Ambuíta",
+      "Santa Rita",
+      "Itapevi",
+      "Engenheiro Cardoso",
+      "Sagrado Coração",
+      "Jandira",
+      "Jardim Silveira",
+      "Jardim Belval",
+      "Barueri",
+      "Antônio João",
+      "Santa Terezinha",
+      "Carapicuíba",
+      "General Miguel Costa",
+      "Quitaúna",
+      "Comandante Sampaio",
+      "Osasco",
+      "Presidente Altino",
+      "Imperatriz Leopoldina",
+      "Domingos de Moraes",
+      "Lapa",
+      "Palmeiras-Barra Funda",
+      "Júlio Prestes"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Osasco",
+        "linhas": [
+          9
+        ]
+      },
+      {
+        "estacao": "Presidente Altino",
+        "linhas": [
+          9
+        ]
+      },
+      {
+        "estacao": "Palmeiras-Barra Funda",
+        "linhas": [
+          3,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "nome": "Linha 9 - Esmeralda",
+    "trajeto": [
+      "Osasco",
+      "Presidente Altino",
+      "Ceasa",
+      "Villa Lobos-Jaguaré",
+      "Cidade Universitária",
+      "Pinheiros",
+      "Hebraica-Rebouças",
+      "Cidade Jardim",
+      "Vila Olímpia",
+      "Berrini",
+      "Morumbi",
+      "Granja Julieta",
+      "João Dias",
+      "Santo Amaro",
+      "Socorro",
+      "Jurubatuba",
+      "Autódromo",
+      "Primavera-Interlagos",
+      "Grajaú",
+      "Mendes-Vila Natal",
+      "Varginha"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Osasco",
+        "linhas": [
+          8
+        ]
+      },
+      {
+        "estacao": "Presidente Altino",
+        "linhas": [
+          8
+        ]
+      },
+      {
+        "estacao": "Pinheiros",
+        "linhas": [
+          4
+        ]
+      },
+      {
+        "estacao": "Santo Amaro",
+        "linhas": [
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "nome": "Linha 10 – Turquesa",
+    "trajeto": [
+      "Luz",
+      "Brás",
+      "Juventus-Mooca",
+      "Ipiranga",
+      "Tamanduateí",
+      "São Caetano do Sul",
+      "Utinga",
+      "Prefeito Saladino",
+      "Santo André",
+      "Capuava",
+      "Mauá",
+      "Guapituba",
+      "Ribeirão Pires",
+      "Rio Grande da Serra"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Brás",
+        "linhas": [
+          3,
+          11,
+          12
+        ]
+      },
+      {
+        "estacao": "Tamanduateí",
+        "linhas": [
+          2
+        ]
+      },
+      {
+        "estacao": "Luz",
+        "linhas": [
+          7,
+          11,
+          1,
+          4
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "nome": "Linha 11 – Coral",
+    "trajeto": [
+      "Luz",
+      "Brás",
+      "Tatuapé",
+      "Corinthians-Itaquera",
+      "Dom Bosco",
+      "José Bonifácio",
+      "Guaianases",
+      "Antônio Gianetti Neto",
+      "Ferraz de Vasconcelos",
+      "Poá",
+      "Calmon Viana",
+      "Suzano",
+      "Jundiapeba",
+      "Braz Cubas",
+      "Mogi das Cruzes",
+      "Estudantes"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Luz",
+        "linhas": [
+          1,
+          4,
+          7,
+          10
+        ]
+      },
+      {
+        "estacao": "Brás",
+        "linhas": [
+          3,
+          10,
+          12
+        ]
+      },
+      {
+        "estacao": "Corinthians-Itaquera",
+        "linhas": [
+          3
+        ]
+      },
+      {
+        "estacao": "Tatuapé",
+        "linhas": [
+          3,
+          12
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "nome": "Linha 12 – Safira",
+    "trajeto": [
+      "Brás",
+      "Tatuapé",
+      "Engenheiro Goulart",
+      "USP Leste",
+      "Comendador Ermelino",
+      "São Miguel Paulista",
+      "Jardim Helena-Vila Mara",
+      "Itaim Paulista",
+      "Jardim Romano",
+      "Engenheiro Manoel Feio",
+      "Itaquaquecetuba",
+      "Aracaré",
+      "Calmon Viana"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Brás",
+        "linhas": [
+          3,
+          10,
+          11
+        ]
+      },
+      {
+        "estacao": "Tatuapé",
+        "linhas": [
+          3,
+          11
+        ]
+      },
+      {
+        "estacao": "Engenheiro Goulart",
+        "linhas": [
+          13
+        ]
+      },
+      {
+        "estacao": "Calmon Viana",
+        "linhas": [
+          11
+        ]
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "nome": "Linha 13 – Jade",
+    "trajeto": [
+      "Engenheiro Goulart",
+      "Guarulhos-Cecap",
+      "Aeroporto-Guarulhos"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Engenheiro Goulart",
+        "linhas": [
+          12
+        ]
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "nome": "Linha 15 – Prata",
+    "trajeto": [
+      "Vila Prudente",
+      "Orfanato",
+      "São Lucas",
+      "Camilo Haddad",
+      "Vila Tolstói",
+      "Vila União",
+      "Jardim Planalto",
+      "Sapopemba",
+      "Fazenda da Juta",
+      "São Mateus",
+      "Jardim Colonial"
+    ],
+    "ligacoes": [
+      {
+        "estacao": "Vila Prudente",
+        "linhas": [
+          2
+        ]
+      }
+    ]
+  }
+]

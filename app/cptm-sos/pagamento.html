@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tela de pagamento</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/cabecalho.css">
+    <link rel="stylesheet" href="assets/css/ajuda.css">
+    <link rel="stylesheet" href="assets/css/pagamento.css">
+</head>
+<body>
+  <div class="pagina">
+    <header>
+      <div class="header-todo">
+        <div class="logo">
+          <a href="home.html" class="logo-link" aria-label="Ir para a home"><img src="assets/imagem/logo.svg" alt="Logo"></a>
+          <h1 id="boas-vindas" aria-live="polite">Carregando...</h1>
+        </div>
+        <div class="barra" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <div class="conteudo">
+      <div id="divvoltar">
+          <img id="seta" src="assets/imagem/imgseta.png" alt="">
+          <button type="button" id="voltar">Voltar</button>
+      </div>
+
+      <article id="bttsaldo">
+          <svg class="imagess" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 10.5C4 9 5.1 7.8 6.6 7.6L22.4 5.3c1-.1 1.9.6 1.9 1.6v3.1"/>
+            <rect x="4" y="10.4" width="24" height="16.2" rx="3.2"/>
+            <circle cx="22.6" cy="18.5" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+          <div class="saldo-texto">
+            <p id="seusaldo">Seu saldo:</p>
+            <p id="dinheiro" aria-live="polite">Carregando...</p>
+          </div>
+      </article>
+
+      <div id="pagaments">
+          <h2>Métodos de pagamento</h2>
+          <button class="mets" data-metodo="pix">
+              <svg class="imagess" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14.1 4.5a2.7 2.7 0 0 1 3.8 0l9.6 9.6a2.7 2.7 0 0 1 0 3.8l-9.6 9.6a2.7 2.7 0 0 1-3.8 0l-9.6-9.6a2.7 2.7 0 0 1 0-3.8z"/>
+                <path d="M9.6 16c2.1-2.6 4.3-2.6 6.4 0s4.3 2.6 6.4 0"/>
+              </svg>
+              <p class="fontmets">Pix</p>
+              <svg class="setapagamentos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
+          <button class="mets" data-metodo="cartao">
+              <svg class="imagess" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3.5" y="7" width="25" height="18" rx="3"/>
+                <path d="M3.5 13h25"/>
+                <path d="M8 19.5h5"/>
+                <path d="M16.5 19.5h2"/>
+              </svg>
+              <p class="fontmets">Cartão de Crédito</p>
+              <svg class="setapagamentos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
+          <button class="mets" data-metodo="boleto">
+              <svg class="imagess" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9.5V7.6C6 6.7 6.7 6 7.6 6h1.9M22.5 6h1.9c.9 0 1.6.7 1.6 1.6v1.9M26 22.5v1.9c0 .9-.7 1.6-1.6 1.6h-1.9M9.5 26H7.6C6.7 26 6 25.3 6 24.4v-1.9"/>
+                <path d="M10.5 11v10M13.5 11v10M17 11v10M20.5 11v10" stroke-width="1.6"/>
+                <path d="M23.5 11v10" stroke-width="2.6"/>
+              </svg>
+              <p class="fontmets">Boleto Bancário</p>
+              <svg class="setapagamentos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+          </button>
+      </div>
+    </div>
+
+    <footer class="rodape-simples">
+        <button type="button" id="Ajuda" class="link-ajuda">Central de Ajuda</button>
+    </footer>
+  </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/ajuda.js"></script>
+    <script src="assets/js/pagamento.js"></script>
+</body>
+</html>
+
+<!-- testado -->

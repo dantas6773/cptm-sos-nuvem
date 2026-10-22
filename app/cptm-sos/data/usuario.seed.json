@@ -1,0 +1,76 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Ana Clara Souza",
+      "cpf": "12345678901",
+      "email": "ana.souza@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 368.6,
+      "alerta": false
+    },
+    {
+      "id": 2,
+      "nome": "Bruno Oliveira",
+      "cpf": "98765432100",
+      "email": "bruno.oliveira@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 915.6,
+      "alerta": false
+    },
+    {
+      "id": 3,
+      "nome": "Camila Pereira",
+      "cpf": "45678912309",
+      "email": "camila.pereira@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 23,
+      "alerta": true
+    },
+    {
+      "id": 4,
+      "nome": "Diego Santos",
+      "cpf": "32165498710",
+      "email": "diego.santos@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 46,
+      "alerta": false
+    },
+    {
+      "id": 5,
+      "nome": "Usuario Teste 1",
+      "cpf": "11122233344",
+      "email": "teste1@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 0,
+      "alerta": true
+    },
+    {
+      "id": 6,
+      "nome": "Usuario Teste 2",
+      "cpf": "55566677788",
+      "email": "teste2@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 0,
+      "alerta": false
+    },
+    {
+      "id": 7,
+      "nome": "Usuario Teste 3",
+      "cpf": "99988877766",
+      "email": "teste3@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 0,
+      "alerta": true
+    },
+    {
+      "id": 8,
+      "nome": "Usuario Teste 4",
+      "cpf": "44433322211",
+      "email": "teste4@example.com",
+      "senha": "$2a$10$ENS0MPsX6e8sOB2D5/n8UOEq2r4OVgfBiagXSOniMPkXuCFkP1vki",
+      "saldo": 0,
+      "alerta": false
+    }
+  ]
+}

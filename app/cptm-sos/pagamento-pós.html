@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tela de pós-pagamento</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/cabecalho.css">
+    <link rel="stylesheet" href="assets/css/pagamento-pós.css">
+</head>
+<body>
+  <div class="pagina">
+    <header>
+      <div class="header-todo">
+        <div class="logo">
+          <a href="home.html" class="logo-link" aria-label="Ir para a home"><img src="assets/imagem/logo.svg" alt="Logo"></a>
+          <h1 id="boas-vindas" aria-live="polite">Carregando...</h1>
+        </div>
+        <div class="barra" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <div class="conteudo">
+        <button type="button" id="divvoltar">
+            <img id="seta" src="assets/imagem/imgseta.png" alt="Voltar">
+            <span id="voltar">Voltar</span>
+        </button>
+
+        <article id="bttsaldo">
+            <svg class="imagess" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 10.5C4 9 5.1 7.8 6.6 7.6L22.4 5.3c1-.1 1.9.6 1.9 1.6v3.1"/>
+            <rect x="4" y="10.4" width="24" height="16.2" rx="3.2"/>
+            <circle cx="22.6" cy="18.5" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+            <div class="saldo-texto">
+              <p id="seusaldo">Seu saldo:</p>
+              <p id="dinheiro" aria-live="polite">Carregando...</p>
+            </div>
+        </article>
+
+        <div id="pagaments">
+            <h2>Deseja comprar<br>quantos bilhetes?</h2>
+        </div>
+
+        <div id="selecaoDeBilhetes">
+            <div id="quantidade-bilhetes-box">
+                <button id="decrecimo-bilhetes" type="button" aria-label="Menos um bilhete">-</button>
+                <span id="quantidade-bilhetes" aria-live="polite" aria-atomic="true">0</span>
+                <button id="incrementar-bilhetes" type="button" aria-label="Mais um bilhete">+</button>
+            </div>
+
+            <div id="valor-bilhetes-box">
+                <span class="valor-com-cifrao">
+                    <span class="cifrao">R$</span>
+                    <span id="valor-bilhetes">0,00</span>
+                </span>
+            </div>
+        </div>
+
+        <p id="metodo-escolhido" class="metodo-escolhido" hidden>
+            <span>Pagando com <strong id="metodo-nome"></strong></span>
+            <a href="pagamento.html">Trocar</a>
+        </p>
+
+    </div>
+
+    <div class="rodape-acao">
+        <p id="aviso-compra" class="aviso" role="status"></p>
+        <button id="botao-comprar" type="button" disabled>COMPRAR</button>
+    </div>
+  </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/pagamento-pós.js"></script>
+</body>
+</html>

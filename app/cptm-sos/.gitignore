@@ -1,0 +1,29 @@
+node_modules
+.env
+.DS_Store
+
+# banco local: nasce de data/usuario.seed.json na primeira execução.
+# O glob cobre cópias acidentais do tipo "usuario 2.json" que o Finder/editor cria,
+# e que já vieram parar no repositório uma vez.
+data/usuario*.json
+!data/usuario.seed.json
+
+# estado efêmero de sessão do Claude Code (os agentes em .claude/agents/ são versionados)
+.claude/scheduled_tasks.lock
+
+# documento interno de coordenação; não deve ir para o repositório público
+LIMPEZA-HISTORICO.md
+
+# ambiente virtual do Python. O projeto não usa mais Python — o cálculo de rota
+# foi reescrito em TypeScript — mas a linha fica: quem clonou antes ainda tem a
+# pasta no disco, e ela não pode escorregar para o repositório.
+.venv/
+
+
+# denuncias registradas localmente (dado de usuario, como o banco)
+data/denuncias.json
+
+# banco temporario da suite e2e
+.e2e-tmp/
+test-results/
+playwright-report/

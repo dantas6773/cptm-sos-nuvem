@@ -1,0 +1,359 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Inter", sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-header: #1B4680;
+    --cor-fonte: #FFFFFF;
+    --cor-botao-saldo: #4F4D56;
+    --cor-botao-recarga: #ED1C24;
+}
+
+html,
+body {
+    background-color: #DADDE3;
+}
+
+.pagina {
+    /* a casca (altura, coluna, largura máxima) vem de cabecalho.css */
+    background-color: #FFFFFF;
+}
+
+.cartao-saldo {
+    display: flex;
+    margin: 30px 15px 0 15px;
+    height: 120px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0px 5px 15px rgba(100, 100, 111, 0.25);
+}
+
+.saldo {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--cor-header);
+    padding: 16px 18px;
+}
+
+.saldo>h3 {
+    color: var(--cor-fonte);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.saldo-valor-linha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.saldo>.saldo-valor-linha>h5 {
+    color: var(--cor-fonte);
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.saldo>.saldo-valor-linha>img {
+    width: 22px;
+    height: 22px;
+}
+
+.recarga {
+    display: flex;
+    align-self: flex-start;
+}
+
+.recarga>span {
+    padding: 6px 18px;
+    background-color: var(--cor-botao-recarga);
+    color: var(--cor-fonte);
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.qrcode {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--cor-botao-recarga);
+    color: var(--cor-fonte);
+    padding: 12px;
+    text-align: center;
+}
+
+.qrcode>img {
+    width: 44px;
+    height: 44px;
+}
+
+.qrcode>span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-fonte);
+    line-height: 1.25;
+}
+
+.secao-mapa {
+    margin: 24px 15px 30px 15px;
+}
+
+.secao-mapa>h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #050505;
+    margin-bottom: 10px;
+}
+
+.mapa {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 230px;
+    background-image: url(../imagem/mapa-metro.png);
+    /* Sem ampliação. O recorte anterior (420%) desenhava a imagem a 4574px de
+       dispositivo num cartão de 363px, a partir de uma fonte de 1100px: o
+       navegador ampliava 4,16x e o resultado saía borrado, com os rótulos das
+       bordas cortados no meio. Em `cover` a imagem é desenhada a 1089px de
+       dispositivo — praticamente 1:1 com a fonte, ou seja, nítida — e o mapa
+       aparece inteiro em vez de um pedaço ampliado. */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 24px;
+    /* sem contorno: no Figma o cartão não tem borda, só a sombra */
+    box-shadow: 0px 5px 15px rgba(100, 100, 111, 0.35);
+    overflow: hidden;
+}
+
+.azul {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 62%;
+    /* A parada única em 55% criava uma linha perceptível onde o azul começava.
+       Com paradas intermediárias a transição fica gradual, como no projeto. */
+    background: linear-gradient(to top,
+        #1B4680 0%,
+        #1B4680 38%,
+        rgba(27, 70, 128, 0.82) 60%,
+        rgba(27, 70, 128, 0.45) 78%,
+        transparent 100%);
+    border-radius: 0 0 24px 24px;
+}
+
+.input-busca {
+    position: absolute;
+    /* Era left:30px com width:310px fixo, somando 340px: em telas de 320px o campo
+       vazava para fora da tela. Agora a largura acompanha o espaço disponível. */
+    left: 30px;
+    right: 30px;
+    top: 115px;
+    border: 1px solid black;
+    width: auto;
+    max-width: 310px;
+    height: 62px;
+    background-color: var(--cor-fonte);
+    background-image: url(../imagem/lupa.png);
+    background-repeat: no-repeat;
+    background-position: 14px center;
+    background-size: 26px 26px;
+    /* espaço para a lupa: `position` e `left` em ::placeholder não são
+       propriedades válidas — o Chrome tolerava, o Safari ignorava e o texto
+       ficava por cima do ícone. O recuo pertence ao campo, não ao placeholder. */
+    padding-left: 52px;
+    padding-right: 18px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 30px;
+    z-index: 1;
+}
+
+.input-busca::placeholder {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.endereco {
+    position: absolute;
+    /* Ocupa a faixa entre o fim da busca e a base do cartão, centrado nela — em
+       vez de uma distância fixa da borda, que desalinha se a busca ou a altura
+       do cartão mudarem. 115px é o topo da busca e 62px a altura dela. */
+    top: calc(115px + 62px);
+    bottom: 0;
+    /* alinhado com a lupa: o campo começa em 30px e a lupa fica a 14px dele */
+    left: 44px;
+    right: 30px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* O endereço é informação contextual, mas estava em 20px/600 — empatado com o
+       saldo e o campo de busca, e maior que os títulos de seção. Passa a ficar um
+       nível abaixo deles na hierarquia. Peso 500 e não 400 porque o fundo é azul
+       e o texto branco perde definição com peso leve. */
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 1;
+}
+
+.secao-avisos {
+    margin: 0 0 30px 15px;
+}
+
+.secao-avisos>h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #050505;
+    margin-bottom: 10px;
+}
+
+.avisos-lista {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-right: 15px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, black 0%, black 90%, transparent 100%);
+}
+
+.avisos-lista::-webkit-scrollbar {
+    display: none;
+}
+
+.aviso-card {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 220px;
+    background-color: var(--cor-fonte);
+    border: 1px solid #EDEFF3;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0px 4px 12px rgba(100, 100, 111, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.aviso-card>h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #141A2E;
+}
+
+.aviso-card>p {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: #6B6E76;
+    line-height: 1.4;
+}
+
+.aviso-icone-navy {
+    color: var(--cor-header);
+}
+
+.aviso-icone-atencao {
+    color: #C97A1F;
+}/* testado */
+
+/* Primeira media query do projeto. Em telas de 320px (iPhone SE e similares) o
+   rodapé estourava a largura e o item "Ajustes" ficava cortado — o respiro entre
+   os itens era maior do que a tela comporta. Reduz o espaçamento em vez de
+   esconder qualquer item de navegação. */
+@media (max-width: 359px) {}
+
+/* Indicadores de página do carrossel de avisos. Sem eles, o segundo card aparece
+   cortado na borda e nada informa que existem outros — no projeto há os pontos. */
+.avisos-indicadores {
+    display: flex;
+    justify-content: center;
+    /* o espaçamento visual entre os pontos já vem da área de toque de cada um */
+    gap: 0;
+    margin-top: 6px;
+}
+
+/* O ponto continua com 8px, mas a área de toque tem 24px: o alvo mínimo da WCAG
+   2.2. Antes o botão era o próprio ponto, e acertar 8px com o dedo é sorte. O
+   ponto é desenhado no ::before, então crescer o alvo não afasta os pontos. */
+.avisos-indicadores button {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.avisos-indicadores button::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #C7CBD4;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.avisos-indicadores button[aria-selected="true"]::before {
+    background-color: var(--cor-header);
+    transform: scale(1.25);
+}
+
+.avisos-indicadores button:focus-visible {
+    outline: 3px solid var(--cor-header);
+    outline-offset: 3px;
+}
+
+/* Olho e pin eram PNG de 29x29 e 23x23 — ampliados além do que tinham, ficavam
+   borrados em tela de alta densidade. Em SVG são nítidos em qualquer densidade e
+   herdam a cor do texto ao redor. */
+#olho {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cor-fonte);
+    cursor: pointer;
+}
+
+#olho svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* o traço aparece só quando o saldo está oculto */
+#olho .olho-corte {
+    opacity: 0;
+}
+
+#olho[aria-pressed="true"] .olho-corte {
+    opacity: 1;
+}
+
+.icone-local {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--cor-fonte);
+}

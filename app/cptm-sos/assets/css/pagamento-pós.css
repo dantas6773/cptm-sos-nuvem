@@ -1,0 +1,277 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --cor-header: #1B4680;
+    --cor-fonte: #FFFFFF;
+    --cor-botao-recarga: #ED1C24;
+    --cor-fundo: #F5F4F1;
+}
+
+html, body {
+    height: 100%;
+    background-color: #DADDE3;
+}
+
+.pagina {
+    /* a casca (altura, coluna, largura máxima) vem de cabecalho.css */
+    background-color: var(--cor-fundo);
+}
+
+.conteudo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 22px 20px;
+}
+
+#divvoltar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+#seta {
+    width: 20px;
+    height: 20px;
+}
+
+#voltar {
+    text-decoration: none;
+    color: #141A2E;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#bttsaldo {
+    border-radius: 20px;
+    background-color: var(--cor-header);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+}
+
+/* Os ícones eram PNGs de ~40px exibidos a 32px: num celular 3x faltava mais da
+   metade dos pixels e eles saíam borrados. Além disso vinham coloridos (Pix
+   verde, cartão amarelo) sobre o card azul, enquanto o ícone da carteira ao lado
+   era traço branco — duas linguagens de ícone na mesma tela. Em SVG herdam a cor
+   do texto e ficam nítidos em qualquer densidade. */
+.imagess {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--cor-fonte);
+}
+
+.saldo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#seusaldo {
+    color: var(--cor-fonte);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#dinheiro {
+    color: var(--cor-fonte);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#pagaments h2 {
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 600;
+    color: #141A2E;
+    text-align: center;
+    line-height: 1.3;
+}
+
+#selecaoDeBilhetes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background-color: var(--cor-header);
+    border-radius: 20px;
+    padding: 28px 20px;
+}
+
+#quantidade-bilhetes-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+#quantidade-bilhetes-box button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--cor-fonte);
+    font-size: 26px;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#quantidade-bilhetes {
+    color: var(--cor-fonte);
+    font-size: 40px;
+    font-weight: 600;
+    min-width: 50px;
+    text-align: center;
+}
+
+#valor-bilhetes-box {
+    width: 100%;
+    background-color: var(--cor-fundo);
+    border-radius: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    padding: 16px;
+}
+
+/* O número fica no eixo central do cartão, alinhado com o contador logo acima.
+   Antes o "R$" entrava na conta da centralização e empurrava o valor para a
+   direita, deixando os dois desencontrados. Tirando o cifrão do fluxo, quem é
+   centrado é o número — e o "R$" pende à esquerda dele. */
+.valor-com-cifrao {
+    position: relative;
+    display: inline-block;
+}
+
+.cifrao {
+    position: absolute;
+    right: 100%;
+    bottom: 0;
+    margin-right: 6px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #141A2E;
+    white-space: nowrap;
+}
+
+#valor-bilhetes {
+    font-size: 28px;
+    font-weight: 600;
+    color: #141A2E;
+}
+
+/* Nesta tela o rodapé é a própria ação. O botão morava dentro da área que rola,
+   então em tela baixa ele ficava atrás da barra de ajuda — a ação principal
+   escondida, e sem nada indicando que era preciso rolar. Preso aqui, ele está
+   sempre à vista; a Central de Ajuda continua a um toque, na tela anterior. */
+.rodape-acao {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 20px 16px;
+    background-color: var(--cor-fundo);
+    /* a linha sutil avisa que o conteúdo passa por baixo */
+    box-shadow: 0 -1px 0 rgba(20, 26, 46, 0.08);
+}
+
+#botao-comprar {
+    width: 100%;
+    background-color: var(--cor-header);
+    color: var(--cor-fonte);
+    border: none;
+    border-radius: 16px;
+    padding: 18px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+
+/* testado */
+
+/* Elementos que já eram clicáveis viraram <button> para funcionar no teclado.
+   O reset mantém a aparência que tinham como div/a/h2. */
+#voltar, #divvoltar {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-align: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid #ED1C24;
+    outline-offset: 2px;
+}
+
+/* Retorno da compra. Antes era um alert() do navegador: bloqueava a tela, saía
+   do visual do app e sumia sem deixar rastro para quem usa leitor de tela. */
+.aviso {
+    font-size: 15px;
+    text-align: center;
+}
+
+/* Sem reservar altura: a barra está ancorada embaixo, então a mensagem cresce
+   para cima e o botão não sai do lugar quando ela aparece. */
+.aviso:empty {
+    display: none;
+}
+
+.aviso.erro {
+    color: #B3151B;
+}
+
+.aviso.sucesso {
+    color: #16704A;
+}
+
+#botao-comprar:disabled,
+#quantidade-bilhetes-box button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* Método escolhido na tela anterior. Sem esta linha, Pix, cartão e boleto
+   levavam a uma tela idêntica e nada confirmava o que a pessoa selecionou. */
+.metodo-escolhido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    color: #4A5162;
+}
+
+.metodo-escolhido[hidden] {
+    display: none;
+}
+
+.metodo-escolhido strong {
+    color: #141A2E;
+    font-weight: 600;
+}
+
+.metodo-escolhido a {
+    color: var(--cor-header);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}

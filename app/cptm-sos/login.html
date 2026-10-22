@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Login</title>
+
+    <!-- Caminho relativo (funciona local e no GitHub Pages) -->
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/login.css" />
+  </head>
+
+  <body>
+    <div class="tela-auth">
+      <div class="azul"></div>
+
+      <div class="topo-marca">
+        <img id="logo" src="assets/imagem/logo.svg" alt="Logo CPTM" />
+        <h2 id="cptm">CPTM</h2>
+      </div>
+
+      <div class="conteudo-auth">
+        <h3 id="bvd">Seja Bem-vindo!</h3>
+
+        <form id="forme" novalidate>
+          <div class="input-group1">
+            <label class="sr-only" for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="Email" inputmode="email" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next" required />
+            <p class="erro-campo" id="erro-email" role="alert"></p>
+          </div>
+
+          <div class="input-group2">
+            <label class="sr-only" for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Senha" autocomplete="current-password" enterkeyhint="go" required />
+            <p class="erro-campo" id="erro-senha" role="alert"></p>
+            <button type="button" class="revelar-senha" aria-controls="senha" aria-pressed="false" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path class="olho-aberto" d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle class="olho-aberto" cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/>
+                <path class="olho-cortado" d="M4 4l16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <div>
+            <p class="erro-geral" role="alert"></p>
+            <button type="submit" id="botao">Entrar</button>
+            <button type="button" id="botao-demo" class="hidden">Entrar como demonstração</button>
+          </div>
+        </form>
+
+        <div class="cadastro-link">
+          <span id="a0">Não tem uma conta?</span>
+          <a id="a2" href="cadastro.html">Cadastre-se</a>
+        </div>
+
+        <div class="baixo">
+          <a id="a3" href="#">Termos de uso</a>
+          <h5>.</h5>
+          <a id="a4" href="#">Política de privacidade</a>
+          <h5>.</h5>
+          <a id="a1" href="#">Alguma dúvida?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Caminho relativo para o JS -->
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/formulario.js"></script>
+    <script src="assets/js/tela-login.js"></script>
+    <script src="assets/js/revelar-senha.js"></script>
+  </body>
+</html>
