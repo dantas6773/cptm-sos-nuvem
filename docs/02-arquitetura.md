@@ -206,7 +206,7 @@ Ele entraria na função `confirmar`, que passaria a gravar um item por confirma
 
 ## 5. Diagrama de arquitetura de ponta a ponta
 
-O diagrama está abaixo e no arquivo [`docs/diagrama.png`](diagrama.png). O código que o desenha, em Mermaid, está em [`docs/diagrama.md`](diagrama.md), com a explicação de como ler as setas.
+O diagrama foi feito no Lucidchart e está abaixo e no arquivo [`docs/diagrama.png`](diagrama.png). Ele foi gerado no próprio Lucidchart a partir do código Mermaid que está em [`docs/diagrama.md`](diagrama.md), com a explicação de como ler as setas: mudar o desenho é mudar o código e gerar de novo.
 
 ![Diagrama de arquitetura de ponta a ponta do CPTM SOS · Relatos por estação](diagrama.png)
 
@@ -394,6 +394,6 @@ Data: pendente
 
 Ajuste após a orientação da professora (15/10/2026): os requisitos não funcionais passaram de quatro para cinco, um para cada requisito funcional da Sprint 1. O anonimato no registro e nas fotos e o limite de uma confirmação a cada 10 minutos, que eram requisitos não funcionais, passaram a decisões da seção 9, e o pilar 1 passou a ter requisito (RNF-05). Versão do documento: 1.1.
 
-Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi conferido no LocalStack (seção 6.2); as razões dos requisitos não funcionais foram encurtadas para uma ou duas frases; e o recorte passou a deixar especificados e não implementados o RNF-04, o limite de 10 minutos e a conferência do EXIF na função (seção 8). Versão do documento: 1.2.
+Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi conferido no LocalStack (seção 6.2); as razões dos requisitos não funcionais foram encurtadas para uma ou duas frases; o recorte passou a deixar especificados e não implementados o RNF-04, o limite de 10 minutos e a conferência do EXIF na função (seção 8); e o diagrama passou a ser feito no Lucidchart (seção 5). Versão do documento: 1.2.
 
 Ajustes da revisão cruzada: pendente, registrados aqui depois do retorno da equipe revisora.
