@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --cor-texto: #FFFFFF;
+    --cor-botao: #ED1C24;
+    --cor-placeholder: #3F3F3F;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    background-color: #0B1020;
+}
+
+.tela-auth {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    background-image: url(../imagem/imagemtrem.jpeg);
+    background-size: cover;
+    background-position: center 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.azul {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 68%;
+    /* Menos opaco que o azul sólido anterior: no Figma a foto do trem continua
+       visível através do azul na parte de baixo. */
+    background: linear-gradient(to top,
+        rgba(27, 70, 128, 0.92) 35%,
+        rgba(27, 70, 128, 0.72) 65%,
+        transparent);
+    pointer-events: none;
+}
+
+.topo-marca {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: clamp(16px, 4vh, 28px) clamp(20px, 6vw, 32px) 0 clamp(20px, 6vw, 32px);
+}
+
+.topo-marca .logo {
+    width: 42px;
+    height: auto;
+}
+
+.topo-marca .cptm {
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--cor-texto);
+}
+
+.conteudo-auth {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    /* Sem esta margem o bloco encosta na borda inferior; no Figma ele termina
+       bem antes do fim da tela. */
+    margin-bottom: clamp(24px, 13vh, 130px);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: clamp(24px, 6vh, 40px) clamp(20px, 6vw, 32px) 0 clamp(20px, 6vw, 32px);
+}
+
+.apelido {
+    color: var(--cor-texto);
+    font-size: clamp(28px, 8vw, 38px);
+    /* O itálico pertence à marca ("CPTM", "CPTM Security"), não aos títulos de
+       conteúdo: no Figma este texto é reto e centralizado. */
+    font-weight: 300;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+input {
+    width: 100%;
+    height: 58px;
+    background-color: var(--cor-texto);
+    border: none;
+    border-radius: 15px;
+    padding: 0 20px;
+    font-size: 18px;
+    font-family: "Inter", sans-serif;
+}
+
+input::placeholder {
+    color: var(--cor-placeholder);
+    font-size: 18px;
+}
+
+#botao {
+    width: 100%;
+    /* mesmas medidas do botão das telas de login e cadastro */
+    height: 55px;
+    background-color: var(--cor-botao);
+    color: var(--cor-texto);
+    border: none;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+}
+
+/* testado */
+
+/* Rótulo lido por leitor de tela, invisível na tela. O placeholder some quando a
+   pessoa digita, então sozinho ele não cumpre o papel de rótulo. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ===== Retorno visual no preenchimento ===== */
+
+/* Sem estado de foco, quem usa teclado não enxerga onde está, e no toque não há
+   confirmação de qual campo está ativo. */
+input:focus {
+    outline: 3px solid #FFFFFF;
+    outline-offset: 2px;
+}
+
+/* Campo resolvido: confirmação discreta de que aquele dado já está válido. */
+input.valido {
+    box-shadow: inset 0 0 0 2px #1E9E57;
+}
+
+input.invalido {
+    box-shadow: inset 0 0 0 2px #E5484D;
+}
+
+.erro-campo,
+.erro-geral {
+    color: #FFD5D7;
+    font-size: 13px;
+    line-height: 1.3;
+    margin: 6px 4px 0 4px;
+}
+
+/* sem mensagem, o parágrafo não deve ocupar espaço nem empurrar o layout */
+.erro-campo:empty,
+.erro-geral:empty {
+    display: none;
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: progress;
+}

@@ -1,0 +1,505 @@
+/* ===========================
+   RESET BÁSICO E VARIÁVEIS
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-azul-principal: #1B4680;
+    --cor-branco-principal: #f4f4f4;
+    --cor-font-preto: #050505;
+    --sobreposicao-mapa: 96px;
+    --vermelho-cptm: #ED1C24;
+}
+
+html, body {
+    height: 100%;
+    background-color: #DADDE3;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--cor-font-preto);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.pagina {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--cor-branco-principal);
+    position: relative;
+}
+
+/* ===========================
+   MAPA (ÁREA PRINCIPAL)
+=========================== */
+/* Precisa de dois seletores para vencer `.pagina > main` de cabecalho.css, que
+   dá rolagem vertical aos miolos das telas — aqui isso atrapalharia o arrasto. */
+.pagina > .map-container {
+    width: 100%;
+    /* ocupa toda a altura que o cartão não usa */
+    flex: 1 1 auto;
+    min-height: 180px;
+    /* o mapa se move por transform; rolagem aqui competiria com o gesto */
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+
+    /* A borda de baixo cortava o mapa em seco, no meio de linhas e nomes de
+       estação. Aqui ele se dissolve no fundo da página nos últimos pixels, em vez
+       de terminar numa régua. É a mesma máscara que o carrossel de avisos da home
+       usa na borda direita. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 64px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 64px), transparent 100%);
+}
+
+.map-container:active {
+    cursor: grabbing;
+}
+
+.map {
+    width: 1313px;
+    height: 875px;
+    background-image: url('../imagem/mapa-rede-metro-cptm.svg');
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+}
+
+/* botão de expandir mapa */
+#expandir {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 100%;
+    background-color: var(--cor-azul-principal);
+    border: none;
+    cursor: pointer;
+}
+
+#expandir:active {
+    background-color: var(--vermelho-cptm);
+}
+
+/* Só o mapa cresce. Antes este bloco também tinha flex: 1, então os dois
+   dividiam a sobra e ficava um vão de 173px entre o cartão e a barra de baixo.
+   Aqui ele ocupa a altura do próprio conteúdo e encosta no rodapé; o que sobrar
+   fica com o mapa. Se o trajeto for longo, ele encolhe e rola por dentro, sem
+   espremer o mapa abaixo do mínimo. */
+.conteudo-mapa {
+    flex: 0 1 auto;
+    overflow-y: auto;
+    /* O cartão sobe por cima do mapa, que continua atrás dele e some no
+       esfumaçado. A margem negativa não move o cartão: ela devolve essa altura ao
+       mapa, que cresce o mesmo tanto para baixo. O valor leva a borda do mapa até
+       a base dos seletores de origem e destino. */
+    margin-top: calc(var(--sobreposicao-mapa) * -1);
+    position: relative;
+    z-index: 1;
+    /* O bloco cobre o mapa de ponta a ponta, e a área vazia dele engolia o toque:
+       dava para ver o mapa ao lado do cartão e não conseguir arrastá-lo. O bloco
+       deixa o toque passar; quem recebe são os filhos. */
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 18px;
+}
+
+/* ===========================
+   CARTÃO DE PESQUISA / ROTAS
+=========================== */
+.conteudo-mapa > * {
+    pointer-events: auto;
+}
+
+.container-pesquisa {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: var(--cor-azul-principal);
+    border-radius: 20px;
+    color: var(--cor-branco-principal);
+    text-align: center;
+}
+
+.dropdown-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 18px;
+    width: 100%;
+}
+
+.gerar-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-gerar {
+    width: 100%;
+    background: var(--cor-branco-principal);
+    color: var(--cor-azul-principal);
+    border: none;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-gerar:hover {
+    background-color: #e6ecf9;
+}
+
+.btn-gerar:active {
+    transform: translateY(1px);
+}
+
+.campo-estacao {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdown-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cor-branco-principal);
+}
+
+/* <select> nativo no lugar do menu feito à mão. No celular abre o seletor do
+   sistema, e teclado e leitor de tela funcionam sem código nosso. */
+.seletor-estacao {
+    width: 100%;
+    padding: 12px 34px 12px 14px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--cor-branco-principal);
+    color: var(--cor-azul-principal);
+    font-family: "Inter", sans-serif;
+    /* 16px evita o zoom automático do iOS ao focar */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    /* a seta é desenhada aqui: a nativa aparecia junto com um "▾" que estava
+       escrito no texto do botão, e aí eram duas */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B4680' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    text-overflow: ellipsis;
+}
+
+.seletor-estacao:focus-visible {
+    outline: 3px solid var(--cor-branco-principal);
+    outline-offset: 2px;
+}
+
+.btn-gerar:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+/* --- trajeto --- */
+
+.container-trajeto {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 20px;
+    background-color: var(--cor-azul-principal);
+    border-radius: 20px;
+    color: var(--cor-branco-principal);
+}
+
+.container-trajeto.hidden {
+    display: none;
+}
+
+.trajeto-pernas {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* A etiqueta ocupa a própria linha, mas com a largura do texto — em largura
+   total virava uma faixa, e não a pastilha do projeto visual. */
+.trajeto-perna {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: center;
+    gap: 6px 8px;
+    font-size: 15px;
+}
+
+.linha-chip {
+    grid-column: 1 / -1;
+    justify-self: start;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+.trajeto-seta {
+    opacity: 0.75;
+}
+
+.trajeto-paradas {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-left: auto;
+}
+
+.trajeto-resumo {
+    font-size: 15px;
+    font-weight: 600;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 12px;
+}
+
+/* O tempo é estimado por taxa fixa, não por tabela de horários. Dizer isso na
+   tela evita prometer precisão que os dados não têm. */
+.trajeto-nota {
+    font-size: 12px;
+    opacity: 0.75;
+    line-height: 1.4;
+}
+
+.aviso-trajeto {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.aviso-trajeto.erro {
+    background-color: #7A1015;
+}/* ===========================
+   CONTEÚDO DE TRAJETO / RESULTADO
+=========================== */
+.container-trajeto {
+    width: 100%;
+    background-color: var(--cor-azul-principal);
+    border-radius: 20px;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--cor-branco-principal);
+}.estacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}.seta {
+    font-size: 20px;
+    color: var(--cor-branco-principal);
+}/* ===========================
+   TEXTOS / TIPOGRAFIA GENÉRICA
+=========================== */
+h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--cor-branco-principal);
+}
+
+h4 {
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    color: var(--cor-branco-principal);
+    font-family: 'Inter', sans-serif;
+}
+
+h5 {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--cor-branco-principal);
+    font-family: 'Inter', sans-serif;
+}
+
+h6 {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--cor-branco-principal);
+    font-family: 'Inter', sans-serif;
+}
+
+p {
+    font-size: 22px;
+    font-family: 'Inter', sans-serif;
+    color: var(--cor-branco-principal);
+}/* ===========================
+   OVERLAY / MAPA EXPANDIDO
+=========================== */
+#overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(17,17,17,0.9);
+    padding: 20px;
+}
+
+.mapa-expandido {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background-color: var(--cor-azul-principal);
+    border-radius: 20px;
+    padding: 24px 16px;
+    color: var(--cor-branco-principal);
+    font-weight: 400;
+}
+
+.mapa-expandido img {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+#btn-voltar {
+    align-self: flex-start;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    background-color: transparent;
+    border: none;
+    color: var(--cor-branco-principal);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* ===========================
+   FOOTER FIXO
+=========================== */
+
+/* testado */
+
+/* O mapa trata o arrasto por conta própria; sem isto o navegador reivindica o
+   gesto horizontal e rola a página em vez de mover o mapa. */
+.map-container {
+    touch-action: none;
+}
+
+/* Com o trajeto na tela o mapa já está no mínimo, e a sobreposição deixa de
+   parecer intencional: vira o mapa espiando atrás de dois cartões empilhados.
+   Sem trajeto, o efeito volta. */
+/* Com trajeto na tela, o mapa sai de cena. O meio-termo — mapa encolhido
+   aparecendo atrás de dois cartões — ficava confuso: nem servia para se
+   localizar, nem deixava o resultado respirar. A tela passa a ter dois estados
+   claros, e o "Voltar ao mapa" faz o que diz. */
+.pagina.com-trajeto {
+    --sobreposicao-mapa: 0px;
+}
+
+.com-trajeto .map-container {
+    display: none;
+}
+
+.com-trajeto .conteudo-mapa {
+    flex: 1 1 auto;
+}
+
+/* Com trajeto, o bloco volta a receber o toque. O `pointer-events: none` existe
+   só para o mapa continuar arrastável na faixa que o bloco cobre — e sem
+   sobreposição não há faixa coberta. Mantê-lo aqui custaria caro: no WebKit um
+   container que rola e não recebe ponteiro simplesmente não rola, e o trajeto
+   ficava preso no que coubesse na tela. */
+.com-trajeto .conteudo-mapa {
+    pointer-events: auto;
+}
+
+/* Com trajeto, o cartão costuma passar da altura disponível e rola por dentro —
+   e era cortado em seco pela barra de baixo. Mesmo esfumaçado usado na base do
+   mapa e no carrossel da home, agora sinalizando que há mais para ver. */
+.com-trajeto .conteudo-mapa {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+}
+
+/* Caminho de volta ao mapa. Fica fora do cartão de trajeto e sobre o fundo da
+   página: dentro do cartão, azul sobre azul, ele se confundia com o conteúdo e
+   passava por mais uma etiqueta de linha. */
+.trajeto-voltar {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px 10px 14px;
+    border: 1px solid rgba(27, 70, 128, 0.25);
+    border-radius: 999px;
+    background-color: var(--cor-branco-principal);
+    color: var(--cor-azul-principal);
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.trajeto-voltar[hidden] {
+    display: none;
+}
+
+.trajeto-voltar:active {
+    background-color: #e6ecf9;
+}
+
+.trajeto-voltar:focus-visible {
+    outline: 3px solid var(--cor-azul-principal);
+    outline-offset: 2px;
+}
+
+/* A camada recebe o foco ao abrir, para que o teclado entre nela. Como não é um
+   controle, não desenha anel: quem precisa de indicação visível é o botão. */
+#overlay:focus {
+    outline: none;
+}
+
+#btn-voltar:focus-visible {
+    outline: 3px solid var(--cor-branco-principal);
+    outline-offset: 3px;
+    border-radius: 8px;
+}

@@ -1,0 +1,189 @@
+/* Regras que valem para todas as telas.
+   Carregado antes do CSS de cada tela, para que ela possa sobrescrever. */
+
+/* A Inter servida pelo próprio projeto, em um lugar só.
+   Antes cada tela resolvia isso por conta: sete carregavam do Google Fonts e
+   cinco não carregavam nada, apesar de todas declararem font-family "Inter" —
+   nessas o navegador caía na fonte do sistema. Pior: das sete, seis pediam a
+   versão variável e pagamento-pós pedia a estática de quatro pesos, que desenha
+   diferente. Dava três tipografias no mesmo app, e ir de pagamento para
+   pós-pagamento trocava o desenho dos números na cara de quem usa.
+
+   Servir localmente resolve mais do que a inconsistência: o resto do app já
+   funciona sem internet, e a tipografia era a única parte que dependia de um
+   servidor de fora. Num celular ligado só ao Wi-Fi da máquina, todas as telas
+   caíam no fallback. Também evita expor o IP de quem usa a um terceiro, o que
+   num app cujo tema é segurança seria contraditório.
+
+   Arquivo variável (100–900) em vez de um por peso: é um pedido só e cobre
+   todos os pesos que o projeto usa. Licença em assets/fontes/LICENSE-Inter.txt. */
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    /* mostra o texto na fonte de sistema enquanto a Inter carrega, em vez de
+       deixar a tela em branco */
+    font-display: swap;
+    src: url("../fontes/inter-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../fontes/inter-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+        U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Itálico de verdade. Quatro telas usam font-style: italic — entre elas a marca
+   "CPTM" da tela de login. Sem o arquivo próprio o navegador inclina a versão
+   reta por conta, e em tamanho grande a falsificação aparece. */
+@font-face {
+    font-family: "Inter";
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../fontes/inter-italico-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Inter";
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../fontes/inter-italico-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+        U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Sem isto o iOS deixa arrastar a página inteira mesmo quando não há conteúdo
+   sobrando — o efeito elástico dá a impressão de que a tela está solta. */
+html,
+body {
+    overscroll-behavior: none;
+}
+
+/* Com viewport-fit=cover a página passa a ocupar também a área da barra de status
+   e a do indicador de início. O fundo preenche a tela toda, em vez de deixar duas
+   faixas escuras. Em aparelho sem recorte, env() vale 0 e nada muda. */
+
+/* Os contêineres de altura total recebem o recuo das áreas seguras. Como o box-sizing
+   é border-box, o recuo entra dentro dos 100dvh: o fundo segue preenchendo a tela
+   inteira e só o conteúdo se afasta das bordas do aparelho. */
+.pagina,
+.tela-auth,
+#background-pré-denuncia {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Campos e botões não herdam a fonte da página: o padrão deles vem do sistema,
+   e é por isso que o "VER TRAJETO" do mapa saía em Arial enquanto todo o resto
+   estava em Inter. Cada folha vinha declarando a fonte um controle por vez, o
+   que só funciona enquanto ninguém esquece. */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* Alvo mínimo de toque (WCAG 2.2, critério 2.5.8): 24x24. Controles que são só
+   texto — "Voltar", "Faça login", os links do rodapé — ficavam com 15 a 20px de
+   altura, a altura da linha. Acertá-los com o dedo em movimento é sorte.
+
+   Sem tocar no `display`: a primeira tentativa usou inline-flex e desalinhou o
+   texto de todos os botões, porque em flex o text-align deixa de centralizar. Em
+   botão basta a altura mínima; em link, o recuo vertical aumenta a área de toque
+   sem empurrar o que está em volta, porque num elemento em linha ele não entra
+   no cálculo da altura da linha. */
+button {
+    min-height: 24px;
+}
+
+a[href] {
+    padding-block: 5px;
+}
+
+/* --- Comportamento de aplicativo, não de página web --- */
+
+/* Arrastar o dedo sobre um texto não o realça mais, e o toque longo não abre o
+   menu Copiar / Consultar / Compartilhar do iOS. São os dois gestos que
+   entregam na hora que aquilo é uma página aberta no navegador. */
+html {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+
+    /* O retângulo cinza que o sistema pisca sobre o que é clicável. Cada tela já
+       tem o seu próprio estado de toque; o realce do sistema só se soma a ele. */
+    -webkit-tap-highlight-color: transparent;
+
+    /* Toque duplo deixa de dar zoom. `manipulation` desliga só esse gesto: rolar
+       e a pinça continuam funcionando, e é de propósito — bloquear o zoom por
+       completo tiraria a única saída de quem precisa ampliar para enxergar, e
+       nenhuma página aqui declara maximum-scale por esse mesmo motivo. */
+    touch-action: manipulation;
+}
+
+/* Onde selecionar é a função do elemento. Sem esta exceção não dá para corrigir
+   o que se digitou num campo, e o número de protocolo da denúncia — que a
+   própria tela manda guardar — ficaria impossível de copiar. */
+input,
+textarea,
+[contenteditable],
+.protocolo {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+}
+
+/* O controle de arrastar do alarme trata o gesto por conta própria. Sem isto o
+   navegador ainda pode reivindicar o arrasto horizontal e roubá-lo no meio. */
+.slider-button {
+    touch-action: none;
+}
+
+/* --- Transição entre telas --- */
+
+/* Cada tela é um documento próprio, então trocar de tela descartava tudo e
+   remontava: o resultado é o flash branco a cada toque. Com a transição entre
+   documentos o navegador guarda o quadro anterior e faz a passagem, sem que o
+   app deixe de ser multipágina.
+
+   Não substitui uma aplicação de página única — o documento continua sendo
+   recarregado por baixo. Resolve o que se vê, que era a queixa. */
+@view-transition {
+    navigation: auto;
+}
+
+/* Cabeçalho e barra de seções são os mesmos de uma tela para a outra. Com nome
+   próprio, o navegador os trata como o mesmo elemento e os mantém parados
+   enquanto só o miolo troca — em vez de dissolver a tela inteira. */
+.header-todo {
+    view-transition-name: cabecalho;
+}
+
+.barra-navegacao {
+    view-transition-name: barra-secoes;
+}
+
+/* Quem pede menos movimento no sistema não recebe nenhum: a transição é conforto
+   visual, e para parte das pessoas é o contrário disso. */
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}

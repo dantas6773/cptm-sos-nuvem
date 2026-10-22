@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Formúlario de Denúncia</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/cabecalho.css">
+    <link rel="stylesheet" href="assets/css/ajuda.css">
+    <link rel="stylesheet" href="assets/css/fomularioDenuncia.css">
+</head>
+<body>
+  <div class="pagina">
+    <header>
+      <div class="header-todo">
+        <div class="logo">
+          <a href="home.html" class="logo-link" aria-label="Ir para a home"><img src="assets/imagem/logo.svg" alt="Logo"></a>
+          <h1 id="boas-vindas" aria-live="polite">Carregando...</h1>
+        </div>
+        <div class="barra" aria-hidden="true"></div>
+      </div>
+    </header>
+    <main>
+        <button type="button" id="voltar">
+            <img src="assets/imagem/setaVoltar.png" alt="voltar">
+            <h2>Voltar</h2>
+        </button>
+        <div id="conteudo-principal">
+            <div id="orientacao">
+                <img src="assets/imagem/escudoVermelho.png" alt="">
+                <h3>Selecione o que você<br>deseja denunciar:</h3>
+            </div>
+            <div id="pai-categorias">
+                <button type="button" class="categoria" data-categoria="assedio">
+                    <h4>Assédio/Violência</h4>
+                    <img src="assets/imagem/setaAvançar.png" alt="" class="seta">
+                </button>
+                <button type="button" class="categoria" data-categoria="roubo">
+                    <h4>Roubos/Furtos</h4>
+                    <img src="assets/imagem/setaAvançar.png" alt="" class="seta">
+                </button>
+                <button type="button" class="categoria" data-categoria="outros">
+                    <h4>Outras Ocorrências</h4>
+                    <img src="assets/imagem/setaAvançar.png" alt="" class="seta">
+                </button>
+            </div>
+
+            <form id="form-denuncia" class="hidden" novalidate>
+                <h4 id="categoria-escolhida"></h4>
+
+                <label for="descricao">O que aconteceu?</label>
+                <textarea id="descricao" name="descricao" rows="5"
+                    placeholder="Descreva o ocorrido com o máximo de detalhes que conseguir."
+                    maxlength="1000" required></textarea>
+                <small id="contador">0/1000</small>
+
+                <label for="local">Onde? (estação ou linha)</label>
+                <input type="text" id="local" name="local" placeholder="Ex.: Estação Luz, Linha 7-Rubi">
+
+                <label class="linha-checkbox" for="anonima">
+                    <input type="checkbox" id="anonima" name="anonima">
+                    <span>Enviar como anônima (não guardamos quem enviou)</span>
+                </label>
+
+                <p id="erro-denuncia" class="erro" role="alert"></p>
+
+                <div class="acoes">
+                    <button type="button" id="cancelar">Voltar</button>
+                    <button type="submit" id="enviar">Enviar denúncia</button>
+                </div>
+            </form>
+
+            <div id="confirmacao" class="hidden" role="status">
+                <h3>Denúncia registrada</h3>
+                <p>Guarde o número de protocolo para acompanhar a ocorrência:</p>
+                <p id="protocolo" class="protocolo"></p>
+                <button type="button" id="nova-denuncia">Fazer outra denúncia</button>
+            </div>
+        </div>
+    </main>
+    <footer class="rodape-simples">
+        <button type="button" id="Ajuda" class="link-ajuda">Central de Ajuda</button>
+    </footer>
+  </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/ajuda.js"></script>
+    <script src="assets/js/formularioDenuncia.js"></script>
+</body>
+</html>
+
+<!-- testado -->

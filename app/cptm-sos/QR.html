@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>QR Code</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/Qr.css">
+    <link rel="stylesheet" href="assets/css/confirmacao.css">
+</head>
+
+<body>
+
+  <div class="blur-background"></div>
+
+  <button id="btn-voltar">← Voltar</button>
+
+  <div class="card-qr">
+    <p class="saldo" aria-live="polite">Seu saldo: Carregando...</p>
+
+    <div class="moldura-qr">
+      <img id="qrfront" src="assets/imagem/qrcodehd_106111.png" alt="QR code do seu bilhete">
+    </div>
+
+    <p class="valor-passagem">
+      Um valor de <strong id="preco-passagem">R$ 5,20</strong> será descontado do seu saldo.
+    </p>
+  </div>
+
+  <p id="aviso-catraca" class="aviso" role="status"></p>
+
+  <button id="btn-catraca" type="button">Simular a catraca lendo o código</button>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/confirmacao.js"></script>
+  <script src="assets/js/QR.js"></script>
+</body>
+
+</html>
+
+<!-- testado -->

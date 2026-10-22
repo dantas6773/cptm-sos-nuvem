@@ -1,0 +1,64 @@
+/* Caixa de confirmação, compartilhada por quem precisa fechar um fluxo: a compra
+   de bilhetes e a passagem na catraca. Nasceu só na home; quando a segunda tela
+   pediu a mesma coisa, virou peça própria em vez de cópia — foi assim que os
+   cabeçalhos do app divergiram antes.
+
+   A composição é a do protótipo: o aviso num cartão e a ação num botão do lado
+   de fora, a mesma divisão da tela do QR. */
+
+.dialogo-confirmacao {
+    /* O reset `* { margin: 0 }` das folhas por tela vence o `margin: auto` que o
+       navegador aplica ao <dialog>, e sem isto a caixa nasce colada no canto
+       superior esquerdo em vez de centrada. */
+    margin: auto;
+    width: min(88vw, 330px);
+    max-width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    overflow: visible;
+}
+
+.dialogo-confirmacao::backdrop {
+    background-color: rgba(11, 15, 28, 0.6);
+}
+
+.confirmacao-cartao {
+    background-color: var(--cor-header, #1B4680);
+    color: var(--cor-fonte, #FFFFFF);
+    border-radius: 24px;
+    padding: 34px 26px;
+    text-align: center;
+    /* Separa a caixa do que está atrás. Sem isto, na tela do QR — que já é azul
+       sobre fundo escuro — a borda do cartão some contra o cartão de baixo. */
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.confirmacao-cartao h2 {
+    font-family: "Inter", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.confirmacao-detalhe {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+}
+
+.confirmacao-botao {
+    width: 100%;
+    margin-top: 16px;
+    background-color: var(--cor-header, #1B4680);
+    color: var(--cor-fonte, #FFFFFF);
+    border: none;
+    border-radius: 20px;
+    padding: 16px 24px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}

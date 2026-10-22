@@ -1,0 +1,47 @@
+{
+  "name": "projeto-cptm-paraiso-feudal",
+  "version": "1.0.0",
+  "description": "App da CPTM com botão de emergência. Integrantes: Benjamin, João Pedro, Paulo, Thales, Thomas e Waldir.",
+  "main": "assets/src/server.ts",
+  "scripts": {
+    "dev": "tsx watch assets/src/server.ts",
+    "start": "tsx assets/src/server.ts",
+    "test": "NODE_ENV=test JWT_SECRET=segredo-de-teste-para-suite-automatizada tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dantas6773/cptm-sos.git"
+  },
+  "keywords": [],
+  "author": "Grupo Paraíso Feudal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dantas6773/cptm-sos/issues"
+  },
+  "homepage": "https://cptm-sos.onrender.com",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20.14.12",
+    "axe-core": "^4.13.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.6.2",
+    "jsonwebtoken": "^9.0.2",
+    "tsx": "^4.16.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

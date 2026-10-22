@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Seu App</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/cabecalho.css">
+    <link rel="stylesheet" href="assets/css/confirmacao.css">
+    <link rel="stylesheet" href="assets/css/navegacao.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+</head>
+
+<body>
+  <div class="pagina">
+    <header>
+      <div class="header-todo">
+        <div class="logo">
+          <img src="assets/imagem/logo.svg" alt="Logo">
+          <h1 id="boas-vindas" aria-live="polite">Carregando...</h1>
+        </div>
+        <div class="barra" aria-hidden="true"></div>
+
+      </div>
+    </header>
+
+    <div class="conteudo">
+      <div class="cartao-saldo">
+        <div class="saldo">
+          <h3>Seu saldo</h3>
+          <div class="saldo-valor-linha">
+            <h5 id="valor-saldo">Carregando...</h5>
+            <button type="button" id="olho" aria-pressed="false" aria-label="Ocultar saldo">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/>
+                <path class="olho-corte" d="M4 4l16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="recarga"><span>Recarga</span></div>
+        </div>
+
+        <div class="qrcode" id="botao-qrcode">
+          <img src="assets/imagem/qrcode.png" alt="qrcode">
+          <span>Usar QR Code</span>
+        </div>
+      </div>
+
+      <div class="secao-mapa">
+        <h2>Mapa das estações:</h2>
+        <div class="mapa">
+          <form action="">
+            <input class="input-busca" aria-label="Buscar destino" type="text" placeholder="Para onde?">
+          </form>
+          <div class="endereco">
+            <svg class="icone-local" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <circle cx="12" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <p>Rua Sugestão, 1234 - Lourdes</p>
+          </div>
+          <div class="azul"></div>
+        </div>
+      </div>
+
+      <div class="secao-avisos">
+        <h2 id="avisos">Avisos:</h2>
+        <div class="avisos-lista" tabindex="0" role="group" aria-label="Avisos, role para o lado para ver mais">
+          <div class="aviso-card">
+            <svg class="aviso-icone aviso-icone-navy" width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3 4 6v6c0 5 3.4 8.5 8 9.5 4.6-1 8-4.5 8-9.5V6l-8-3Z" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 12l1.8 1.8L15 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h4>Novo sistema de segurança</h4>
+            <p>Botão de emergência agora envia sua localização em tempo real</p>
+          </div>
+          <div class="aviso-card">
+            <svg class="aviso-icone aviso-icone-navy" width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 13h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 13v7a2 2 0 1 1-4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 3v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <h4>Leve guarda-chuva hoje</h4>
+            <p>Previsão de chuva forte no período da tarde</p>
+          </div>
+          <div class="aviso-card">
+            <svg class="aviso-icone aviso-icone-atencao" width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 4 21 20H3L12 4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="0.9" fill="currentColor"/></svg>
+            <h4>Linha Rubi com operação parcial</h4>
+            <p>Intervalos maiores entre Osasco e Barra Funda</p>
+          </div>
+          <div class="aviso-card">
+            <svg class="aviso-icone aviso-icone-navy" width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h4>Horário estendido aos sábados</h4>
+            <p>Trens circulando até 1h da madrugada</p>
+          </div>
+        </div>
+        <div class="avisos-indicadores" role="tablist" aria-label="Navegar entre os avisos"></div>
+      </div>
+    </div>
+
+<nav class="barra-navegacao" aria-label="Seções do app"></nav>
+
+
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/confirmacao.js"></script>
+  <script src="assets/js/navegacao.js"></script>
+  <script src="assets/js/tela-home.js"></script>
+</body>
+
+</html>
+
+<!-- testado -->

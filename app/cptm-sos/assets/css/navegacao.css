@@ -1,0 +1,81 @@
+/* Barra de seções. Antes existia duas vezes, com marcações e medidas diferentes
+   em home.css e mapa.css. */
+
+.barra-navegacao {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    background-color: var(--cor-header, #1B4680);
+    color: var(--cor-fonte, #FFFFFF);
+    min-height: var(--altura-barra, 80px);
+    padding: clamp(8px, 1.4vh, 14px) 8px;
+    z-index: 100;
+}
+
+.item-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    /* O item que não é o da tela atual fica apagado: é o contraste entre os dois
+       que diz onde a pessoa está. */
+    color: rgba(255, 255, 255, 0.62);
+    border-radius: 12px;
+    min-width: 0;
+}
+
+.item-nav svg {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.item-nav span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.item-nav[aria-current="page"] {
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.item-nav[aria-disabled="true"] {
+    /* Continua legível (4,5:1) mesmo estando indisponível: o WCAG dispensa
+       contraste em controle inativo, mas um rótulo ilegível não ajuda ninguém.
+       O que diz que está fora é a ausência de foco e de cursor, não o apagado. */
+    color: rgba(255, 255, 255, 0.6);
+    cursor: default;
+}
+
+.item-nav:focus-visible {
+    outline: 3px solid #FFFFFF;
+    outline-offset: -2px;
+}
+
+@media (max-width: 359px) {
+    .barra-navegacao {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .item-nav {
+        font-size: 11px;
+        gap: 2px;
+    }
+
+    .item-nav svg {
+        width: 23px;
+        height: 23px;
+    }
+}

@@ -1,0 +1,279 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --vermelho-cptm: #ED1C24;
+    --azul-principal: #1B4680;
+    --branco-sujo: #f4f4f4;
+    --preto-font: #050505;
+}
+
+html, body {
+    height: 100%;
+    background-color: #DADDE3;
+}
+
+.pagina {
+    /* a casca (altura, coluna, largura máxima) vem de cabecalho.css */
+    background-color: var(--branco-sujo);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px 24px;
+}
+
+#voltar {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    cursor: pointer;
+}
+
+#voltar img {
+    width: 16px;
+    height: 16px;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--preto-font);
+}
+
+#conteudo-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+#orientacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+#orientacao img {
+    width: 48px;
+    height: 48px;
+}
+
+h3 {
+    font-family: "Inter", sans-serif;
+    color: var(--preto-font);
+    text-align: center;
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 400;
+}
+
+#pai-categorias {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+.categoria {
+    width: 100%;
+    padding: 18px 24px;
+    background-color: var(--azul-principal);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    cursor: pointer;
+    /* viraram <button> para serem alcançáveis por teclado: reset do estilo nativo */
+    border: none;
+    font: inherit;
+    text-align: left;
+}
+
+.categoria:focus-visible,
+#form-denuncia button:focus-visible,
+#confirmacao button:focus-visible {
+    outline: 3px solid var(--vermelho-cptm);
+    outline-offset: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#form-denuncia {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* o h4 global é branco (usado dentro dos cards azuis); aqui o fundo é claro */
+#categoria-escolhida {
+    color: var(--azul-principal);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+#form-denuncia label {
+    font-size: 15px;
+    color: var(--preto-font);
+    margin-top: 8px;
+}
+
+#form-denuncia textarea,
+#form-denuncia input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #9AA3B0;
+    border-radius: 12px;
+    /* 16px evita o zoom automático do iOS ao focar */
+    font-size: 16px;
+    background-color: #FFFFFF;
+    resize: vertical;
+}
+
+#form-denuncia textarea:focus,
+#form-denuncia input[type="text"]:focus {
+    outline: 2px solid var(--azul-principal);
+    border-color: var(--azul-principal);
+}
+
+#contador {
+    align-self: flex-end;
+    font-size: 12px;
+    color: #5A6472;
+}
+
+.linha-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.linha-checkbox input {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.erro {
+    color: #B3151B;
+    font-size: 14px;
+    min-height: 1.2em;
+}
+
+.acoes {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.acoes button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#cancelar {
+    background-color: #C9CFD8;
+    color: var(--preto-font);
+}
+
+#enviar {
+    background-color: var(--vermelho-cptm);
+    color: var(--branco-sujo);
+}
+
+#enviar:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+#confirmacao {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+
+#confirmacao h3 {
+    color: var(--azul-principal);
+    font-size: 22px;
+}
+
+.protocolo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--azul-principal);
+    background-color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 12px;
+}
+
+#nova-denuncia {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 14px;
+    background-color: var(--azul-principal);
+    color: var(--branco-sujo);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.seta {
+    width: 16px;
+    height: 16px;
+}
+
+h4 {
+    font-family: "Inter", sans-serif;
+    font-size: clamp(17px, 4.5vw, 22px);
+    color: var(--branco-sujo);
+    font-weight: 400;
+    pointer-events: none;
+}
+
+
+.categoria:active {
+    background-color: var(--vermelho-cptm);
+}
+
+/* testado */
+
+/* Elementos que já eram clicáveis viraram <button> para funcionar no teclado.
+   O reset mantém a aparência que tinham como div/a/h2. */
+#voltar, #divvoltar {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-align: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid #ED1C24;
+    outline-offset: 2px;
+}

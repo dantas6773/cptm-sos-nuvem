@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mapa</title>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/cabecalho.css" />
+  <link rel="stylesheet" href="assets/css/navegacao.css" />
+  <link rel="stylesheet" href="assets/css/mapa.css" />
+
+  <!-- Fonte Inter -->
+  <!-- Ícones material -->
+</head>
+
+<body>
+  <div class="pagina">
+    <header>
+      <div class="header-todo">
+        <div class="logo">
+          <a href="home.html" class="logo-link" aria-label="Ir para a home"><img src="assets/imagem/logo.svg" alt="Logo"></a>
+          <h1 id="boas-vindas" aria-live="polite">Carregando...</h1>
+        </div>
+        <div class="barra" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <!-- área principal do mapa interativo -->
+    <main class="map-container">
+      <div class="map"></div>
+
+      <!-- botão de expandir mapa -->
+      <button id="expandir" aria-label="Expandir mapa">
+        <img src="assets/imagem/expandir.png" alt="Expandir" />
+      </button>
+    </main>
+
+    <div class="conteudo-mapa">
+      <!-- bloco de busca / seleção de rota -->
+      <section class="container-pesquisa">
+        <div class="dropdown-row">
+          <div class="campo-estacao">
+            <label class="dropdown-label" for="origem">ORIGEM</label>
+            <select id="origem" class="seletor-estacao">
+              <option value="">Selecionar</option>
+            </select>
+          </div>
+
+          <div class="campo-estacao">
+            <label class="dropdown-label" for="destino">DESTINO</label>
+            <select id="destino" class="seletor-estacao">
+              <option value="">Selecionar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="gerar-wrapper">
+          <button id="gerar-mapa-btn" class="btn-gerar" type="button" disabled>VER TRAJETO</button>
+        </div>
+      </section>
+
+      <!-- desfaz a busca e devolve o mapa; fora do cartão de trajeto, para não
+           se confundir com o conteúdo dele -->
+      <button type="button" class="trajeto-voltar" hidden>
+        <span aria-hidden="true">&#8592;</span> Voltar ao mapa
+      </button>
+
+      <!-- container onde você vai injetar as infos de trajeto -->
+      <section
+        class="container-trajeto hidden"
+        id="trajeto-info"
+        aria-live="polite"
+      ></section>
+    </div>
+
+    <!-- rodapé fixo -->
+    <nav class="barra-navegacao" aria-label="Seções do app"></nav>
+
+    <!-- overlay com o mapa expandido -->
+    <div id="overlay" class="hidden" role="dialog" aria-modal="true" aria-label="Mapa das estações" tabindex="-1">
+      <button id="btn-voltar" class="btn-voltar-overlay">
+        <img src="assets/imagem/seta-voltar-mapa.png" alt="Voltar" />
+        <p>Voltar</p>
+      </button>
+
+      <div class="mapa-expandido">
+        <h6>Mapa das Estações</h6>
+        <img
+          src="assets/imagem/mapa-rede-metro-cptm.svg"
+          alt="Mapa das Estações"
+          id="mapa"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- JS principal -->
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/navegacao.js"></script>
+  <script src="assets/js/mapa.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --cor-header: #1B4680;
+    --cor-fonte: #FFFFFF;
+    --cor-botao-recarga: #ED1C24;
+    --cor-fundo: #F5F4F1;
+}
+
+html, body {
+    height: 100%;
+    background-color: #DADDE3;
+}
+
+.pagina {
+    /* a casca (altura, coluna, largura máxima) vem de cabecalho.css */
+    background-color: var(--cor-fundo);
+}
+
+.conteudo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 22px 20px;
+}
+
+#divvoltar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#seta {
+    width: 20px;
+    height: 20px;
+}
+
+#voltar {
+    text-decoration: none;
+    color: #141A2E;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#bttsaldo {
+    border-radius: 20px;
+    background-color: var(--cor-header);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+}
+
+/* Os ícones eram PNGs de ~40px exibidos a 32px: num celular 3x faltava mais da
+   metade dos pixels e eles saíam borrados. Além disso vinham coloridos (Pix
+   verde, cartão amarelo) sobre o card azul, enquanto o ícone da carteira ao lado
+   era traço branco — duas linguagens de ícone na mesma tela. Em SVG herdam a cor
+   do texto e ficam nítidos em qualquer densidade. */
+.imagess {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--cor-fonte);
+}
+
+.saldo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#seusaldo {
+    color: var(--cor-fonte);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#dinheiro {
+    color: var(--cor-fonte);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#pagaments {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#pagaments h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #141A2E;
+    margin-bottom: 4px;
+}
+
+.mets {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    background-color: var(--cor-header);
+    padding: 18px 20px;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.fontmets {
+    color: var(--cor-fonte);
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.setapagamentos {
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    flex-shrink: 0;
+    color: var(--cor-fonte);
+}
+
+
+/* testado */
+
+/* Elementos que já eram clicáveis viraram <button> para funcionar no teclado.
+   O reset mantém a aparência que tinham como div/a/h2. */
+#voltar, #divvoltar {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-align: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid #ED1C24;
+    outline-offset: 2px;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Denúncia</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/denuncia.css">
+</head>
+<body>
+  <div class="pagina">
+    <header>
+        <div id="barrasEsquerda">
+            <div id="barra1"></div>
+            <div id="barra2"></div>
+            <div id="barra3"></div>
+            <div id="barra4"></div>
+        </div>
+        <div id="nomeLogo">
+            <img src="assets/imagem/logoCPTMdenuncia.png" alt="logo" id="logo">
+            <h1>CPTM</h1>
+            <h2>Security</h2>
+        </div>
+        <div id="barrasDireita">
+            <div id="barra5"></div>
+            <div id="barra6"></div>
+            <div id="barra7"></div>
+            <div id="barra8"></div>
+        </div>
+    </header>
+    <main>
+        <!-- VÍDEO DA CÂMERA -->
+        <video id="camera-video" autoplay playsinline></video>
+
+        <!-- REC por cima do vídeo -->
+        <div id="rec">
+            <div class="recDot"></div>
+            <h3>REC</h3>
+        </div>
+    </main>
+    <footer>
+        <div id="botoes">
+            <div id="sirene">
+                <img src="assets/imagem/sirene.png" alt="sirene" id="icone-sirene">
+                <h4 id="texto-sirene">Sirene</h4>
+            </div>
+            <div id="meEncontre">
+                <img src="assets/imagem/escudo.png" alt="escudo" id="escudo">
+                <h4 id="texto-meEncontre">Me encontre</h4>
+            </div>
+            <a href="tel:190" id="ligar190">
+                <img src="assets/imagem/telefone.png" alt="telefone">
+                <h4>Ligar 190</h4>
+            </a>
+        </div>
+        <!-- Retorno do alarme. Substitui os alert() do sistema: no celular eles
+             mostram o endereço do servidor no topo e travam a tela inteira —
+             inclusive o "Ligar 190" — justamente numa emergência. -->
+        <p id="aviso-alarme" class="aviso-alarme" role="status" aria-live="assertive"></p>
+
+        <div class="slider-container" id="slider">
+            <div class="slider-text">Arraste para desativar o alarme</div>
+            <div class="slider-button" id="slider-button" role="button" tabindex="0" aria-label="Deslize ou pressione Enter para desativar o alarme"><img src="assets/imagem/cadeado.png" alt="" id="cadeado"></div>
+        </div>
+        <div id="cpf-container" class="hidden">
+            <button type="button" id="voltar"><img src="assets/imagem/setaVoltarBranca.png" alt=""> Voltar</button>
+            <p>Digite o seu CPF para desativar o alarme:</p>
+            <div id="cpf-input-container">
+                <label class="sr-only" for="cpf-input">Digite o seu CPF para desativar o alarme</label>
+                <input type="text" id="cpf-input" placeholder="Digite o seu CPF" inputmode="numeric" autocomplete="off" enterkeyhint="done" maxlength="14">
+                <button id="cpf-button">
+                    <img src="assets/imagem/setaCircular.png" alt="Confirmar">
+                </button>
+            </div>
+        </div>
+    </footer>
+  </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/formulario.js"></script>
+    <script src="assets/js/denuncia.js"></script>
+</body>
+</html>
+
+<!-- testado -->
