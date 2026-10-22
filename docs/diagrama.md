@@ -1,8 +1,10 @@
 # Diagrama de arquitetura — CPTM SOS · Relatos por estação
 
-Entregável da Sprint 2, seção 5. A imagem do diagrama está em
-[`diagrama.png`](diagrama.png). Abaixo, o código em Mermaid que a desenha, e que o
-GitHub também desenha ao abrir este arquivo.
+Entregável da Sprint 2, seção 5. O diagrama foi feito no Lucidchart, no
+documento "CPTM SOS - Arquitetura (Sprint 2)", e a imagem exportada de lá está em
+[`diagrama.png`](diagrama.png). Ele foi gerado pelo recurso "Diagrama em código"
+do Lucidchart, a partir do código Mermaid abaixo, que o GitHub também desenha ao
+abrir este arquivo. Para mudar o desenho, mude o código e gere de novo no Lucidchart.
 
 ```mermaid
 %%{init: {"theme": "default"}}%%
