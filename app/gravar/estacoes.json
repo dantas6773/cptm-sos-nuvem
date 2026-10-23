@@ -1,0 +1,695 @@
+{
+  "observacao": "Lista provisória: estações das linhas 7 a 13, a partir da lista do CPTM SOS. Os códigos são do projeto, não das operadoras. Conferir com a relação oficial (docs/02-arquitetura.md, seção 8).",
+  "estacoes": [
+    {
+      "codigo": "BUE",
+      "nome": "2 Bueno",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "AEG",
+      "nome": "Aeroporto-Guarulhos",
+      "linhas": [
+        13
+      ]
+    },
+    {
+      "codigo": "AMB",
+      "nome": "Ambuíta",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "AGN",
+      "nome": "Antônio Gianetti Neto",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "ANJ",
+      "nome": "Antônio João",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "ARC",
+      "nome": "Aracaré",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "ATD",
+      "nome": "Autódromo",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "AGB",
+      "nome": "Água Branca",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "BAF",
+      "nome": "Baltazar Fidélis",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "BRR",
+      "nome": "Barueri",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "BRN",
+      "nome": "Berrini",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "BTJ",
+      "nome": "Botujuru",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "BRC",
+      "nome": "Braz Cubas",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "BRS",
+      "nome": "Brás",
+      "linhas": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "codigo": "CRS",
+      "nome": "Caieiras",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "CAV",
+      "nome": "Calmon Viana",
+      "linhas": [
+        11,
+        12
+      ]
+    },
+    {
+      "codigo": "CLP",
+      "nome": "Campo Limpo Paulista",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "CPV",
+      "nome": "Capuava",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "CRP",
+      "nome": "Carapicuíba",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "CEA",
+      "nome": "Ceasa",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "CIJ",
+      "nome": "Cidade Jardim",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "CIU",
+      "nome": "Cidade Universitária",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "COS",
+      "nome": "Comandante Sampaio",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "COE",
+      "nome": "Comendador Ermelino",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "COI",
+      "nome": "Corinthians-Itaquera",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "DOB",
+      "nome": "Dom Bosco",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "DOM",
+      "nome": "Domingos de Moraes",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "ENC",
+      "nome": "Engenheiro Cardoso",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "ENG",
+      "nome": "Engenheiro Goulart",
+      "linhas": [
+        12,
+        13
+      ]
+    },
+    {
+      "codigo": "EMF",
+      "nome": "Engenheiro Manoel Feio",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "EST",
+      "nome": "Estudantes",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "FEV",
+      "nome": "Ferraz de Vasconcelos",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "FRM",
+      "nome": "Francisco Morato",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "FRR",
+      "nome": "Franco da Rocha",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "GMC",
+      "nome": "General Miguel Costa",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "GRJ",
+      "nome": "Grajaú",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "GAJ",
+      "nome": "Granja Julieta",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "GNS",
+      "nome": "Guaianases",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "GPT",
+      "nome": "Guapituba",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "GUC",
+      "nome": "Guarulhos-Cecap",
+      "linhas": [
+        13
+      ]
+    },
+    {
+      "codigo": "HER",
+      "nome": "Hebraica-Rebouças",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "IML",
+      "nome": "Imperatriz Leopoldina",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "IPR",
+      "nome": "Ipiranga",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "ITP",
+      "nome": "Itaim Paulista",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "ITV",
+      "nome": "Itapevi",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "ITQ",
+      "nome": "Itaquaquecetuba",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "JND",
+      "nome": "Jandira",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "JRG",
+      "nome": "Jaraguá",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "JAB",
+      "nome": "Jardim Belval",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "JHV",
+      "nome": "Jardim Helena-Vila Mara",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "JAR",
+      "nome": "Jardim Romano",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "JAS",
+      "nome": "Jardim Silveira",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "JOD",
+      "nome": "João Dias",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "JOB",
+      "nome": "José Bonifácio",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "JUN",
+      "nome": "Jundiaí",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "JNP",
+      "nome": "Jundiapeba",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "JRB",
+      "nome": "Jurubatuba",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "JUM",
+      "nome": "Juventus-Mooca",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "JUP",
+      "nome": "Júlio Prestes",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "LAP",
+      "nome": "Lapa",
+      "linhas": [
+        7,
+        8
+      ]
+    },
+    {
+      "codigo": "LUZ",
+      "nome": "Luz",
+      "linhas": [
+        7,
+        10,
+        11
+      ]
+    },
+    {
+      "codigo": "MAU",
+      "nome": "Mauá",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "MVN",
+      "nome": "Mendes-Vila Natal",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "MOC",
+      "nome": "Mogi das Cruzes",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "MRM",
+      "nome": "Morumbi",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "OSS",
+      "nome": "Osasco",
+      "linhas": [
+        8,
+        9
+      ]
+    },
+    {
+      "codigo": "PBF",
+      "nome": "Palmeiras-Barra Funda",
+      "linhas": [
+        7,
+        8
+      ]
+    },
+    {
+      "codigo": "PRS",
+      "nome": "Perus",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "PNH",
+      "nome": "Pinheiros",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "PQR",
+      "nome": "Piqueri",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "PRT",
+      "nome": "Pirituba",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "POA",
+      "nome": "Poá",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "PES",
+      "nome": "Prefeito Saladino",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "PRA",
+      "nome": "Presidente Altino",
+      "linhas": [
+        8,
+        9
+      ]
+    },
+    {
+      "codigo": "PRI",
+      "nome": "Primavera-Interlagos",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "QTN",
+      "nome": "Quitaúna",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "RIP",
+      "nome": "Ribeirão Pires",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "RGS",
+      "nome": "Rio Grande da Serra",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "SAC",
+      "nome": "Sagrado Coração",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "SAR",
+      "nome": "Santa Rita",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "SAT",
+      "nome": "Santa Terezinha",
+      "linhas": [
+        8
+      ]
+    },
+    {
+      "codigo": "SAA",
+      "nome": "Santo Amaro",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "SNA",
+      "nome": "Santo André",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "SCS",
+      "nome": "São Caetano do Sul",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "SMP",
+      "nome": "São Miguel Paulista",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "SCR",
+      "nome": "Socorro",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "SZN",
+      "nome": "Suzano",
+      "linhas": [
+        11
+      ]
+    },
+    {
+      "codigo": "TMN",
+      "nome": "Tamanduateí",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "TTP",
+      "nome": "Tatuapé",
+      "linhas": [
+        11,
+        12
+      ]
+    },
+    {
+      "codigo": "USL",
+      "nome": "USP Leste",
+      "linhas": [
+        12
+      ]
+    },
+    {
+      "codigo": "UTN",
+      "nome": "Utinga",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "VRG",
+      "nome": "Varginha",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "VAP",
+      "nome": "Várzea Paulista",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "VIA",
+      "nome": "Vila Aurora",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "VIC",
+      "nome": "Vila Clarice",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "VIO",
+      "nome": "Vila Olímpia",
+      "linhas": [
+        9
+      ]
+    },
+    {
+      "codigo": "VLJ",
+      "nome": "Villa Lobos-Jaguaré",
+      "linhas": [
+        9
+      ]
+    }
+  ]
+}

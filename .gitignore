@@ -4,10 +4,15 @@
 *.pem
 *.key
 credentials
+credentials.*
+*credenciais*
+*.p12
+*.pfx
 .aws/
 
-# artefatos de empacotamento
+# artefatos de empacotamento e saídas de teste
 *.zip
+saida*.json
 volume/
 
 # ambiente
