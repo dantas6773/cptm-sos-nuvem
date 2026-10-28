@@ -22,8 +22,8 @@ testes/   testes de aceite (Sprint 5)
 
 | Sprint | Entrega | Situação |
 |---|---|---|
-| 1 | [Documento de requisitos](docs/01-requisitos.md) · [versão Word](docs/01-requisitos.docx) | entregue · revisão cruzada em 08/10 |
-| 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) | entregue · ajustes da devolutiva de 22/10 feitos · revisão cruzada pendente |
+| 1 | [Documento de requisitos](docs/01-requisitos.md) · [versão Word](docs/01-requisitos.docx) | entregue · revisado pela professora |
+| 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) | entregue · revisado pela professora · ajustes feitos |
 | 3 | Armazenamento e função de gravação | — |
 | 4 | API e página publicada | — |
 | 5 | Validação e homologação | — |

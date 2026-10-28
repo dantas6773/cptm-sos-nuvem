@@ -4,8 +4,8 @@ Entregável da Sprint 1, no formato do Template 1.
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 08/10/2026\
-Versão: 1.1
+Data: 27/10/2026\
+Versão: 1.2
 
 ## 1. O cenário
 
@@ -184,18 +184,18 @@ Estas cinco linhas viram os requisitos não funcionais da Sprint 2.
 
 ## 9. Revisão cruzada recebida
 
-Revisado por: pendente, a revisão acontece na aula de 08/10/2026\
+Revisado por: Profa. Angélica Guimarães. A revisão foi feita com a professora, e não por outra equipe.\
 Data: 08/10/2026
 
 | Pergunta | Resposta da equipe revisora |
 |---|---|
-| Algum requisito está escrito como decisão de arquitetura? | pendente — preenchido com a resposta da equipe revisora em 08/10/2026 |
-| Algum "para que" é circular? | pendente — preenchido com a resposta da equipe revisora em 08/10/2026 |
-| Algum cenário BDD cobre só o caminho feliz? | pendente — preenchido com a resposta da equipe revisora em 08/10/2026 |
-| Alguma história falha no S do INVEST? | pendente — preenchido com a resposta da equipe revisora em 08/10/2026 |
+| Algum requisito está escrito como decisão de arquitetura? | Sem apontamento nesse sentido. A professora pediu que cada requisito citasse o serviço da AWS onde acontece, e isso foi feito sem trocar o verbo do requisito por "usar" (seção 8). |
+| Algum "para que" é circular? | Sem apontamento registrado. |
+| Algum cenário BDD cobre só o caminho feliz? | Sem apontamento registrado. |
+| Alguma história falha no S do INVEST? | Sem apontamento registrado. |
 
 ### 9.1 O que foi ajustado depois da revisão
 
 Ajuste após a devolutiva da professora (08/10/2026): os requisitos funcionais passaram a citar os seis serviços do percurso — API Gateway e DynamoDB no RF-01, S3 no RF-02, Lambda, IAM e DynamoDB no RF-03, DynamoDB no RF-04, Lambda e CloudWatch Logs no RF-05 — todo requisito cita ao menos um serviço. O critério US-01, cenário 2, passou a conferir o registro da recusa no CloudWatch Logs. Versão do documento: 1.1.
 
-Ajustes da revisão cruzada: pendente, registrados aqui depois do retorno da equipe revisora.
+A revisão foi feita com a professora, que olhou as duas primeiras sprints. O ajuste que ela pediu para a Sprint 1 é o registrado acima. Versão do documento: 1.2.

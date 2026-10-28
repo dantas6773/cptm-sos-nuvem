@@ -4,8 +4,8 @@ Entregável da Sprint 2, no formato do Template 2. As seções têm os mesmos n�
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 22/10/2026\
-Versão: 1.2
+Data: 27/10/2026\
+Versão: 1.3
 
 ## 1. Requisitos não funcionais
 
@@ -380,15 +380,15 @@ Antes de a função `registrar` ser escrita, na Sprint 3, a lista de estações 
 
 ## 10. Revisão cruzada recebida
 
-Revisado por: pendente, a revisão acontece na aula\
-Data: pendente
+Revisado por: Profa. Angélica Guimarães. A revisão foi feita com a professora, e não por outra equipe.\
+Data: 15/10/2026 e 22/10/2026
 
 | Pergunta | Resposta da equipe revisora |
 |---|---|
-| Algum requisito não funcional está sem número? | pendente — preenchido com a resposta da equipe revisora |
-| O pilar escolhido faz sentido para aquele requisito? | pendente — preenchido com a resposta da equipe revisora |
-| Alguma caixa do diagrama não corresponde a requisito? | pendente — preenchido com a resposta da equipe revisora |
-| O recorte cabe em duas sprints? | pendente — preenchido com a resposta da equipe revisora |
+| Algum requisito não funcional está sem número? | Sem apontamento de número faltando. A orientação de 15/10 foi que os requisitos não funcionais fossem cinco, um para cada requisito funcional da Sprint 1. |
+| O pilar escolhido faz sentido para aquele requisito? | Sem apontamento registrado. |
+| Alguma caixa do diagrama não corresponde a requisito? | Sem apontamento sobre as caixas. O pedido de 22/10 foi fazer o diagrama no Lucidchart. |
+| O recorte cabe em duas sprints? | Não como estava. Em 22/10, a professora apontou que as razões estavam extensas e que não daria para fazer tudo a tempo, e pediu para enxugar. Pediu também para conferir se o DynamoDB funciona. |
 
 ### 10.1 O que foi ajustado depois da revisão
 
@@ -396,4 +396,4 @@ Ajuste após a orientação da professora (15/10/2026): os requisitos não funci
 
 Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi conferido no LocalStack (seção 6.2); as razões dos requisitos não funcionais foram encurtadas para uma ou duas frases; o recorte passou a deixar especificados e não implementados o RNF-04, o limite de 10 minutos e a conferência do EXIF na função (seção 8); e o diagrama passou a ser feito no Lucidchart (seção 5). Versão do documento: 1.2.
 
-Ajustes da revisão cruzada: pendente, registrados aqui depois do retorno da equipe revisora.
+A revisão foi feita com a professora, e os ajustes que ela pediu são os dois registrados acima. Versão do documento: 1.3.
