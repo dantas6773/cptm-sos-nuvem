@@ -12,18 +12,19 @@ inseguras, e quem vai passar por ali consulta o que já foi relatado.
 ## Estrutura
 
 ```
-docs/     documentos de cada sprint
-infra/    scripts de provisionamento (a partir da Sprint 3)
-app/      funções e página (a partir da Sprint 3)
-testes/   testes de aceite (Sprint 5)
+docs/           documentos de cada sprint
+apresentacoes/  apresentações das sprints, editáveis
+infra/          scripts de provisionamento (a partir da Sprint 3)
+app/            funções e página (a partir da Sprint 3)
+testes/         testes de aceite (Sprint 5)
 ```
 
 ## Andamento
 
 | Sprint | Entrega | Situação |
 |---|---|---|
-| 1 | [Documento de requisitos](docs/01-requisitos.md) · [versão Word](docs/01-requisitos.docx) | entregue · revisado pela professora |
-| 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) | entregue · revisado pela professora · ajustes feitos |
+| 1 | [Documento de requisitos](docs/01-requisitos.md) · [versão Word](docs/01-requisitos.docx) · [apresentação](apresentacoes/sprint-1.pptx) | entregue · revisado pela professora |
+| 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) · [apresentação](apresentacoes/sprint-2.pptx) | entregue · revisado pela professora · ajustes feitos |
 | 3 | Armazenamento e função de gravação | — |
 | 4 | API e página publicada | — |
 | 5 | Validação e homologação | — |
