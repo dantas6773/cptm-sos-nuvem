@@ -50,9 +50,9 @@ Lucidchart, no slide 8 da Sprint 2.
 
 ## Cuidados
 
-- O diagrama no slide 8 da Sprint 2 é pequeno para quem está longe: o texto
-  das caixas fica com cerca de 3,6 pt. Para explicar caixa por caixa, vale
-  abrir o documento "CPTM SOS - Arquitetura (Sprint 2)" no Lucidchart e dar
-  zoom.
+- O diagrama no slide 8 da Sprint 2 é o do modelo AWS do Lucidchart, com o
+  ícone de cada serviço. Ele é largo, e o texto das caixas fica com cerca de
+  4 pt: para explicar caixa por caixa, vale abrir a página "Arquitetura AWS" do
+  documento "CPTM SOS - Arquitetura (Sprint 2)" no Lucidchart e dar zoom.
 - Se o conteúdo de um documento mudar, a apresentação daquela sprint precisa
   mudar junto: os números, os requisitos e as decisões dos slides vêm de lá.

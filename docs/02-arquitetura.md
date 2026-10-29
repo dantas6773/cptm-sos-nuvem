@@ -4,8 +4,8 @@ Entregável da Sprint 2, no formato do Template 2. As seções têm os mesmos n�
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 27/10/2026\
-Versão: 1.3
+Data: 29/10/2026\
+Versão: 1.4
 
 ## 1. Requisitos não funcionais
 
@@ -206,7 +206,7 @@ Ele entraria na função `confirmar`, que passaria a gravar um item por confirma
 
 ## 5. Diagrama de arquitetura de ponta a ponta
 
-O diagrama foi feito no Lucidchart e está abaixo e no arquivo [`docs/diagrama.png`](diagrama.png). Ele foi gerado no próprio Lucidchart a partir do código Mermaid que está em [`docs/diagrama.md`](diagrama.md), com a explicação de como ler as setas: mudar o desenho é mudar o código e gerar de novo.
+O diagrama foi feito no Lucidchart, sobre o modelo "Estrutura horizontal AWS (2019)", com o ícone oficial de cada serviço, e está abaixo e no arquivo [`docs/diagrama.png`](diagrama.png). As setas numeradas de 1 a 5 seguem o caminho de um relato (seção 5.2), e a explicação de como ler as setas está em [`docs/diagrama.md`](diagrama.md).
 
 ![Diagrama de arquitetura de ponta a ponta do CPTM SOS · Relatos por estação](diagrama.png)
 
@@ -214,6 +214,7 @@ O diagrama foi feito no Lucidchart e está abaixo e no arquivo [`docs/diagrama.p
 
 | Caixa | Serviço AWS | O que ela faz | Requisito que a justifica |
 |---|---|---|---|
+| Passageira | — | Relata, consulta e confirma pela página, sem se identificar | US-01, US-02, US-03 |
 | Navegador | — | Mostra o formulário, a consulta e o botão de confirmar; limpa e reduz a foto e gera o código de cada envio e de cada confirmação | US-01, US-02, US-03, RNF-01, RNF-04 |
 | Site estático | Amazon S3, bucket `cptm-sos-site` | Serve `index.html`, `config.js` e `estacoes.json` | US-01, US-02, US-03 |
 | Entrada da API | Amazon API Gateway | Recebe as três rotas e invoca a função certa | US-01, US-02, US-03: é por ela que passam as três rotas |
@@ -381,13 +382,13 @@ Antes de a função `registrar` ser escrita, na Sprint 3, a lista de estações 
 ## 10. Revisão cruzada recebida
 
 Revisado por: Profa. Angélica Guimarães. A revisão foi feita com a professora, e não por outra equipe.\
-Data: 15/10/2026 e 22/10/2026
+Data: 15/10/2026, 22/10/2026 e 29/10/2026
 
 | Pergunta | Resposta da equipe revisora |
 |---|---|
 | Algum requisito não funcional está sem número? | Sem apontamento de número faltando. A orientação de 15/10 foi que os requisitos não funcionais fossem cinco, um para cada requisito funcional da Sprint 1. |
 | O pilar escolhido faz sentido para aquele requisito? | Sem apontamento registrado. |
-| Alguma caixa do diagrama não corresponde a requisito? | Sem apontamento sobre as caixas. O pedido de 22/10 foi fazer o diagrama no Lucidchart. |
+| Alguma caixa do diagrama não corresponde a requisito? | Sem apontamento sobre as caixas. O pedido de 22/10 foi fazer o diagrama no Lucidchart; o de 29/10, fazê-lo sobre um modelo AWS do Lucidchart, com o ícone de cada serviço. |
 | O recorte cabe em duas sprints? | Não como estava. Em 22/10, a professora apontou que as razões estavam extensas e que não daria para fazer tudo a tempo, e pediu para enxugar. Pediu também para conferir se o DynamoDB funciona. |
 
 ### 10.1 O que foi ajustado depois da revisão
@@ -396,4 +397,6 @@ Ajuste após a orientação da professora (15/10/2026): os requisitos não funci
 
 Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi conferido no LocalStack (seção 6.2); as razões dos requisitos não funcionais foram encurtadas para uma ou duas frases; o recorte passou a deixar especificados e não implementados o RNF-04, o limite de 10 minutos e a conferência do EXIF na função (seção 8); e o diagrama passou a ser feito no Lucidchart (seção 5). Versão do documento: 1.2.
 
-A revisão foi feita com a professora, e os ajustes que ela pediu são os dois registrados acima. Versão do documento: 1.3.
+Ajuste após a devolutiva da professora (29/10/2026): o diagrama foi refeito no Lucidchart sobre o modelo "Estrutura horizontal AWS (2019)", com o ícone oficial de cada serviço e as setas do caminho de um relato numeradas de 1 a 5 (seção 5). A passageira entrou no desenho e na legenda. Versão do documento: 1.4.
+
+A revisão foi feita com a professora, e os ajustes que ela pediu são os registrados acima.
