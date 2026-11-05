@@ -29,3 +29,4 @@ EOF
 )
 aws_local s3api put-bucket-policy --bucket "$BUCKET" --policy "$(uma_linha <<<"$POLITICA_BUCKET")"
 echo "politica do bucket aplicada: $BUCKET (publico so le fotos/)"
+
