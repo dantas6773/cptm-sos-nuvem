@@ -4,18 +4,18 @@ Entregável da Sprint 5, no formato do Template 3. As seções têm os mesmos n�
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: [preencher: data em que os testes foram rodados]\
+Data: 05/11/2026\
 Versão: 1.0
 
-> Rascunho. O que depende de uma execução está marcado com `[preencher: ...]` e sai das capturas E5.1 a E5.5 e das saídas dos roteiros. O resto já está escrito a partir dos documentos das Sprints 1 a 4.
+> Os testes foram rodados em 05/11/2026, a partir do ambiente vazio, e as saídas abaixo são as dessa execução. Continuam marcados com `[preencher: ...]` só o que depende de pessoas: a conferência da página no navegador (C4), as duas homologações (seções 5 e 6) e o fechamento (seção 8).
 
 ## 1. Reconstrução do ambiente
 
 | Item | Resposta |
 |---|---|
-| Tempo do `deploy.sh` a partir do ambiente vazio | [preencher: a linha `real` de `time ./infra/deploy.sh`, captura E5.3] |
-| Foi necessário algum comando fora do script | [preencher: sim ou não] |
-| Se sim, qual e por quê | [preencher, ou "não se aplica: o deploy rodou sem nenhum comando digitado à mão"] |
+| Tempo do `deploy.sh` a partir do ambiente vazio | 46,6 s (`./infra/deploy.sh  9.94s user 3.14s system 28% cpu 46.582 total`), captura E5.3 |
+| Foi necessário algum comando fora do script | não |
+| Se sim, qual e por quê | não se aplica: o deploy rodou sem nenhum comando digitado à mão e terminou em "aplicacao no ar" |
 
 O ambiente vazio é o de `./infra/destroy.sh` seguido de `lstk stop` e `lstk start`. O LocalStack começa vazio a cada `lstk start`.
 
@@ -25,21 +25,89 @@ Os seis critérios são os da seção 5 do documento da Sprint 1 ([`docs/01-requ
 
 | # | Cenário BDD, em uma linha | Como foi executado | Resultado |
 |---|---|---|---|
-| C1 | US-01, cenário 1: relato válido de Brás, com foto, devolve protocolo e endereço, a foto abre e o relato nasce com 0 confirmações | `POST /relatos`, depois `GET` no endereço da foto e leitura do item (verificações `US-01-c1`) | [preencher: passou / falhou] |
-| C2 | US-01, cenário 2: estação "Barra Funda", fora da lista, é recusada, nada é gravado e 1 recusa aparece no CloudWatch Logs sem dado de quem enviou | `POST /relatos`, contagem de itens e de fotos antes e depois, leitura do log (`US-01-c2`) | [preencher] |
-| C3 | US-02, cenário 1: Tatuapé lista 4 relatos de até 30 dias, na ordem 5-2-2-0, com o mais recente à frente no empate, e sem o de 45 dias | 5 itens gravados no DynamoDB e `GET /relatos?estacao=TTP` (`US-02-c1`) | [preencher] |
-| C4 | US-02, cenário 2: Botujuru, sem relatos, devolve 200 com total 0 e a página mostra a mensagem de lista vazia | `GET /relatos?estacao=BTJ` e busca da mensagem em `app/site/index.html` (`US-02-c2`) | [preencher] |
-| C5 | US-03, cenário 1: confirmar o relato A da Luz o leva de 2 para 3 e o B continua com 2 | `POST /confirmacoes` e leitura dos dois itens (`US-03-c1`) | [preencher] |
-| C6 | US-03, cenário 2: relato de 31 dias com 4 confirmações é recusado com a mensagem de expirado e continua com 4 | `POST /confirmacoes` em um item gravado no DynamoDB com 31 dias (`US-03-c2`) | [preencher] |
+| C1 | US-01, cenário 1: relato válido de Brás, com foto, devolve protocolo e endereço, a foto abre e o relato nasce com 0 confirmações | `POST /relatos`, depois `GET` no endereço da foto e leitura do item (verificações `US-01-c1`) | passou |
+| C2 | US-01, cenário 2: estação "Barra Funda", fora da lista, é recusada, nada é gravado e 1 recusa aparece no CloudWatch Logs sem dado de quem enviou | `POST /relatos`, contagem de itens e de fotos antes e depois, leitura do log (`US-01-c2`) | passou |
+| C3 | US-02, cenário 1: Tatuapé lista 4 relatos de até 30 dias, na ordem 5-2-2-0, com o mais recente à frente no empate, e sem o de 45 dias | 5 itens gravados no DynamoDB e `GET /relatos?estacao=TTP` (`US-02-c1`) | passou |
+| C4 | US-02, cenário 2: Botujuru, sem relatos, devolve 200 com total 0 e a página mostra a mensagem de lista vazia | `GET /relatos?estacao=BTJ` e busca da mensagem em `app/site/index.html` (`US-02-c2`) | passou |
+| C5 | US-03, cenário 1: confirmar o relato A da Luz o leva de 2 para 3 e o B continua com 2 | `POST /confirmacoes` e leitura dos dois itens (`US-03-c1`) | passou |
+| C6 | US-03, cenário 2: relato de 31 dias com 4 confirmações é recusado com a mensagem de expirado e continua com 4 | `POST /confirmacoes` em um item gravado no DynamoDB com 31 dias (`US-03-c2`) | passou |
 
 Resultado: passou, falhou ou não verificável.
 
 ### 2.1 Saída do script
 
 ```
-[preencher: cole aqui a saída completa de ./testes/executar.sh, com as linhas
-finais "passaram:" e "falharam:". É a captura E5.1 (captura de tela 12).]
+Testes de aceite · Sprint 5 · API: http://xjxuvdvgmj.execute-api.localhost.localstack.cloud:4566/dev
+Preparando: apagando os relatos de TTP, LUZ e BTJ
+
+US-01, cenário 1: relato válido de Brás, com foto de 2 MB no máximo
+  OK      US-01-c1  o envio devolve 201 (esperado: 201)
+  OK      US-01-c1  devolve um protocolo de 16 caracteres (esperado: 16)
+  OK      US-01-c1  a foto abre pelo endereço devolvido (esperado: 200)
+  OK      US-01-c1  o sistema passa a ter 1 relato a mais (esperado: 1)
+  OK      US-01-c1  o relato novo tem 0 confirmações (esperado: 0)
+
+US-01, cenário 2: estação "Barra Funda", fora da lista aceita
+  OK      US-01-c2  o envio devolve 400 (esperado: 400)
+  OK      US-01-c2  o campo recusado é a estação (esperado: estacao)
+  OK      US-01-c2  a mensagem diz que a estação não foi reconhecida (esperado: True)
+  OK      US-01-c2  nenhum relato novo (esperado: 1)
+  OK      US-01-c2  nenhuma foto nova (esperado: 1)
+  OK      US-01-c2  1 registro da recusa no CloudWatch Logs (esperado: 1)
+  OK      US-01-c2  o registro não leva dado de quem enviou (nem o nome digitado) (esperado: 0)
+
+US-02, cenário 1: Tatuapé, 4 relatos recentes (5, 2, 2 e 0) e 1 de 45 dias
+  OK      US-02-c1  a consulta devolve 200 (esperado: 200)
+  OK      US-02-c1  a lista traz exatamente 4 relatos (esperado: 4)
+  OK      US-02-c1  ordem por confirmações (esperado: 5 2 2 0)
+  OK      US-02-c1  no empate, o mais recente vem à frente (esperado: a1 a2 a3 a4)
+  OK      US-02-c1  o relato de 45 dias não aparece (esperado: False)
+
+US-02, cenário 2: Botujuru, sem relatos nos últimos 30 dias
+  OK      US-02-c2  a consulta devolve 200, e não erro (esperado: 200)
+  OK      US-02-c2  a lista tem 0 relatos (esperado: 0)
+  OK      US-02-c2  a página tem a mensagem de lista vazia (esperado: sim)
+
+US-03, cenário 1: Luz, dois relatos com 2 confirmações; confirma o A
+  OK      US-03-c1  a confirmação devolve 200 (esperado: 200)
+  OK      US-03-c1  A passa de 2 para 3 (esperado: 3)
+  OK      US-03-c1  B continua com 2 (esperado: 2)
+
+US-03, cenário 2: relato de 31 dias com 4 confirmações
+  OK      US-03-c2  a confirmação é recusada (409) (esperado: 409)
+  OK      US-03-c2  a mensagem diz que o relato expirou (esperado: True)
+  OK      US-03-c2  o relato continua com 4 (esperado: 4)
+
+RNF-01: 5 reenvios do mesmo relato gravam 1 só
+  OK      RNF-01  o primeiro envio devolve 201 (esperado: 201)
+  OK      RNF-01  os 5 reenvios devolvem 200 (esperado: 5)
+  OK      RNF-01  os 5 reenvios devolvem o mesmo protocolo (esperado: 5)
+  OK      RNF-01  a estação ganha exatamente 1 relato (esperado: 10)
+  OK      RNF-01  e exatamente 1 foto (esperado: 1)
+
+RNF-02: o público só lê a foto, pelo endereço exato
+  OK      RNF-02  a política tem 1 única permissão (esperado: 1)
+  OK      RNF-02  a única ação é s3:GetObject (esperado: s3:GetObject)
+  OK      RNF-02  ela vale para o público (Principal *) (esperado: True)
+  OK      RNF-02  e só para o que está em fotos/ (esperado: arn:aws:s3:::cptm-sos-fotos/fotos/*)
+  OK      RNF-02  nenhuma ação de listar, gravar ou apagar (esperado: 0)
+
+RF-03: o papel da função consultar só lê o DynamoDB
+  OK      RF-03  nenhuma ação de gravar, atualizar ou apagar, nem curinga (esperado: 0)
+
+RNF-05: 10 envios inválidos deixam 10 linhas no CloudWatch Logs em até 10 s
+  OK      RNF-05  exatamente 10 linhas de recusa (esperado: 10)
+  OK      RNF-05  visíveis em até 10 segundos (levou 1 s, contando os 10 envios) (esperado: sim)
+
+RNF-04: 5 reenvios da mesma confirmação somam 1 (fora do recorte)
+  FORA DO RECORTE  RNF-04  os 5 reenvios somaram 5, e não 1: o código da confirmação não foi implementado (docs/02-arquitetura.md, seção 8)
+
+passaram: 39
+falharam: 0
+fora do recorte, documentados: 1
 ```
+
+Na primeira tentativa, `./testes/executar.sh` não rodou ("permission denied"): os roteiros `executar.sh` e `medir.sh` tinham ido para o repositório sem a permissão de execução. A permissão foi corrigida no próprio repositório (`git update-index --chmod=+x`), e a saída acima é a da execução seguinte, sem nenhuma outra mudança.
 
 ### 2.2 Cenários não verificáveis por script
 
@@ -54,11 +122,11 @@ Os valores declarados são os da seção 1 do documento da Sprint 2 ([`docs/02-a
 
 | ID | Valor declarado na Sprint 2 | Método | Valor obtido | Resultado |
 |---|---|---|---|---|
-| RNF-01 | com 5 reenvios do mesmo envio, 1 relato, 1 protocolo e 1 foto | demonstração: `executar.sh`, bloco `RNF-01` | [preencher] | [preencher] |
-| RNF-02 | o público só lê a foto pelo endereço exato; 0 ações de listar, gravar ou apagar na política | inspeção: `executar.sh` lê a política do bucket e confere a única permissão | [preencher] | [preencher] |
-| RNF-03 | p95 de até 500 ms, com 300 relatos dos últimos 30 dias na estação e 30 requisições seguidas | medição: `medir.sh` | [preencher: p95 em ms] | [preencher] |
-| RNF-04 | com 5 reenvios da mesma confirmação, soma 1 | demonstração: `executar.sh`, bloco `RNF-04` | [preencher: quanto somou] | não cumprido (seção 7) |
-| RNF-05 | exatamente 1 linha de recusa por envio inválido no CloudWatch Logs, visível em até 10 segundos, com 10 envios inválidos | demonstração: `executar.sh`, bloco `RNF-05` | [preencher: linhas e segundos] | [preencher] |
+| RNF-01 | com 5 reenvios do mesmo envio, 1 relato, 1 protocolo e 1 foto | demonstração: `executar.sh`, bloco `RNF-01` | 1 relato, 1 protocolo (o mesmo nos 5 reenvios, que devolvem 200) e 1 foto | cumprido |
+| RNF-02 | o público só lê a foto pelo endereço exato; 0 ações de listar, gravar ou apagar na política | inspeção: `executar.sh` lê a política do bucket e confere a única permissão | 1 única permissão, `s3:GetObject`, para o público, só em `fotos/*`; 0 ações de listar, gravar ou apagar | cumprido |
+| RNF-03 | p95 de até 500 ms, com 300 relatos dos últimos 30 dias na estação e 30 requisições seguidas | medição: `medir.sh` | p95 de 33 ms (mínimo 30, mediana 32, máximo 39), 0 respostas diferentes de 200 | cumprido |
+| RNF-04 | com 5 reenvios da mesma confirmação, soma 1 | demonstração: `executar.sh`, bloco `RNF-04` | somou 5 | não cumprido (seção 7) |
+| RNF-05 | exatamente 1 linha de recusa por envio inválido no CloudWatch Logs, visível em até 10 segundos, com 10 envios inválidos | demonstração: `executar.sh`, bloco `RNF-05` | 10 linhas para 10 envios, visíveis em 1 s | cumprido |
 
 Método: medição, inspeção, demonstração ou análise.
 
@@ -67,7 +135,17 @@ Resultado: cumprido, cumprido em parte ou não cumprido.
 ### 3.1 Saída da medição
 
 ```
-[preencher: cole aqui a saída de ./testes/medir.sh, com o p95. É a captura E5.2.]
+Medição do RNF-03 · API: http://xjxuvdvgmj.execute-api.localhost.localstack.cloud:4566/dev
+Preparando: 300 relatos na estação MAU (10 por dia, nos últimos 30 dias)
+relatos de MAU na tabela: 300
+consultando 30 vezes seguidas: GET /relatos?estacao=MAU
+
+tempos em ms, em ordem: 30 30 30 31 31 31 31 31 31 32 32 32 32 32 32 32 32 32 32 32 32 33 33 33 33 33 33 33 33 39 
+respostas diferentes de 200: 0
+minimo: 30 ms · mediana: 32 ms · maximo: 39 ms
+p95: 33 ms (limite do RNF-03: 500 ms)
+
+OK      RNF-03: p95 de 33 ms, dentro de 500 ms
 ```
 
 ### 3.2 Requisitos verificados por análise
@@ -82,19 +160,19 @@ Toda linha das Sprints 1 e 2 aparece aqui: os 5 requisitos funcionais, os 5 não
 
 | ID | O que foi prometido | Como foi verificado | Evidência | Resultado |
 |---|---|---|---|---|
-| RF-01 | registrar cada relato enviado ao API Gateway no DynamoDB, com protocolo único e data e hora do envio | teste C1 (`US-01-c1`): 201, protocolo de 16 caracteres, 1 relato a mais | E5.1 (saída do `executar.sh`) | [preencher] |
-| RF-02 | guardar a foto no S3 e deixar no relato o endereço para vê-la | teste C1: a foto abre pelo endereço devolvido; inspeção do bucket | E5.1; E3.4 / E4.4 (recursos listados) | [preencher] |
-| RF-03 | listar os relatos da estação dos últimos 30 dias, do mais confirmado ao menos, por função só com permissão de leitura | testes C3 e C4; inspeção do papel IAM da função consultar (`RF-03`) | E5.1 | [preencher] |
-| RF-04 | somar uma confirmação a um relato de até 30 dias | testes C5 e C6 | E5.1 | [preencher] |
-| RF-05 | recusar o relato inválido, informar o campo e registrar a recusa no CloudWatch Logs sem dado de quem enviou | teste C2; leitura do registro | E5.1 | [preencher] |
-| RNF-01 | 5 reenvios do mesmo relato gravam 1 só | demonstração: bloco `RNF-01` | E5.1 | [preencher] |
-| RNF-02 | o público só lê a foto | inspeção da política do bucket; negação por análise (seção 3.2) | E5.1 | [preencher] |
-| RNF-03 | consulta em até 500 ms no p95 | medição: `medir.sh` | E5.2 | [preencher] |
+| RF-01 | registrar cada relato enviado ao API Gateway no DynamoDB, com protocolo único e data e hora do envio | teste C1 (`US-01-c1`): 201, protocolo de 16 caracteres, 1 relato a mais | E5.1 (saída do `executar.sh`) | cumprido |
+| RF-02 | guardar a foto no S3 e deixar no relato o endereço para vê-la | teste C1: a foto abre pelo endereço devolvido; inspeção do bucket | E5.1; E3.4 / E4.4 (recursos listados) | cumprido |
+| RF-03 | listar os relatos da estação dos últimos 30 dias, do mais confirmado ao menos, por função só com permissão de leitura | testes C3 e C4; inspeção do papel IAM da função consultar (`RF-03`) | E5.1 | cumprido |
+| RF-04 | somar uma confirmação a um relato de até 30 dias | testes C5 e C6 | E5.1 | cumprido |
+| RF-05 | recusar o relato inválido, informar o campo e registrar a recusa no CloudWatch Logs sem dado de quem enviou | teste C2; leitura do registro | E5.1 | cumprido |
+| RNF-01 | 5 reenvios do mesmo relato gravam 1 só | demonstração: bloco `RNF-01` | E5.1 | cumprido |
+| RNF-02 | o público só lê a foto | inspeção da política do bucket; negação por análise (seção 3.2) | E5.1 | cumprido |
+| RNF-03 | consulta em até 500 ms no p95 | medição: `medir.sh` | E5.2 | cumprido |
 | RNF-04 | 5 reenvios da mesma confirmação somam 1 | demonstração: bloco `RNF-04` | E5.1 (linha `FORA DO RECORTE`) | não cumprido |
-| RNF-05 | 1 linha por recusa no CloudWatch Logs, em até 10 s | demonstração: bloco `RNF-05` | E5.1 | [preencher] |
-| US-01 | a passageira registra o ponto inseguro com uma foto do local | testes C1 e C2; demonstração na página | E5.1; E4.2 (página no navegador) | [preencher] |
-| US-02 | a passageira vê os relatos recentes da estação antes de embarcar | testes C3 e C4; demonstração na página | E5.1; E4.2 | [preencher] |
-| US-03 | a passageira confirma um relato existente | testes C5 e C6 | E5.1 | [preencher] |
+| RNF-05 | 1 linha por recusa no CloudWatch Logs, em até 10 s | demonstração: bloco `RNF-05` | E5.1 | cumprido |
+| US-01 | a passageira registra o ponto inseguro com uma foto do local | testes C1 e C2; demonstração na página | E5.1; E4.2 (página no navegador) | cumprido |
+| US-02 | a passageira vê os relatos recentes da estação antes de embarcar | testes C3 e C4; demonstração na página | E5.1; E4.2 | cumprido |
+| US-03 | a passageira confirma um relato existente | testes C5 e C6 | E5.1 | cumprido |
 
 Resultado: cumprido, cumprido em parte ou não cumprido.
 
@@ -102,9 +180,9 @@ Resultado: cumprido, cumprido em parte ou não cumprido.
 
 | Resultado | Quantidade |
 |---|---|
-| Cumprido | [preencher] |
-| Cumprido em parte | [preencher] |
-| Não cumprido | [preencher: no mínimo 1, o RNF-04] |
+| Cumprido | 12 |
+| Cumprido em parte | 0 |
+| Não cumprido | 1 (RNF-04) |
 
 Total: 13 linhas.
 
@@ -165,6 +243,6 @@ Escolhemos não identificar quem confirma (RD-01), então o risco de confirmaç�
 | Item | Resposta |
 |---|---|
 | URL do repositório | https://github.com/dantas6773/cptm-sos-nuvem |
-| Número de commits | [preencher: `git rev-list --count HEAD`] |
-| Há pelo menos um commit por sprint | [preencher: sim ou não, conferindo `git log --oneline`; a captura E5.5 mostra os commits por integrante] |
+| Número de commits | 33, contando o que registra esta validação |
+| Há pelo menos um commit por sprint | sim: requisitos (Sprint 1), arquitetura (2), provisionamento e função registrar (3), API e página (4), testes e validação (5); a captura E5.5 mostra os commits por integrante |
 | Endereço do site depois do deploy | http://cptm-sos-site.s3-website.localhost.localstack.cloud:4566 |

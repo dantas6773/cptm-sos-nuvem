@@ -117,4 +117,4 @@ O resultado de cada sprint está em `docs/`.
 | 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) · [apresentação](apresentacoes/sprint-2.pptx) | entregue · revisado pela professora · ajustes feitos |
 | 3 | [Scripts de provisionamento](infra/) · [função registrar](app/gravar/) · [demonstração](demo/) · [apresentação](apresentacoes/sprint-3.pdf) | feita |
 | 4 | [API](infra/openapi.yaml) · [funções consultar](app/consultar/) e [confirmar](app/confirmar/) · [página](app/site/index.html) · deploy completo | feita |
-| 5 | [Documento de validação](docs/03-validacao.md) · [testes de aceite](testes/executar.sh) · [medição do tempo](testes/medir.sh) | em andamento: falta rodar e colar as evidências |
+| 5 | [Documento de validação](docs/03-validacao.md) · [testes de aceite](testes/executar.sh) · [medição do tempo](testes/medir.sh) | testes rodados em 05/11/2026: 39 passaram, 0 falharam, RNF-04 fora do recorte; p95 de 33 ms · faltam as homologações e o fechamento |
