@@ -21,6 +21,17 @@ demo/           página de demonstração da Sprint 3, antes de existir a API
 testes/         testes de aceite (Sprint 5)
 ```
 
+## Pré-requisitos
+
+| Ferramenta | Para quê | Conferir com |
+|---|---|---|
+| Docker | roda o LocalStack | `docker --version` |
+| lstk | sobe o LocalStack e chama o AWS CLI nele | `lstk --version` |
+| AWS CLI v2 | o `lstk aws` chama o AWS CLI da máquina | `aws --version` |
+| zip, curl, Python 3 | empacotar as funções, chamar a API, apoiar os testes | `zip -v`, `curl --version`, `python3 --version` |
+
+No Windows, rode tudo no Git Bash. Versões usadas pela equipe: [preencher: saída dos comandos da última coluna].
+
 ## Como rodar
 
 Com o Docker aberto, na raiz do repositório:
@@ -32,7 +43,11 @@ open "http://cptm-sos-site.s3-website.localhost.localstack.cloud:4566"
 ```
 
 No Windows, use `explorer` no lugar de `open`. O LocalStack começa vazio a cada
-`lstk start`, e o `./infra/destroy.sh` apaga tudo o que o deploy criou.
+`lstk start`. O endereço do site e o da API aparecem nas duas últimas linhas do
+deploy.
+
+Para derrubar tudo, `./infra/destroy.sh` apaga o que o deploy criou e `lstk stop`
+desliga o LocalStack.
 
 | Rota | Função | O que faz |
 |---|---|---|
@@ -81,6 +96,19 @@ lstk aws lambda invoke --function-name "$FUNCAO_CONSULTAR" \
 cat saida.json
 ```
 
+## Testes de aceite
+
+Com a aplicação no ar (`./infra/deploy.sh`), na raiz do repositório:
+
+```bash
+./testes/executar.sh   # os 6 cenários da Sprint 1 e os RNF-01, 02, 04 e 05: OK ou FALHOU
+./testes/medir.sh      # o RNF-03: o p95 da consulta, com 300 relatos
+```
+
+O `executar.sh` apaga e recria os relatos de Tatuapé, Luz e Botujuru para montar
+os cenários, e o `medir.sh` faz o mesmo com Mauá; isso só acontece no LocalStack.
+O resultado de cada sprint está em `docs/`.
+
 ## Andamento
 
 | Sprint | Entrega | Situação |
@@ -89,4 +117,4 @@ cat saida.json
 | 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) · [apresentação](apresentacoes/sprint-2.pptx) | entregue · revisado pela professora · ajustes feitos |
 | 3 | [Scripts de provisionamento](infra/) · [função registrar](app/gravar/) · [demonstração](demo/) · [apresentação](apresentacoes/sprint-3.pdf) | feita |
 | 4 | [API](infra/openapi.yaml) · [funções consultar](app/consultar/) e [confirmar](app/confirmar/) · [página](app/site/index.html) · deploy completo | feita |
-| 5 | Validação e homologação | — |
+| 5 | [Documento de validação](docs/03-validacao.md) · [testes de aceite](testes/executar.sh) · [medição do tempo](testes/medir.sh) | em andamento: falta rodar e colar as evidências |
