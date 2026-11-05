@@ -16,6 +16,7 @@ docs/           documentos de cada sprint
 apresentacoes/  apresentações das sprints, editáveis
 infra/          scripts de provisionamento (a partir da Sprint 3)
 app/            funções e página (a partir da Sprint 3)
+demo/           página de demonstração da Sprint 3, no LocalStack
 testes/         testes de aceite (Sprint 5)
 ```
 
@@ -25,6 +26,6 @@ testes/         testes de aceite (Sprint 5)
 |---|---|---|
 | 1 | [Documento de requisitos](docs/01-requisitos.md) · [versão Word](docs/01-requisitos.docx) · [apresentação](apresentacoes/sprint-1.pptx) | entregue · revisado pela professora |
 | 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) · [apresentação](apresentacoes/sprint-2.pptx) | entregue · revisado pela professora · ajustes feitos |
-| 3 | [Scripts de provisionamento](infra/) · [função registrar](app/gravar/) · [apresentação](apresentacoes/sprint-3.pdf) | feita |
+| 3 | [Scripts de provisionamento](infra/) · [função registrar](app/gravar/) · [demonstração](demo/) · [apresentação](apresentacoes/sprint-3.pdf) | feita |
 | 4 | API e página publicada | — |
 | 5 | Validação e homologação | — |

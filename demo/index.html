@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPTM SOS · Relatos por estação</title>
+<style>
+  :root { --azul:#2340BF; --laranja:#E84E1B; --amarelo:#FDC13A; --creme:#F3EBDD; --areia:#E6D7BD; --verde:#2E6B45; --texto:#1E1714; --marrom:#6B5E52; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--creme); color:var(--texto); font:16px/1.45 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { background:var(--azul); color:var(--creme); padding:22px 32px; }
+  header .trilha { font:13px ui-monospace, Menlo, monospace; color:var(--amarelo); }
+  header h1 { margin:6px 0 0; font:700 30px Georgia, serif; }
+  header h1 span { background:var(--laranja); color:var(--texto); padding:2px 12px; border-radius:4px; }
+  header p { margin:8px 0 0; }
+  main { display:grid; grid-template-columns: minmax(320px, 440px) 1fr; gap:24px; padding:24px 32px; }
+  @media (max-width: 900px) { main { grid-template-columns:1fr; padding:16px; } }
+  section { background:#fff; border-radius:12px; padding:20px 22px; }
+  h2 { margin:0 0 12px; font:700 22px Georgia, serif; }
+  label { display:block; margin:12px 0 4px; font:13px ui-monospace, Menlo, monospace; color:var(--marrom); }
+  select, textarea, input[type=file] { width:100%; font:inherit; padding:8px 10px; border:1px solid var(--areia); border-radius:8px; background:#fff; }
+  textarea { min-height:70px; resize:vertical; }
+  .aviso { margin-top:10px; padding:10px 12px; background:var(--areia); border-radius:8px; font-size:14px; }
+  .botoes { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  button { font:600 15px inherit; padding:10px 14px; border:0; border-radius:8px; cursor:pointer; }
+  .principal { background:var(--laranja); color:var(--texto); }
+  .secundario { background:var(--areia); color:var(--texto); }
+  button:disabled { opacity:.55; cursor:wait; }
+  #previa { margin-top:10px; max-width:100%; max-height:180px; border-radius:8px; display:none; }
+  .resposta { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:15px; display:none; }
+  .r201 { background:#dcefe2; } .r200 { background:#fff3cf; } .r400, .rerro { background:#fbdcd2; }
+  .codigo { font:700 20px ui-monospace, Menlo, monospace; }
+  .lista { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:14px; margin-top:14px; }
+  .relato { background:var(--creme); border-radius:10px; overflow:hidden; }
+  .relato img { width:100%; height:150px; object-fit:cover; display:block; background:var(--areia); }
+  .relato div { padding:10px 12px; font-size:14px; }
+  .relato .tipo { font-weight:700; font-size:15px; }
+  .etiqueta { display:inline-block; font:12px ui-monospace, Menlo, monospace; background:var(--areia); border-radius:4px; padding:1px 6px; margin:4px 4px 0 0; }
+  .vazio { margin-top:14px; padding:14px; background:var(--areia); border-radius:10px; }
+  .nota { margin-top:10px; font:12px ui-monospace, Menlo, monospace; color:var(--marrom); }
+</style>
+</head>
+<body>
+<header>
+  <div class="trilha">cptm sos · sprint 3 · demonstração</div>
+  <h1><span>CPTM SOS</span> Relatos por estação</h1>
+  <p>Saber, antes de chegar, o que outras passageiras já perceberam numa estação.</p>
+</header>
+<main>
+  <section>
+    <h2>Registrar um ponto inseguro</h2>
+    <form id="form">
+      <label for="estacao">estação</label>
+      <select id="estacao" required></select>
+      <label for="tipo">tipo de problema</label>
+      <select id="tipo" required>
+        <option>iluminação precária</option><option>área isolada</option><option>sem agente de segurança</option>
+        <option>equipamento de segurança quebrado</option><option>outro</option>
+      </select>
+      <label for="faixa">faixa de horário</label>
+      <select id="faixa" required>
+        <option value="madrugada">madrugada (0h–6h)</option><option value="manhã">manhã (6h–12h)</option>
+        <option value="tarde">tarde (12h–18h)</option><option value="noite" selected>noite (18h–24h)</option>
+      </select>
+      <label for="descricao">descrição (até 500 caracteres)</label>
+      <textarea id="descricao" maxlength="500" placeholder="Ex.: escada entre a passarela e a plataforma, sem nenhuma lâmpada acesa."></textarea>
+      <label for="foto">foto do local</label>
+      <input id="foto" type="file" accept="image/*" required>
+      <img id="previa" alt="prévia da foto">
+      <div class="aviso">A foto deve mostrar o <b>ambiente</b> (escada, corredor, plataforma), não pessoas. O relato não aciona ninguém: em emergência, ligue <b>190</b>.</div>
+      <div class="botoes">
+        <button class="principal" type="submit" id="enviar">Enviar relato</button>
+        <button class="secundario" type="button" id="reenviar" disabled>Reenviar o mesmo</button>
+        <button class="secundario" type="button" id="invalido">Testar estação inválida</button>
+      </div>
+    </form>
+    <div class="resposta" id="resposta"></div>
+  </section>
+
+  <section>
+    <h2>O que foi relatado nesta estação nos últimos 30 dias?</h2>
+    <label for="consulta">estação</label>
+    <select id="consulta"></select>
+    <div id="relatos"></div>
+    <div class="nota">os relatos vêm da tabela cptm-sos-relatos (DynamoDB) e as fotos do bucket cptm-sos-fotos (S3), no LocalStack</div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let ultimoEnvio = null;   // o mesmo código de envio, para reenviar sem duplicar
+let estacoes = [];
+
+async function carregaEstacoes() {
+  estacoes = (await (await fetch("/api/estacoes")).json()).sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+  for (const sel of [$("estacao"), $("consulta")]) {
+    sel.innerHTML = estacoes.map((e) => `<option value="${e.codigo}" data-nome="${e.nome}">${e.nome}</option>`).join("");
+    sel.value = "BRS";
+  }
+  listaRelatos();
+}
+
+// redesenha a foto: tira o EXIF (localização do celular) e reduz para até 1600 px
+function preparaFoto(arquivo) {
+  return new Promise((ok, falha) => {
+    const img = new Image();
+    img.onload = () => {
+      const escala = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * escala); c.height = Math.round(img.height * escala);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      ok(c.toDataURL("image/jpeg", 0.85).split(",")[1]);
+    };
+    img.onerror = () => falha(new Error("não consegui ler a imagem"));
+    img.src = URL.createObjectURL(arquivo);
+  });
+}
+
+function mostraResposta(r) {
+  const box = $("resposta");
+  box.style.display = "block";
+  if (r.erro) { box.className = "resposta rerro"; box.innerHTML = `<b>Erro:</b> ${r.erro}`; return; }
+  const s = r.statusCode, b = r.body || {};
+  box.className = `resposta r${s}`;
+  if (s === 201) box.innerHTML = `<b>201 · relato gravado.</b><br>protocolo <span class="codigo">${b.protocolo}</span><br><a href="${b.foto}" target="_blank">abrir a foto gravada no S3</a>`;
+  else if (s === 200) box.innerHTML = `<b>200 · reenvio reconhecido.</b> O mesmo protocolo <span class="codigo">${b.protocolo}</span>, e nada foi gravado de novo.`;
+  else box.innerHTML = `<b>${s} · recusado.</b> ${b.erro || ""}${b.campo ? ` <span class="etiqueta">campo: ${b.campo}</span>` : ""}`;
+}
+
+async function envia(dados) {
+  for (const b of ["enviar", "reenviar", "invalido"]) $(b).disabled = true;
+  try {
+    const r = await (await fetch("/api/relatos", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(dados) })).json();
+    mostraResposta(r);
+    if (r.statusCode === 201 || r.statusCode === 200) { $("consulta").value = $("estacao").value; listaRelatos(); }
+  } finally {
+    $("enviar").disabled = false; $("invalido").disabled = false; $("reenviar").disabled = !ultimoEnvio;
+  }
+}
+
+$("foto").addEventListener("change", () => {
+  const f = $("foto").files[0];
+  if (f) { $("previa").src = URL.createObjectURL(f); $("previa").style.display = "block"; }
+});
+
+$("form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const f = $("foto").files[0];
+  if (!f) return;
+  const opcao = $("estacao").selectedOptions[0];
+  ultimoEnvio = {
+    estacao: opcao.dataset.nome, tipo: $("tipo").value, faixa: $("faixa").value,
+    descricao: $("descricao").value.trim(), foto: await preparaFoto(f), codigo_envio: crypto.randomUUID(),
+  };
+  await envia(ultimoEnvio);
+});
+
+$("reenviar").addEventListener("click", () => ultimoEnvio && envia(ultimoEnvio));
+
+$("invalido").addEventListener("click", async () => {
+  const f = $("foto").files[0];
+  const foto = f ? await preparaFoto(f) : "/9j/4AAQ";
+  await envia({ estacao: "Barra Funda", tipo: $("tipo").value, faixa: $("faixa").value, descricao: "", foto, codigo_envio: crypto.randomUUID() });
+});
+
+async function listaRelatos() {
+  const codigo = $("consulta").value;
+  const nome = $("consulta").selectedOptions[0]?.dataset.nome || codigo;
+  $("relatos").innerHTML = `<div class="nota">carregando…</div>`;
+  const r = await (await fetch(`/api/relatos?estacao=${encodeURIComponent(codigo)}`)).json();
+  if (r.erro) { $("relatos").innerHTML = `<div class="vazio">${r.erro}</div>`; return; }
+  if (!r.relatos.length) {
+    $("relatos").innerHTML = `<div class="vazio"><b>${nome}</b>: nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura.</div>`;
+    return;
+  }
+  $("relatos").innerHTML = `<div class="nota">${r.relatos.length} relato(s) em ${nome}, do mais confirmado ao menos confirmado</div><div class="lista">` +
+    r.relatos.map((i) => `<div class="relato"><img src="${i.foto_url}" alt="foto do local"><div>
+      <div class="tipo">${i.tipo}</div>
+      <span class="etiqueta">${i.faixa}</span><span class="etiqueta">${i.confirmacoes} confirmações</span>
+      <div>${i.descricao || ""}</div>
+      <div class="nota">${new Date(i.enviado_em).toLocaleString("pt-BR")} · protocolo ${i.protocolo}</div>
+    </div></div>`).join("") + `</div>`;
+}
+
+$("consulta").addEventListener("change", listaRelatos);
+carregaEstacoes();
+</script>
+</body>
+</html>
