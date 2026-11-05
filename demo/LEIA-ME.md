@@ -3,9 +3,10 @@
 Uma página que envia relatos à função `registrar` (AWS Lambda no LocalStack) e
 lista os relatos de uma estação, lidos da tabela `cptm-sos-relatos` (DynamoDB).
 
-Não é a entrega da Sprint 4: aqui não existe API Gateway nem função
-`consultar`. O `servidor.py` faz esses dois papéis só para mostrar a gravação
-funcionando, chamando o LocalStack pelo `lstk aws`, como os scripts de `infra/`.
+É anterior à Sprint 4: aqui não existe API Gateway nem função `consultar`. O
+`servidor.py` faz esses dois papéis só para mostrar a gravação funcionando,
+chamando o LocalStack pelo `lstk aws`, como os scripts de `infra/`. A página da
+Sprint 4, que fala com a API, é a de [`app/site/`](../app/site/index.html).
 
 ## Como rodar
 
@@ -34,7 +35,8 @@ O LocalStack começa vazio a cada `lstk start`: depois de reiniciar, rode o
 - **Testar estação inválida**: devolve **400** e diz qual campo foi recusado (RF-05).
 - **A lista da direita**: os relatos da estação nos últimos 30 dias, do mais
   confirmado ao menos confirmado. As confirmações dos exemplos são gravadas
-  direto na tabela, porque a função `confirmar` só existe na Sprint 4.
+  direto na tabela, porque esta demonstração é anterior à função `confirmar`,
+  da Sprint 4.
 
 `exemplo-escada-escura.jpg` é uma foto de exemplo para usar no formulário. É
 uma imagem desenhada, sem pessoas e sem EXIF.
