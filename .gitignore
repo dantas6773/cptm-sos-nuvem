@@ -15,6 +15,12 @@ credentials.*
 saida*.json
 volume/
 
+# gerados pelo deploy a cada vez, com o endereço da API do momento
+infra/.id-api
+infra/.url-api
+infra/openapi-pronto.yaml
+app/site/config.js
+
 # ambiente
 .venv/
 __pycache__/

@@ -1,0 +1,7 @@
+{
+  "httpMethod": "GET",
+  "path": "/relatos",
+  "queryStringParameters": {
+    "estacao": "BRS"
+  }
+}

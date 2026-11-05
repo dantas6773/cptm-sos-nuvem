@@ -1,0 +1,184 @@
+openapi: 3.0.1
+info:
+  title: API_NOME
+  description: >-
+    CPTM SOS - Relatos por estacao. Tres rotas, cada uma ligada a uma
+    funcao (docs/02-arquitetura.md, secao 4). Os marcadores URI_* sao
+    trocados pelo 06-api.sh pelo endereco de cada funcao no momento do deploy.
+  version: "1.0"
+paths:
+  /relatos:
+    post:
+      summary: Registra um relato, com a foto do local (RF-01, RF-02, RF-05)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Entrada"
+      responses:
+        "201":
+          description: Relato gravado; devolve o protocolo e o endereco da foto
+        "200":
+          description: Reenvio do mesmo relato; o mesmo protocolo, nada gravado de novo (RNF-01)
+        "400":
+          description: Campo recusado; diz qual foi (RF-05)
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: URI_GRAVAR
+    get:
+      summary: Lista os relatos da estacao nos ultimos 30 dias (RF-03)
+      parameters:
+        - name: estacao
+          in: query
+          required: true
+          description: Codigo fixo da estacao, a chave de particao, como BRS
+          schema:
+            type: string
+        - name: limite
+          in: query
+          required: false
+          description: Quantos relatos devolver; padrao 50, teto 100
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lista da estacao, do mais confirmado ao menos; pode vir vazia
+        "400":
+          description: Parametro estacao ausente ou invalido
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: URI_CONSULTAR
+    options:
+      summary: Responde a verificacao previa do navegador (CORS)
+      responses:
+        "200":
+          description: Cabecalhos de CORS
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin:
+                "'*'"
+              method.response.header.Access-Control-Allow-Methods:
+                "'GET,POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers:
+                "'Content-Type'"
+  /confirmacoes:
+    post:
+      summary: Soma uma confirmacao a um relato de ate 30 dias (RF-04)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Confirmacao"
+      responses:
+        "200":
+          description: Confirmacao somada; devolve o novo total
+        "400":
+          description: Chave do relato ausente ou invalida
+        "404":
+          description: Relato nao encontrado
+        "409":
+          description: Relato expirado, com mais de 30 dias; nada muda (US-03, cenario 2)
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: URI_CONFIRMAR
+    options:
+      summary: Responde a verificacao previa do navegador (CORS)
+      responses:
+        "200":
+          description: Cabecalhos de CORS
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin:
+                "'*'"
+              method.response.header.Access-Control-Allow-Methods:
+                "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers:
+                "'Content-Type'"
+components:
+  schemas:
+    Entrada:
+      type: object
+      description: >-
+        O relato, como a pagina envia. Nenhum campo identifica quem relata
+        (RD-01). Quem confere os valores e a funcao registrar, e nao a API.
+      required:
+        - estacao
+        - tipo
+        - faixa
+        - foto
+        - codigo_envio
+      properties:
+        estacao:
+          type: string
+          description: Nome oficial da estacao, da lista estacoes.json
+        tipo:
+          type: string
+          enum:
+            - "iluminação precária"
+            - "área isolada"
+            - "sem agente de segurança"
+            - "equipamento de segurança quebrado"
+            - "outro"
+        faixa:
+          type: string
+          enum: [madrugada, "manhã", tarde, noite]
+        descricao:
+          type: string
+          maxLength: 500
+        foto:
+          type: string
+          format: byte
+          description: JPEG em base64, ate 2 MB, sem EXIF. Mostra o local, nao pessoas (RD-02)
+        codigo_envio:
+          type: string
+          description: Gerado pela pagina e repetido no reenvio (RNF-01)
+    Confirmacao:
+      type: object
+      description: A chave do relato, que a consulta devolve em cada item
+      required:
+        - estacao_id
+        - dia_protocolo
+      properties:
+        estacao_id:
+          type: string
+          description: Codigo da estacao, como BRS
+        dia_protocolo:
+          type: string
+          description: Dia do envio e protocolo, como 2026-11-05#9c1e5a7b2f40d863

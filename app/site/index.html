@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPTM SOS · Relatos por estação</title>
+<style>
+  :root { --azul:#2340BF; --laranja:#E84E1B; --amarelo:#FDC13A; --creme:#F3EBDD; --areia:#E6D7BD; --verde:#2E6B45; --texto:#1E1714; --marrom:#6B5E52; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--creme); color:var(--texto); font:16px/1.45 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { background:var(--azul); color:var(--creme); padding:22px 32px; }
+  header .trilha { font:13px ui-monospace, Menlo, monospace; color:var(--amarelo); }
+  header h1 { margin:6px 0 0; font:700 30px Georgia, serif; }
+  header h1 span { background:var(--laranja); color:var(--texto); padding:2px 12px; border-radius:4px; }
+  header p { margin:8px 0 0; }
+  main { display:grid; grid-template-columns: minmax(320px, 440px) 1fr; gap:24px; padding:24px 32px; }
+  /* No celular, a consulta vem primeiro: a lista é lida em pé, com uma mão ocupada */
+  @media (max-width: 900px) { main { grid-template-columns:1fr; padding:16px; } #secao-consulta { order:-1; } }
+  section { background:#fff; border-radius:12px; padding:20px 22px; }
+  h2 { margin:0 0 12px; font:700 22px Georgia, serif; }
+  label { display:block; margin:12px 0 4px; font:13px ui-monospace, Menlo, monospace; color:var(--marrom); }
+  select, textarea, input[type=file] { width:100%; font:inherit; padding:10px; border:1px solid var(--areia); border-radius:8px; background:#fff; min-height:44px; }
+  textarea { min-height:70px; resize:vertical; }
+  .aviso { margin-top:10px; padding:10px 12px; background:var(--areia); border-radius:8px; font-size:14px; }
+  .botoes { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; align-items:center; }
+  .botoes .rotulo { font:12px ui-monospace, Menlo, monospace; color:var(--marrom); width:100%; margin-top:6px; }
+  button { font:600 15px inherit; padding:10px 14px; min-height:44px; border:0; border-radius:8px; cursor:pointer; }
+  .principal { background:var(--laranja); color:var(--texto); }
+  .secundario { background:var(--areia); color:var(--texto); }
+  button:disabled { opacity:.55; cursor:wait; }
+  #previa { margin-top:10px; max-width:100%; max-height:180px; border-radius:8px; display:none; }
+  .resposta { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:15px; display:none; }
+  .r201 { background:#dcefe2; } .r200 { background:#fff3cf; } .r400, .rerro { background:#fbdcd2; }
+  .codigo { font:700 20px ui-monospace, Menlo, monospace; }
+  .lista { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:14px; margin-top:14px; }
+  .relato { background:var(--creme); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
+  .relato img { width:100%; height:150px; object-fit:cover; display:block; background:var(--areia); }
+  .relato .corpo { padding:10px 12px; font-size:14px; flex:1; display:flex; flex-direction:column; gap:4px; }
+  .relato .tipo { font-weight:700; font-size:15px; }
+  .relato .confirmar { margin-top:auto; background:var(--azul); color:var(--creme); width:100%; }
+  .relato .retorno { font-size:13px; }
+  .etiqueta { display:inline-block; font:12px ui-monospace, Menlo, monospace; background:var(--areia); border-radius:4px; padding:1px 6px; margin:4px 4px 0 0; }
+  .vazio { margin-top:14px; padding:14px; background:var(--areia); border-radius:10px; }
+  .nota { margin-top:10px; font:12px ui-monospace, Menlo, monospace; color:var(--marrom); overflow-wrap:anywhere; }
+</style>
+</head>
+<body>
+<header>
+  <div class="trilha">cptm sos · sprint 4 · relatos por estação</div>
+  <h1><span>CPTM SOS</span> Relatos por estação</h1>
+  <p>Saber, antes de chegar, o que outras passageiras já perceberam numa estação.</p>
+</header>
+<main>
+  <section id="secao-relato">
+    <h2>Registrar um ponto inseguro</h2>
+    <form id="form">
+      <label for="estacao">estação</label>
+      <select id="estacao" required></select>
+      <label for="tipo">tipo de problema</label>
+      <select id="tipo" required>
+        <option>iluminação precária</option><option>área isolada</option><option>sem agente de segurança</option>
+        <option>equipamento de segurança quebrado</option><option>outro</option>
+      </select>
+      <label for="faixa">faixa de horário</label>
+      <select id="faixa" required>
+        <option value="madrugada">madrugada (0h–6h)</option><option value="manhã">manhã (6h–12h)</option>
+        <option value="tarde">tarde (12h–18h)</option><option value="noite" selected>noite (18h–24h)</option>
+      </select>
+      <label for="descricao">descrição (até 500 caracteres)</label>
+      <textarea id="descricao" maxlength="500" placeholder="Ex.: escada entre a passarela e a plataforma, sem nenhuma lâmpada acesa."></textarea>
+      <label for="foto">foto do local</label>
+      <input id="foto" type="file" accept="image/*" required>
+      <img id="previa" alt="prévia da foto">
+      <div class="aviso">A foto deve mostrar o <b>ambiente</b> (escada, corredor, plataforma), não pessoas. O relato não aciona ninguém: em emergência, ligue <b>190</b>.</div>
+      <div class="botoes">
+        <button class="principal" type="submit" id="enviar">Enviar relato</button>
+        <span class="rotulo">para a demonstração:</span>
+        <button class="secundario" type="button" id="reenviar" disabled>Reenviar o mesmo</button>
+        <button class="secundario" type="button" id="invalido">Testar estação inválida</button>
+      </div>
+    </form>
+    <div class="resposta" id="resposta"></div>
+  </section>
+
+  <section id="secao-consulta">
+    <h2>O que foi relatado nesta estação nos últimos 30 dias?</h2>
+    <label for="consulta">estação</label>
+    <select id="consulta"></select>
+    <div id="relatos"></div>
+    <div class="nota" id="origem"></div>
+  </section>
+</main>
+
+<!-- config.js é gerado pelo infra/07-site.sh, a cada deploy, com o endereço da API do momento -->
+<script src="config.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const ESCAPE = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+// Tudo o que vem da API ou da lista é escrito como texto, nunca como HTML:
+// a descrição é digitada por qualquer pessoa, e a página é pública.
+const esc = (valor) => String(valor ?? "").replace(/[&<>"']/g, (c) => ESCAPE[c]);
+const API = typeof URL_API === "string" ? URL_API.replace(/\/$/, "") : null;
+const VAZIO = "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura.";
+let ultimoEnvio = null;   // o mesmo código de envio, para reenviar sem duplicar (RNF-01)
+
+// Código aleatório de cada envio, no formato UUID. Não usa crypto.randomUUID,
+// que o navegador só oferece em https ou localhost, e o site do S3 é http.
+function novoCodigo() {
+  const b = crypto.getRandomValues(new Uint8Array(16));
+  b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+  const h = Array.from(b, (x) => x.toString(16).padStart(2, "0")).join("");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+
+// Chama a API e devolve { status, corpo }. Sem resposta (rede, CORS), status 0.
+async function chama(caminho, opcoes) {
+  try {
+    const r = await fetch(API + caminho, opcoes);
+    let corpo = {};
+    try { corpo = await r.json(); } catch (e) { /* resposta sem JSON */ }
+    return { status: r.status, corpo };
+  } catch (e) {
+    return { status: 0, corpo: { erro: "não consegui falar com a API (" + e.message + ")" } };
+  }
+}
+const postJson = (caminho, dados) => chama(caminho, {
+  method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(dados),
+});
+
+async function carregaEstacoes() {
+  if (!API) {
+    $("relatos").innerHTML = `<div class="vazio">A página abriu sem o config.js: rode o ./infra/07-site.sh.</div>`;
+    return;
+  }
+  $("origem").textContent = "relatos pela API " + API;
+  const lista = (await (await fetch("estacoes.json")).json()).estacoes;
+  lista.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+  for (const sel of [$("estacao"), $("consulta")]) {
+    sel.innerHTML = lista.map((e) => `<option value="${esc(e.codigo)}" data-nome="${esc(e.nome)}">${esc(e.nome)}</option>`).join("");
+    sel.value = "BRS";
+  }
+  listaRelatos();
+}
+
+// Redesenha a foto: tira o EXIF (a localização do celular) e reduz para até 1600 px (RD-01)
+function preparaFoto(arquivo) {
+  return new Promise((ok, falha) => {
+    const img = new Image();
+    img.onload = () => {
+      const escala = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * escala); c.height = Math.round(img.height * escala);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      ok(c.toDataURL("image/jpeg", 0.85).split(",")[1]);
+    };
+    img.onerror = () => falha(new Error("não consegui ler a imagem"));
+    img.src = URL.createObjectURL(arquivo);
+  });
+}
+
+function mostraResposta({ status, corpo }) {
+  const box = $("resposta");
+  box.style.display = "block";
+  box.className = `resposta r${status}`;
+  if (status === 201) {
+    box.innerHTML = `<b>201 · relato gravado.</b><br>protocolo <span class="codigo">${esc(corpo.protocolo)}</span><br><a href="${esc(corpo.foto)}" target="_blank" rel="noopener">abrir a foto gravada no S3</a>`;
+  } else if (status === 200) {
+    box.innerHTML = `<b>200 · reenvio reconhecido.</b> O mesmo protocolo <span class="codigo">${esc(corpo.protocolo)}</span>, e nada foi gravado de novo.`;
+  } else if (status === 400) {
+    box.innerHTML = `<b>400 · recusado pela função.</b> ${esc(corpo.erro)}${corpo.campo ? ` <span class="etiqueta">campo: ${esc(corpo.campo)}</span>` : ""}`;
+  } else {
+    box.className = "resposta rerro";
+    box.innerHTML = `<b>${status || "sem resposta"} · erro.</b> ${esc(corpo.erro)}`;
+  }
+}
+
+async function envia(dados) {
+  for (const b of ["enviar", "reenviar", "invalido"]) $(b).disabled = true;
+  try {
+    const r = await postJson("/relatos", dados);
+    mostraResposta(r);
+    if (r.status === 201 || r.status === 200) { $("consulta").value = $("estacao").value; listaRelatos(); }
+  } finally {
+    $("enviar").disabled = false; $("invalido").disabled = false; $("reenviar").disabled = !ultimoEnvio;
+  }
+}
+
+$("foto").addEventListener("change", () => {
+  const f = $("foto").files[0];
+  if (f) { $("previa").src = URL.createObjectURL(f); $("previa").style.display = "block"; }
+});
+
+$("form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const f = $("foto").files[0];
+  if (!f) return;
+  ultimoEnvio = {
+    estacao: $("estacao").selectedOptions[0].dataset.nome, tipo: $("tipo").value, faixa: $("faixa").value,
+    descricao: $("descricao").value.trim(), foto: await preparaFoto(f), codigo_envio: novoCodigo(),
+  };
+  await envia(ultimoEnvio);
+});
+
+$("reenviar").addEventListener("click", () => ultimoEnvio && envia(ultimoEnvio));
+
+// Manda direto um nome fora da lista: quem recusa é a função, e não a página (RF-05)
+$("invalido").addEventListener("click", async () => {
+  const f = $("foto").files[0];
+  const foto = f ? await preparaFoto(f) : "/9j/4AAQ";
+  await envia({ estacao: "Barra Funda", tipo: $("tipo").value, faixa: $("faixa").value, descricao: "", foto, codigo_envio: novoCodigo() });
+});
+
+function cartao(i) {
+  return `<div class="relato"><img src="${esc(i.foto_url)}" alt="foto do local"><div class="corpo">
+    <div class="tipo">${esc(i.tipo)}</div>
+    <div><span class="etiqueta">${esc(i.faixa)}</span><span class="etiqueta">${esc(i.confirmacoes)} ${i.confirmacoes === 1 ? "confirmação" : "confirmações"}</span></div>
+    <div>${esc(i.descricao)}</div>
+    <div class="nota">${esc(new Date(i.enviado_em).toLocaleString("pt-BR"))} · protocolo ${esc(i.protocolo)}</div>
+    <div class="retorno"></div>
+    <button class="confirmar" type="button" data-estacao="${esc(i.estacao_id)}" data-chave="${esc(i.dia_protocolo)}">O problema continua · confirmar</button>
+  </div></div>`;
+}
+
+async function listaRelatos() {
+  const codigo = $("consulta").value;
+  const nome = $("consulta").selectedOptions[0]?.dataset.nome || codigo;
+  $("relatos").innerHTML = `<div class="nota">carregando…</div>`;
+  const { status, corpo } = await chama(`/relatos?estacao=${encodeURIComponent(codigo)}`);
+  if (status !== 200) { $("relatos").innerHTML = `<div class="vazio">${esc(corpo.erro || "erro " + status)}</div>`; return; }
+  if (!corpo.relatos.length) {
+    $("relatos").innerHTML = `<div class="vazio"><b>${esc(nome)}: 0 relatos.</b> ${VAZIO}</div>`;
+    return;
+  }
+  $("relatos").innerHTML = `<div class="nota">${corpo.total} relato(s) em ${esc(nome)}, do mais confirmado ao menos confirmado</div>` +
+    `<div class="lista">${corpo.relatos.map(cartao).join("")}</div>`;
+}
+
+// US-03: confirmar um relato existente. A lista recarrega, porque a ordem pode mudar.
+$("relatos").addEventListener("click", async (ev) => {
+  const botao = ev.target.closest("button.confirmar");
+  if (!botao) return;
+  botao.disabled = true;
+  const { status, corpo } = await postJson("/confirmacoes", { estacao_id: botao.dataset.estacao, dia_protocolo: botao.dataset.chave });
+  if (status === 200) { listaRelatos(); return; }
+  botao.closest(".corpo").querySelector(".retorno").textContent = corpo.erro || `erro ${status}`;
+  botao.disabled = status !== 0;
+});
+
+$("consulta").addEventListener("change", listaRelatos);
+carregaEstacoes();
+</script>
+</body>
+</html>
