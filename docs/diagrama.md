@@ -22,7 +22,9 @@ As setas numeradas seguem um relato, do envio à consulta:
 5. a `consultar` lê da tabela os relatos dos últimos 30 dias da estação.
 
 A ordem de 3 e 4 é a preocupação de Reliability do FURPS: não pode existir
-relato listado apontando para uma foto que nunca subiu.
+relato listado apontando para uma foto que nunca subiu. No passo 3, a função
+grava no mesmo bucket também a ficha do relato, em JSON, em `fichas/`, que fica
+fechada ao público.
 
 **Nenhuma seta liga o navegador à tabela.** O único caminho até os relatos passa
 pelo API Gateway e por uma função, como descreve a seção 2.1 do documento de

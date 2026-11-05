@@ -6,10 +6,12 @@
 # uso: lstk start   (em outro terminal, ou antes)
 #      bash testes/sprint2-dynamodb.sh
 #
-# Cria e apaga a tabela cptm-sos-relatos só no emulador local.
+# Cria e apaga uma tabela própria, cptm-sos-relatos-teste, só no emulador local.
+# Ela tem a mesma chave da tabela de verdade, mas outro nome: assim o teste pode
+# rodar depois do infra/deploy.sh sem apagar os relatos gravados pela função.
 
 set -u
-TABELA=cptm-sos-relatos
+TABELA=cptm-sos-relatos-teste
 AWS="lstk aws"
 OK=0
 FALHA=0

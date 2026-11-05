@@ -4,8 +4,8 @@ Entregável da Sprint 2, no formato do Template 2. As seções têm os mesmos n�
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 29/10/2026\
-Versão: 1.4
+Data: 05/11/2026\
+Versão: 1.5
 
 ## 1. Requisitos não funcionais
 
@@ -218,11 +218,11 @@ O diagrama foi feito no Lucidchart, sobre o modelo "Estrutura horizontal AWS (20
 | Navegador | — | Mostra o formulário, a consulta e o botão de confirmar; limpa e reduz a foto e gera o código de cada envio e de cada confirmação | US-01, US-02, US-03, RNF-01, RNF-04 |
 | Site estático | Amazon S3, bucket `cptm-sos-site` | Serve `index.html`, `config.js` e `estacoes.json` | US-01, US-02, US-03 |
 | Entrada da API | Amazon API Gateway | Recebe as três rotas e invoca a função certa | US-01, US-02, US-03: é por ela que passam as três rotas |
-| Função registrar | AWS Lambda | Valida, deriva o protocolo e grava a foto e o relato, só se o protocolo for novo | RF-01, RF-02, RF-05, RNF-01, RNF-05 |
+| Função registrar | AWS Lambda | Valida, deriva o protocolo e grava a foto, a ficha e o relato, só se o protocolo for novo | RF-01, RF-02, RF-05, RNF-01, RNF-05 |
 | Função consultar | AWS Lambda | Faz o `query` na partição da estação, só nos últimos 30 dias, e ordena | RF-03, RNF-03 |
 | Função confirmar | AWS Lambda | Soma 1 confirmação, só se o relato tiver até 30 dias e o código da confirmação for novo | RF-04, RNF-04 |
 | Tabela de relatos | Amazon DynamoDB, `cptm-sos-relatos` | Guarda o relato, com `estacao_id` como chave de partição | RF-01, RF-03, RF-04, RNF-03 |
-| Bucket de fotos | Amazon S3, `cptm-sos-fotos` | Guarda a foto em `fotos/<estacao_id>/<protocolo>.jpg`; o público só lê, pelo endereço exato | RF-02, RNF-02 |
+| Bucket de fotos | Amazon S3, `cptm-sos-fotos` | Guarda a foto em `fotos/<estacao_id>/<protocolo>.jpg`, que o público só lê, pelo endereço exato, e a ficha do relato em `fichas/<estacao_id>/<protocolo>.json`, fechada ao público | RF-02, RNF-02 |
 | Papéis das funções | AWS IAM | Concede a cada função só o que ela usa: a `consultar` só lê, e só a `registrar` grava no bucket | RF-03, RNF-02 |
 | Registros | Amazon CloudWatch Logs | Guarda uma linha por execução, sem dado de quem chamou | RF-05, RNF-05 |
 
@@ -232,7 +232,7 @@ A passageira escolhe a estação, o tipo de problema e a faixa de horário, escr
 
 O API Gateway invoca a função `registrar`. Ela confere a estação na lista aceita, o tipo, a faixa e a foto, presente e com até 2 MB. No primeiro campo recusado, devolve 400 dizendo qual foi e imprime uma linha com o nome do campo, sem o valor e sem nada de quem enviou (RF-05 e RNF-05).
 
-Com tudo válido, a função deriva o protocolo do código e confere se ele já existe na tabela. Se existir, é um reenvio, e ela devolve o mesmo protocolo sem gravar nada (RNF-01). Se não, grava primeiro a foto no S3, em `fotos/<estacao_id>/<protocolo>.jpg`, e depois o relato na tabela, com 0 confirmações, numa gravação condicional. A ordem é a preocupação de Reliability do FURPS da Sprint 1: não pode existir relato apontando para uma foto que nunca subiu. A função devolve 201 com o protocolo e o endereço da foto.
+Com tudo válido, a função deriva o protocolo do código e confere se ele já existe na tabela. Se existir, é um reenvio, e ela devolve o mesmo protocolo sem gravar nada (RNF-01). Se não, grava primeiro a foto no S3, em `fotos/<estacao_id>/<protocolo>.jpg`, depois a ficha do relato em JSON, em `fichas/<estacao_id>/<protocolo>.json`, e por último o relato na tabela, com 0 confirmações, numa gravação condicional. A ordem é a preocupação de Reliability do FURPS da Sprint 1: não pode existir relato apontando para uma foto que nunca subiu. A função devolve 201 com o protocolo e o endereço da foto.
 
 A página recarrega a consulta: um GET em `/relatos?estacao=BRS` chega à função `consultar`, que faz um `query` na partição da estação a partir do dia de 30 dias atrás, descarta o que passou de 30 dias na hora exata, ordena por confirmações e, no empate, do mais recente para o mais antigo, e devolve a lista. Se ela vier vazia, a página mostra "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura."
 
@@ -248,8 +248,8 @@ Ficam especificados e fora do recorte das Sprints 3 e 4 (seção 8): a conferên
 | Função registrar | Nenhum relato novo entra | A consulta e a confirmação continuam: quem vai embarcar ainda vê o que já foi relatado, que é o que mais importa à noite |
 | Função consultar | A passageira não vê os relatos da estação | Relatos e confirmações continuam sendo aceitos e nada se perde; a lista volta quando a função voltar |
 | Função confirmar | Nenhuma confirmação é somada | Relato e consulta continuam; a ordem da lista fica parada nos números que já tinha |
-| Tabela de relatos | Nada funciona | Nada. As fotos continuam no bucket, com a estação e o protocolo no caminho, mas sem o tipo, a faixa e a descrição: o acervo não se reconstrói a partir delas |
-| Bucket de fotos | O relato falha antes de gravar na tabela, porque a foto vai primeiro; as fotos dos relatos existentes não abrem | A consulta continua mostrando os relatos em texto, e a confirmação continua |
+| Tabela de relatos | Nada funciona | Nada. As fichas continuam no bucket, com os campos de cada relato como ele foi aceito: o acervo se reconstrói a partir delas, só sem as confirmações somadas depois |
+| Bucket de fotos | O relato falha antes de gravar na tabela, porque a foto e a ficha vão primeiro; as fotos dos relatos existentes não abrem | A consulta continua mostrando os relatos em texto, e a confirmação continua |
 | Registros | Some o registro das recusas | Relatar, consultar e confirmar continuam funcionando; o que se perde é a prova do RF-05 e do RNF-05 durante a queda |
 
 ## 6. Modelo de dados
@@ -314,6 +314,7 @@ A chave foi conferida no LocalStack em 22/10/2026, com o script [`testes/sprint2
 |---|---|---|
 | Os campos do relato: estação, tipo, faixa, descrição, data, confirmações e o caminho da foto | Amazon DynamoDB, tabela `cptm-sos-relatos` | São pequenos e são o que a consulta filtra, ordena e mostra |
 | A foto do local | Amazon S3, bucket `cptm-sos-fotos`, em `fotos/<estacao_id>/<protocolo>.jpg` | Uma foto chega a 2 MB, e um item do DynamoDB aceita no máximo 400 KB. A tabela guarda só o caminho. O protocolo no nome faz o reenvio regravar a mesma foto, em vez de criar outra (RNF-01) |
+| A ficha do relato, em JSON: os mesmos campos do item, como ele foi aceito | Amazon S3, bucket `cptm-sos-fotos`, em `fichas/<estacao_id>/<protocolo>.json`, fechada ao público | É a cópia do que a função aceitou, gravada antes do item. Se a tabela se perder, o acervo se reconstrói a partir das fichas (seção 5.3). Nenhuma tela lê as fichas |
 | A lista de estações aceitas: código, nome de exibição e linhas | Arquivo `estacoes.json`, no pacote da função `registrar` e no bucket do site | Não é dado que a passageira cadastra: é regra, e muda raramente. Um arquivo só, no repositório, publicado nos dois lugares pelo mesmo script, de modo que a lista da página e a da função não divergem |
 | A página: `index.html` e `config.js` | Amazon S3, bucket `cptm-sos-site` | Apresentação, sem credencial nenhuma |
 
@@ -398,5 +399,7 @@ Ajuste após a orientação da professora (15/10/2026): os requisitos não funci
 Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi conferido no LocalStack (seção 6.2); as razões dos requisitos não funcionais foram encurtadas para uma ou duas frases; o recorte passou a deixar especificados e não implementados o RNF-04, o limite de 10 minutos e a conferência do EXIF na função (seção 8); e o diagrama passou a ser feito no Lucidchart (seção 5). Versão do documento: 1.2.
 
 Ajuste após a devolutiva da professora (29/10/2026): o diagrama foi refeito no Lucidchart sobre o modelo "Estrutura horizontal AWS (2019)", com o ícone oficial de cada serviço e as setas do caminho de um relato numeradas de 1 a 5 (seção 5). A passageira entrou no desenho e na legenda. Versão do documento: 1.4.
+
+Ajuste da equipe, sem devolutiva (05/11/2026): o documento passou a registrar a ficha do relato em JSON que a função `registrar` da Sprint 3 grava no bucket de fotos, fechada ao público (seções 5.1, 5.2, 5.3 e 6.3). Versão do documento: 1.5.
 
 A revisão foi feita com a professora, e os ajustes que ela pediu são os registrados acima.
