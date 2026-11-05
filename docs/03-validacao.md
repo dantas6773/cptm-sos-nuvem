@@ -7,7 +7,7 @@ Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela prof
 Data: 05/11/2026\
 Versão: 1.0
 
-> Os testes foram rodados em 05/11/2026, a partir do ambiente vazio, e as saídas abaixo são as dessa execução. Continuam marcados com `[preencher: ...]` só o que depende de pessoas: a conferência da página no navegador (C4), as duas homologações (seções 5 e 6) e o fechamento (seção 8).
+> Os testes foram rodados em 05/11/2026, a partir do ambiente vazio, e as saídas abaixo são as dessa execução. Continuam marcados com `[preencher: ...]` só o que depende de pessoas: as duas homologações (seções 5 e 6) e o fechamento (seção 8).
 
 ## 1. Reconstrução do ambiente
 
@@ -113,7 +113,7 @@ Na primeira tentativa, `./testes/executar.sh` não rodou ("permission denied"): 
 
 Nenhum cenário deixou de virar comando. Duas partes dos critérios são verificadas de forma indireta:
 
-- **C4, "a tela exibe a mensagem":** o script confere a resposta da API (200, total 0) e que a mensagem exata está no código da página. Que ela aparece na tela é conferido no navegador, abrindo a página com a Botujuru: [preencher: sim ou não, e a captura].
+- **C4, "a tela exibe a mensagem":** o script confere a resposta da API (200, total 0) e que a mensagem exata está no código da página. Que ela aparece na tela é conferido no navegador, abrindo a página com a Botujuru na consulta: sim, a página mostra "Botujuru: 0 relatos. Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura." ([captura](evidencias/C4-botujuru-vazia.png), feita no WebKit, o motor do Safari).
 - **C2, "sem nenhum dado de quem enviou":** o script confere que o nome digitado ("Barra Funda") não está nas linhas do registro. O registro da função só leva protocolo, estação e campo recusado, o que se confere também lendo `app/gravar/handler.py`.
 
 ## 3. Requisitos não funcionais medidos
@@ -243,6 +243,6 @@ Escolhemos não identificar quem confirma (RD-01), então o risco de confirmaç�
 | Item | Resposta |
 |---|---|
 | URL do repositório | https://github.com/dantas6773/cptm-sos-nuvem |
-| Número de commits | 33, contando o que registra esta validação |
+| Número de commits | 34, contando os que registram esta validação |
 | Há pelo menos um commit por sprint | sim: requisitos (Sprint 1), arquitetura (2), provisionamento e função registrar (3), API e página (4), testes e validação (5); a captura E5.5 mostra os commits por integrante |
 | Endereço do site depois do deploy | http://cptm-sos-site.s3-website.localhost.localstack.cloud:4566 |
