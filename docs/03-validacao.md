@@ -243,6 +243,6 @@ Escolhemos não identificar quem confirma (RD-01), então o risco de confirmaç�
 | Item | Resposta |
 |---|---|
 | URL do repositório | https://github.com/dantas6773/cptm-sos-nuvem |
-| Número de commits | 34, contando os que registram esta validação |
+| Número de commits | 35, contando os que registram esta validação |
 | Há pelo menos um commit por sprint | sim: requisitos (Sprint 1), arquitetura (2), provisionamento e função registrar (3), API e página (4), testes e validação (5); a captura E5.5 mostra os commits por integrante |
 | Endereço do site depois do deploy | http://cptm-sos-site.s3-website.localhost.localstack.cloud:4566 |

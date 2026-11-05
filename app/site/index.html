@@ -99,7 +99,16 @@ const ESCAPE = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#
 // Tudo o que vem da API ou da lista é escrito como texto, nunca como HTML:
 // a descrição é digitada por qualquer pessoa, e a página é pública.
 const esc = (valor) => String(valor ?? "").replace(/[&<>"']/g, (c) => ESCAPE[c]);
-const API = typeof URL_API === "string" ? URL_API.replace(/\/$/, "") : null;
+// O Chrome e o Safari tentam abrir a página por https primeiro, e o LocalStack aceita.
+// Uma página em https não pode chamar endereços http (mixed content): o navegador
+// bloqueia. Então, aberta por https, a página pede a API e as fotos também por https.
+// As fotos vêm como http://localhost:4566/..., e o certificado do LocalStack não cobre
+// "localhost"; por https elas são pedidas em s3.localhost.localstack.cloud.
+const HTTPS = location.protocol === "https:";
+const seguro = (u) => !HTTPS ? u : String(u ?? "")
+  .replace(/^http:\/\/localhost:4566\//, "https://s3.localhost.localstack.cloud:4566/")
+  .replace(/^http:\/\//, "https://");
+const API = typeof URL_API === "string" ? seguro(URL_API.replace(/\/$/, "")) : null;
 const VAZIO = "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura.";
 let ultimoEnvio = null;   // o mesmo código de envio, para reenviar sem duplicar (RNF-01)
 
@@ -163,7 +172,7 @@ function mostraResposta({ status, corpo }) {
   box.style.display = "block";
   box.className = `resposta r${status}`;
   if (status === 201) {
-    box.innerHTML = `<b>201 · relato gravado.</b><br>protocolo <span class="codigo">${esc(corpo.protocolo)}</span><br><a href="${esc(corpo.foto)}" target="_blank" rel="noopener">abrir a foto gravada no S3</a>`;
+    box.innerHTML = `<b>201 · relato gravado.</b><br>protocolo <span class="codigo">${esc(corpo.protocolo)}</span><br><a href="${esc(seguro(corpo.foto))}" target="_blank" rel="noopener">abrir a foto gravada no S3</a>`;
   } else if (status === 200) {
     box.innerHTML = `<b>200 · reenvio reconhecido.</b> O mesmo protocolo <span class="codigo">${esc(corpo.protocolo)}</span>, e nada foi gravado de novo.`;
   } else if (status === 400) {
@@ -211,7 +220,7 @@ $("invalido").addEventListener("click", async () => {
 });
 
 function cartao(i) {
-  return `<div class="relato"><img src="${esc(i.foto_url)}" alt="foto do local"><div class="corpo">
+  return `<div class="relato"><img src="${esc(seguro(i.foto_url))}" alt="foto do local"><div class="corpo">
     <div class="tipo">${esc(i.tipo)}</div>
     <div><span class="etiqueta">${esc(i.faixa)}</span><span class="etiqueta">${esc(i.confirmacoes)} ${i.confirmacoes === 1 ? "confirmação" : "confirmações"}</span></div>
     <div>${esc(i.descricao)}</div>
