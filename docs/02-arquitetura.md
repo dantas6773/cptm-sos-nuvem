@@ -4,8 +4,8 @@ Entregável da Sprint 2, no formato do Template 2. As seções têm os mesmos n�
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 05/11/2026\
-Versão: 1.5
+Data: 11/11/2026\
+Versão: 1.6
 
 ## 1. Requisitos não funcionais
 
@@ -378,7 +378,7 @@ Antes de a função `registrar` ser escrita, na Sprint 3, a lista de estações 
 | O protocolo é derivado do código de envio, por um hash | O protocolo é o próprio código da página | O protocolo aparece na consulta: se fosse o código, quem o lesse poderia reenviá-lo com outra foto e trocar a foto de um relato alheio. O código identifica o envio, e não quem enviou. |
 | A chave de ordenação começa pelo dia do envio | O protocolo como chave de ordenação, com filtro de 30 dias depois da leitura | O filtro leria toda a história da estação. O preço é um defeito declarado: um reenvio que atravesse a meia-noite em UTC, 21h em Brasília, duplica o relato. |
 | A foto tem leitura pública pelo endereço exato | Endereço temporário assinado pela função `consultar` | Assinar exige permissão no S3, e o RF-03 limita a `consultar` a ler a tabela. Listar, gravar e apagar continuam proibidos (RNF-02). |
-| A lista de estações é um arquivo | Uma tabela de estações no DynamoDB | São 97 estações, que mudam raramente; uma tabela custaria uma leitura a mais em cada relato. |
+| A lista de estações é um arquivo | Uma tabela de estações no DynamoDB | São 98 estações, que mudam raramente; uma tabela custaria uma leitura a mais em cada relato. |
 
 ## 10. Revisão cruzada recebida
 
@@ -401,5 +401,7 @@ Ajustes após a devolutiva da professora (22/10/2026): o uso do DynamoDB foi con
 Ajuste após a devolutiva da professora (29/10/2026): o diagrama foi refeito no Lucidchart sobre o modelo "Estrutura horizontal AWS (2019)", com o ícone oficial de cada serviço e as setas do caminho de um relato numeradas de 1 a 5 (seção 5). A passageira entrou no desenho e na legenda. Versão do documento: 1.4.
 
 Ajuste da equipe, sem devolutiva (05/11/2026): o documento passou a registrar a ficha do relato em JSON que a função `registrar` da Sprint 3 grava no bucket de fotos, fechada ao público (seções 5.1, 5.2, 5.3 e 6.3). Versão do documento: 1.5.
+
+Ajuste da equipe, sem devolutiva (11/11/2026): a lista de estações passou de 97 para 98, com a inclusão de Cimenrita, na Linha 8 (seção 9). Versão do documento: 1.6.
 
 A revisão foi feita com a professora, e os ajustes que ela pediu são os registrados acima.

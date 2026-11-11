@@ -4,8 +4,8 @@ Entregável da Sprint 1, no formato do Template 1.
 
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
-Data: 27/10/2026\
-Versão: 1.2
+Data: 11/11/2026\
+Versão: 1.3
 
 ## 1. O cenário
 
@@ -59,7 +59,7 @@ Os seis serviços do percurso aparecem nos requisitos, cada um dentro de algo qu
 
 As listas aceitas, que tornam o RF-05 verificável:
 
-- **Estações:** as estações das linhas 7 a 13, cada uma pelo nome oficial. A lista de partida é a que o CPTM SOS já usa, com 97 estações; antes de ser usada, ela será conferida com a relação oficial das operadoras.
+- **Estações:** as estações das linhas 7 a 13, cada uma pelo nome oficial. A lista de partida é a que o CPTM SOS já usa. Na revisão de 11/11/2026, dois nomes da Linha 8 foram corrigidos (Amador Bueno e Ambuitá) e a estação Cimenrita entrou, e a lista passou a ter 98 estações; a conferência completa com a relação oficial das operadoras continua pendente.
 - **Tipos de problema:** iluminação precária; área isolada; sem agente de segurança; equipamento de segurança quebrado (câmera, interfone, botão de emergência); outro.
 - **Faixas de horário:** madrugada (0h–6h); manhã (6h–12h); tarde (12h–18h); noite (18h–24h).
 
@@ -168,7 +168,7 @@ Consideramos tirar a ordenação de US-02 e levá-la para US-03, o que deixaria 
 | Performance | A consulta é feita com o trem chegando e o sinal fraco: se a lista demorar mais do que o trem leva para parar, ela não serve para decidir onde esperar. E uma foto pesada não pode atrasar o texto. |
 | Supportability | Estações mudam de nome e de operadora — as linhas 8 e 9, antes da CPTM, hoje são operadas pela ViaMobilidade. Quando o nome de exibição de uma estação mudar, os relatos antigos dela não podem ficar perdidos sob o nome anterior. |
 
-Estas cinco linhas viram os requisitos não funcionais da Sprint 2.
+Estas cinco linhas eram o ponto de partida dos requisitos não funcionais da Sprint 2. Por orientação da professora, eles partiram dos cinco requisitos funcionais, um para cada; nenhuma das cinco preocupações ficou para trás, e a seção 1.2 do documento de arquitetura mostra para onde foi cada uma.
 
 ## 8. Decisões e alternativas descartadas
 
@@ -180,7 +180,7 @@ Estas cinco linhas viram os requisitos não funcionais da Sprint 2.
 | Quais cinco requisitos | Trocar a confirmação (RF-04) pela marcação de um relato como resolvido, feita pela segurança da estação | Marcar como resolvido exige saber quem é agente, o que pede autenticação, fora do escopo; sem ela, qualquer pessoa poderia apagar um alerta verdadeiro. A janela de 30 dias resolve o envelhecimento sem depender de alguém lembrar de fechar o relato. |
 | Qual caso de exceção | Tratar só a falta da foto, um caso de dado ausente | Foto ausente continua coberta pelo RF-05, mas é o erro mais fácil de evitar na própria tela. O erro mais provável aqui é o nome da estação: a mesma estação tem vários nomes no uso comum ("Barra Funda" e "Palmeiras-Barra Funda"), e aceitar qualquer texto espalharia os relatos de um mesmo lugar sob nomes diferentes, e a consulta perderia relatos. Daí o valor inválido. A lista vazia entrou porque, numa consulta sobre segurança, "nenhum relato" é facilmente lido como "estação segura". |
 | O campo pelo qual se consulta | Consultar por linha, e não por estação | A passageira decide por onde andar dentro de uma estação, não de uma linha: a Linha 11 tem 16 estações, e a consulta traria relatos de lugares por onde ela não vai passar. E a Brás atende três linhas: por linha, os relatos dela ficariam divididos em três consultas. |
-| Confirmação sem identificar quem confirma | Exigir conta, ou guardar um identificador do aparelho, para impedir que a mesma pessoa confirme várias vezes | As duas opções identificam quem participa e contrariam o RD-01. Aceitamos o risco de confirmações repetidas e o declaramos aqui; ele volta na Sprint 2 como requisito não funcional. |
+| Confirmação sem identificar quem confirma | Exigir conta, ou guardar um identificador do aparelho, para impedir que a mesma pessoa confirme várias vezes | As duas opções identificam quem participa e contrariam o RD-01. Aceitamos o risco de confirmações repetidas e o declaramos aqui. Na Sprint 2, ele virou uma decisão, e não um requisito não funcional: um intervalo de 10 minutos entre confirmações do mesmo relato, especificado e fora do recorte implementado. |
 
 ## 9. Revisão cruzada recebida
 
@@ -197,5 +197,7 @@ Data: 08/10/2026
 ### 9.1 O que foi ajustado depois da revisão
 
 Ajuste após a devolutiva da professora (08/10/2026): os requisitos funcionais passaram a citar os seis serviços do percurso — API Gateway e DynamoDB no RF-01, S3 no RF-02, Lambda, IAM e DynamoDB no RF-03, DynamoDB no RF-04, Lambda e CloudWatch Logs no RF-05 — todo requisito cita ao menos um serviço. O critério US-01, cenário 2, passou a conferir o registro da recusa no CloudWatch Logs. Versão do documento: 1.1.
+
+Ajuste da equipe, sem devolutiva (11/11/2026): a seção 7 e a última decisão da seção 8 passaram a dizer o que a Sprint 2 fez com os requisitos não funcionais e com as confirmações repetidas; e a lista de estações da seção 2 foi revisada, com dois nomes corrigidos e uma estação incluída. Os requisitos funcionais, os de domínio, as histórias e os critérios de aceite não mudaram. Versão do documento: 1.3.
 
 A revisão foi feita com a professora, que olhou as duas primeiras sprints. O ajuste que ela pediu para a Sprint 1 é o registrado acima. Versão do documento: 1.2.

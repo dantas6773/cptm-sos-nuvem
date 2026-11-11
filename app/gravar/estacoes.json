@@ -1,13 +1,6 @@
 {
-  "observacao": "Lista provisória: estações das linhas 7 a 13, a partir da lista do CPTM SOS. Os códigos são do projeto, não das operadoras. Conferir com a relação oficial (docs/02-arquitetura.md, seção 8).",
+  "observacao": "Lista de partida: estações das linhas 7 a 13, a partir da lista do CPTM SOS. Os códigos são do projeto, não das operadoras. Revisada em 11/11/2026: Amador Bueno e Ambuitá corrigidas, Cimenrita incluída (Linha 8) e a Linha 10 em Palmeiras-Barra Funda. A conferência completa com a relação oficial das operadoras continua pendente (docs/01-requisitos.md, seção 2).",
   "estacoes": [
-    {
-      "codigo": "BUE",
-      "nome": "2 Bueno",
-      "linhas": [
-        8
-      ]
-    },
     {
       "codigo": "AEG",
       "nome": "Aeroporto-Guarulhos",
@@ -16,8 +9,15 @@
       ]
     },
     {
+      "codigo": "BUE",
+      "nome": "Amador Bueno",
+      "linhas": [
+        8
+      ]
+    },
+    {
       "codigo": "AMB",
-      "nome": "Ambuíta",
+      "nome": "Ambuitá",
       "linhas": [
         8
       ]
@@ -48,13 +48,6 @@
       "nome": "Autódromo",
       "linhas": [
         9
-      ]
-    },
-    {
-      "codigo": "AGB",
-      "nome": "Água Branca",
-      "linhas": [
-        7
       ]
     },
     {
@@ -156,6 +149,13 @@
       "nome": "Cidade Universitária",
       "linhas": [
         9
+      ]
+    },
+    {
+      "codigo": "CMR",
+      "nome": "Cimenrita",
+      "linhas": [
+        8
       ]
     },
     {
@@ -370,6 +370,13 @@
       ]
     },
     {
+      "codigo": "JOB",
+      "nome": "José Bonifácio",
+      "linhas": [
+        11
+      ]
+    },
+    {
       "codigo": "JOD",
       "nome": "João Dias",
       "linhas": [
@@ -377,8 +384,8 @@
       ]
     },
     {
-      "codigo": "JOB",
-      "nome": "José Bonifácio",
+      "codigo": "JNP",
+      "nome": "Jundiapeba",
       "linhas": [
         11
       ]
@@ -388,13 +395,6 @@
       "nome": "Jundiaí",
       "linhas": [
         7
-      ]
-    },
-    {
-      "codigo": "JNP",
-      "nome": "Jundiapeba",
-      "linhas": [
-        11
       ]
     },
     {
@@ -476,7 +476,8 @@
       "nome": "Palmeiras-Barra Funda",
       "linhas": [
         7,
-        8
+        8,
+        10
       ]
     },
     {
@@ -593,20 +594,6 @@
       ]
     },
     {
-      "codigo": "SCS",
-      "nome": "São Caetano do Sul",
-      "linhas": [
-        10
-      ]
-    },
-    {
-      "codigo": "SMP",
-      "nome": "São Miguel Paulista",
-      "linhas": [
-        12
-      ]
-    },
-    {
       "codigo": "SCR",
       "nome": "Socorro",
       "linhas": [
@@ -618,6 +605,20 @@
       "nome": "Suzano",
       "linhas": [
         11
+      ]
+    },
+    {
+      "codigo": "SCS",
+      "nome": "São Caetano do Sul",
+      "linhas": [
+        10
+      ]
+    },
+    {
+      "codigo": "SMP",
+      "nome": "São Miguel Paulista",
+      "linhas": [
+        12
       ]
     },
     {
@@ -657,13 +658,6 @@
       ]
     },
     {
-      "codigo": "VAP",
-      "nome": "Várzea Paulista",
-      "linhas": [
-        7
-      ]
-    },
-    {
       "codigo": "VIA",
       "nome": "Vila Aurora",
       "linhas": [
@@ -689,6 +683,20 @@
       "nome": "Villa Lobos-Jaguaré",
       "linhas": [
         9
+      ]
+    },
+    {
+      "codigo": "VAP",
+      "nome": "Várzea Paulista",
+      "linhas": [
+        7
+      ]
+    },
+    {
+      "codigo": "AGB",
+      "nome": "Água Branca",
+      "linhas": [
+        7
       ]
     }
   ]
