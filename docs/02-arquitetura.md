@@ -362,7 +362,7 @@ Prioridade não é ordem de construção. A US-02 está acima da US-03, porque a
 | O que fica especificado e não implementado | Do backlog, o RNF-04: o reenvio de uma confirmação pode somar duas vezes. Do desenho, duas proteções da seção 9: o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função; a página continua limpando a foto. Continuam fora do escopo, como na Sprint 1: botão de emergência e localização em tempo real; conta e autenticação; denúncia de crime ou de pessoa; moderação; envio dos relatos à operadora; e a consulta por linha. |
 | Por que este corte | Por orientação da professora, o recorte tem de caber no tempo das Sprints 3 e 4. Fica toda a prioridade alta e a confirmação, que é o que separa o problema recorrente do caso isolado. O RNF-01, o RNF-03 e o RNF-05 entram porque custam pouco: uma condição na gravação, nenhum código além da chave, e uma linha de registro. O que saiu protege contra casos raros ou contra abuso deliberado, e volta na matriz de rastreabilidade da Sprint 5. |
 
-Antes de a função `registrar` ser escrita, na Sprint 3, a lista de estações precisa ser conferida com a relação oficial das operadoras, e cada estação recebe o seu código fixo. A partir daí o código não muda; o nome pode mudar.
+Na Sprint 3, cada estação da lista recebeu o seu código fixo, e a partir daí o código não muda; o nome pode mudar. A conferência completa da lista com a relação oficial das operadoras ainda está pendente: na revisão de 11/11/2026, dois nomes foram corrigidos e uma estação entrou (documento de requisitos, seção 2).
 
 ## 9. Decisões e alternativas descartadas
 
@@ -402,6 +402,6 @@ Ajuste após a devolutiva da professora (29/10/2026): o diagrama foi refeito no 
 
 Ajuste da equipe, sem devolutiva (05/11/2026): o documento passou a registrar a ficha do relato em JSON que a função `registrar` da Sprint 3 grava no bucket de fotos, fechada ao público (seções 5.1, 5.2, 5.3 e 6.3). Versão do documento: 1.5.
 
-Ajuste da equipe, sem devolutiva (11/11/2026): a lista de estações passou de 97 para 98, com a inclusão de Cimenrita, na Linha 8 (seção 9). Versão do documento: 1.6.
+Ajuste da equipe, sem devolutiva (11/11/2026): a lista de estações passou de 97 para 98, com a inclusão de Cimenrita, na Linha 8 (seção 9), e o fim da seção 8 passou a dizer que a conferência completa da lista ainda está pendente. Versão do documento: 1.6.
 
 A revisão foi feita com a professora, e os ajustes que ela pediu são os registrados acima.
