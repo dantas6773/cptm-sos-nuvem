@@ -198,6 +198,6 @@ Data: 08/10/2026
 
 Ajuste após a devolutiva da professora (08/10/2026): os requisitos funcionais passaram a citar os seis serviços do percurso — API Gateway e DynamoDB no RF-01, S3 no RF-02, Lambda, IAM e DynamoDB no RF-03, DynamoDB no RF-04, Lambda e CloudWatch Logs no RF-05 — todo requisito cita ao menos um serviço. O critério US-01, cenário 2, passou a conferir o registro da recusa no CloudWatch Logs. Versão do documento: 1.1.
 
-Ajuste da equipe, sem devolutiva (11/11/2026): a seção 7 e a última decisão da seção 8 passaram a dizer o que a Sprint 2 fez com os requisitos não funcionais e com as confirmações repetidas; e a lista de estações da seção 2 foi revisada, com dois nomes corrigidos e uma estação incluída. Os requisitos funcionais, os de domínio, as histórias e os critérios de aceite não mudaram. Versão do documento: 1.3.
-
 A revisão foi feita com a professora, que olhou as duas primeiras sprints. O ajuste que ela pediu para a Sprint 1 é o registrado acima. Versão do documento: 1.2.
+
+Ajuste da equipe, sem devolutiva (11/11/2026): a seção 7 e a última decisão da seção 8 passaram a dizer o que a Sprint 2 fez com os requisitos não funcionais e com as confirmações repetidas; e a lista de estações da seção 2 foi revisada, com dois nomes corrigidos e uma estação incluída. Os requisitos funcionais, os de domínio, as histórias e os critérios de aceite não mudaram. Versão do documento: 1.3.
