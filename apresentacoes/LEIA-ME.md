@@ -1,7 +1,7 @@
 # Apresentações
 
 As apresentações das sprints. A da Sprint 3, feita pela Mari, é o modelo; as
-das Sprints 1 e 2 seguem esse modelo e estão editáveis: capa e fecho em azul; conteúdo em creme, com a trilha em
+das Sprints 1, 2 e 4 seguem esse modelo e estão editáveis: capa e fecho em azul; conteúdo em creme, com a trilha em
 monoespaçada no alto, o número num círculo amarelo e o título curto numa faixa
 laranja.
 
@@ -10,6 +10,10 @@ laranja.
 | [sprint-1.pptx](sprint-1.pptx) | 1 · do problema ao requisito | 12 | [docs/01-requisitos.md](../docs/01-requisitos.md) |
 | [sprint-2.pptx](sprint-2.pptx) | 2 · do requisito ao desenho | 12 | [docs/02-arquitetura.md](../docs/02-arquitetura.md) |
 | [sprint-3.pdf](sprint-3.pdf) | 3 · do desenho ao script | 11 | [infra/](../infra/) e [app/gravar/](../app/gravar/) |
+| [sprint-4.pptx](sprint-4.pptx) | 4 · do terminal ao navegador | 12 | [infra/](../infra/), [app/consultar/](../app/consultar/), [app/confirmar/](../app/confirmar/) e [app/site/](../app/site/) |
+
+A da Sprint 4 termina ao vivo: o slide 11 é o roteiro da demonstração, a partir
+do ambiente derrubado (`destroy.sh`, `time deploy.sh` e a página).
 
 O conteúdo das Sprints 1 e 2 está fechado e revisado contra os documentos. O
 que falta é aplicar o design final, o mesmo da Sprint 3.

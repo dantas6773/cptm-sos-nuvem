@@ -7,6 +7,7 @@ estação nem são lidos. É o que sustenta o RNF-03.
 
 A lista sai do mais confirmado para o menos confirmado e, no empate, do mais
 recente para o mais antigo. Lista vazia é resposta certa (200), e não erro.
+O total é quantos relatos a estação tem na janela; a lista traz até o limite.
 
 O papel desta função no IAM só permite Query: ela não consegue alterar nenhum
 relato. O registro (print) leva só a estação e o total, nunca o evento.
@@ -128,5 +129,5 @@ def lambda_handler(event, context):
     itens.sort(key=lambda i: (int(i.get("confirmacoes", 0)), i.get("enviado_em", "")), reverse=True)
     relatos = [para_resposta(i) for i in itens[:limite]]
 
-    registra(resultado="ok", estacao_id=estacao, total=len(relatos))
-    return resposta(200, {"estacao_id": estacao, "total": len(relatos), "relatos": relatos})
+    registra(resultado="ok", estacao_id=estacao, total=len(itens), devolvidos=len(relatos))
+    return resposta(200, {"estacao_id": estacao, "total": len(itens), "relatos": relatos})

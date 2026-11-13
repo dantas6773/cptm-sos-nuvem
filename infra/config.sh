@@ -52,8 +52,10 @@ BUCKET_SITE="${PREFIXO}-site"
 URL_FOTOS="http://localhost:4566/${BUCKET}"
 URL_SITE="http://${BUCKET_SITE}.s3-website.localhost.localstack.cloud:4566"
 
-# A raiz do repositório, para que os scripts rodem de qualquer pasta
-RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# A raiz do repositório, para que os scripts rodem de qualquer pasta. Nos
+# scripts (bash), quem diz onde este arquivo está é o BASH_SOURCE; no
+# "source infra/config.sh" do terminal do Mac, que é zsh, é o $0.
+RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/.." && pwd)"
 
 # No Git Bash, impede que "/aws/lambda/..." vire um caminho do Windows
 export MSYS_NO_PATHCONV=1

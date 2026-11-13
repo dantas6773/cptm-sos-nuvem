@@ -179,7 +179,8 @@ function mostraResposta({ status, corpo }) {
     box.innerHTML = `<b>400 · recusado pela função.</b> ${esc(corpo.erro)}${corpo.campo ? ` <span class="etiqueta">campo: ${esc(corpo.campo)}</span>` : ""}`;
   } else {
     box.className = "resposta rerro";
-    box.innerHTML = `<b>${status || "sem resposta"} · erro.</b> ${esc(corpo.erro)}`;
+    const titulo = status > 0 ? `${status} · erro.` : status === 0 ? "sem resposta da API." : "a página não enviou.";
+    box.innerHTML = `<b>${titulo}</b> ${esc(corpo.erro)}`;
   }
 }
 
@@ -203,9 +204,12 @@ $("form").addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const f = $("foto").files[0];
   if (!f) return;
+  let foto;
+  try { foto = await preparaFoto(f); }
+  catch (e) { mostraResposta({ status: -1, corpo: { erro: "não consegui ler a foto: use uma imagem JPEG ou PNG." } }); return; }
   ultimoEnvio = {
     estacao: $("estacao").selectedOptions[0].dataset.nome, tipo: $("tipo").value, faixa: $("faixa").value,
-    descricao: $("descricao").value.trim(), foto: await preparaFoto(f), codigo_envio: novoCodigo(),
+    descricao: $("descricao").value.trim(), foto, codigo_envio: novoCodigo(),
   };
   await envia(ultimoEnvio);
 });
@@ -215,7 +219,7 @@ $("reenviar").addEventListener("click", () => ultimoEnvio && envia(ultimoEnvio))
 // Manda direto um nome fora da lista: quem recusa é a função, e não a página (RF-05)
 $("invalido").addEventListener("click", async () => {
   const f = $("foto").files[0];
-  const foto = f ? await preparaFoto(f) : "/9j/4AAQ";
+  const foto = f ? await preparaFoto(f).catch(() => "/9j/4AAQ") : "/9j/4AAQ";
   await envia({ estacao: "Barra Funda", tipo: $("tipo").value, faixa: $("faixa").value, descricao: "", foto, codigo_envio: novoCodigo() });
 });
 
@@ -240,7 +244,8 @@ async function listaRelatos() {
     $("relatos").innerHTML = `<div class="vazio"><b>${esc(nome)}: 0 relatos.</b> ${VAZIO}</div>`;
     return;
   }
-  $("relatos").innerHTML = `<div class="nota">${corpo.total} relato(s) em ${esc(nome)}, do mais confirmado ao menos confirmado</div>` +
+  const parte = corpo.relatos.length < corpo.total ? `; aqui os ${corpo.relatos.length} mais confirmados` : "";
+  $("relatos").innerHTML = `<div class="nota">${esc(corpo.total)} relato(s) em ${esc(nome)} nos últimos 30 dias${parte}, do mais confirmado ao menos confirmado</div>` +
     `<div class="lista">${corpo.relatos.map(cartao).join("")}</div>`;
 }
 
