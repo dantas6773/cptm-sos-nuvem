@@ -1,5 +1,5 @@
 {
-  "observacao": "Lista de partida: estações das linhas 7 a 13, a partir da lista do CPTM SOS. Os códigos são do projeto, não das operadoras. Revisada em 11/11/2026: Amador Bueno e Ambuitá corrigidas, Cimenrita incluída (Linha 8) e a Linha 10 em Palmeiras-Barra Funda. A conferência completa com a relação oficial das operadoras continua pendente (docs/01-requisitos.md, seção 2).",
+  "observacao": "Lista de partida: estações das linhas 7 a 13, a partir da lista do CPTM SOS. Os códigos são do projeto, não das operadoras. Revisada em 11/11/2026: Amador Bueno e Ambuitá corrigidas, Cimenrita incluída (Linha 8) e a Linha 10 em Palmeiras-Barra Funda. A conferência completa com a relação oficial das operadoras continua pendente (docs/01-requisitos.md, seção 2). Revisada em 14/11/2026 por pesquisa na web, sem a relação oficial: Mendes-Vila Natal passou a Bruno Covas-Mendes/Vila Natal, a Luz saiu da Linha 7 e Palmeiras-Barra Funda entrou na Linha 11, como na operação desde agosto de 2025.",
   "estacoes": [
     {
       "codigo": "AEG",
@@ -430,7 +430,6 @@
       "codigo": "LUZ",
       "nome": "Luz",
       "linhas": [
-        7,
         10,
         11
       ]
@@ -444,7 +443,7 @@
     },
     {
       "codigo": "MVN",
-      "nome": "Mendes-Vila Natal",
+      "nome": "Bruno Covas-Mendes/Vila Natal",
       "linhas": [
         9
       ]
@@ -477,7 +476,8 @@
       "linhas": [
         7,
         8,
-        10
+        10,
+        11
       ]
     },
     {
