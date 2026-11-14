@@ -44,7 +44,7 @@ echo "const URL_API = \"${URL_API}\";" > app/site/config.js
 
 # A mesma lista de estações que vai no pacote da função registrar (seção 6.3).
 # no-cache: depois de um deploy novo, o navegador não fica com o endereço velho.
-for ARQUIVO in app/site/index.html app/site/config.js app/gravar/estacoes.json; do
+for ARQUIVO in app/site/index.html app/site/config.js app/site/inter-latin.woff2 app/gravar/estacoes.json; do
   aws_local s3 cp "$ARQUIVO" "s3://${BUCKET_SITE}/$(basename "$ARQUIVO")" \
     --cache-control no-cache >/dev/null
   echo "enviado: $(basename "$ARQUIVO")"
