@@ -110,6 +110,7 @@ const seguro = (u) => !HTTPS ? u : String(u ?? "")
   .replace(/^http:\/\//, "https://");
 const API = typeof URL_API === "string" ? seguro(URL_API.replace(/\/$/, "")) : null;
 const VAZIO = "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura.";
+const codigosConfirmacao = new Map();   // um código por relato, repetido no reenvio (RNF-04)
 let ultimoEnvio = null;   // o mesmo código de envio, para reenviar sem duplicar (RNF-01)
 
 // Código aleatório de cada envio, no formato UUID. Não usa crypto.randomUUID,
@@ -254,7 +255,11 @@ $("relatos").addEventListener("click", async (ev) => {
   const botao = ev.target.closest("button.confirmar");
   if (!botao) return;
   botao.disabled = true;
-  const { status, corpo } = await postJson("/confirmacoes", { estacao_id: botao.dataset.estacao, dia_protocolo: botao.dataset.chave });
+  // Mesmo código se a passageira tocar de novo depois de uma falha de rede
+  const chave = botao.dataset.chave;
+  if (!codigosConfirmacao.has(chave)) codigosConfirmacao.set(chave, novoCodigo());
+  const { status, corpo } = await postJson("/confirmacoes", { estacao_id: botao.dataset.estacao, dia_protocolo: chave, codigo_confirmacao: codigosConfirmacao.get(chave) });
+  if (status !== 0) codigosConfirmacao.delete(chave);   // respondeu: o próximo toque é outra confirmação
   if (status === 200) { listaRelatos(); return; }
   botao.closest(".corpo").querySelector(".retorno").textContent = corpo.erro || `erro ${status}`;
   botao.disabled = status !== 0;

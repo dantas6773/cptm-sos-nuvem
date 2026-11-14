@@ -175,6 +175,7 @@ components:
       required:
         - estacao_id
         - dia_protocolo
+        - codigo_confirmacao
       properties:
         estacao_id:
           type: string
@@ -182,3 +183,6 @@ components:
         dia_protocolo:
           type: string
           description: Dia do envio e protocolo, como 2026-11-05#9c1e5a7b2f40d863
+        codigo_confirmacao:
+          type: string
+          description: UUID gerado pela pagina a cada toque, repetido no reenvio; o mesmo codigo nao soma duas vezes (RNF-04)
