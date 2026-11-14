@@ -35,7 +35,9 @@ No Windows, rode tudo no **Git Bash** (o PowerShell não executa os `.sh`) e dei
 `lstk.exe` numa pasta que esteja no PATH, como `C:\lstk`; depois de mexer no PATH,
 feche e abra o terminal. O Docker Desktop precisa estar aberto.
 
-Versões usadas pela equipe: [preencher: saída dos comandos da última coluna].
+Versões usadas pela equipe (Windows 11, Git Bash): Docker 29.8.0, lstk 1.4.3,
+AWS CLI 2.37.0, curl 8.21.0, Python 3.11.9. O `zip` não vem no Git Bash; sem ele,
+os scripts empacotam as funções com `python -m zipfile`, então não precisa instalar.
 
 ## Como rodar
 
