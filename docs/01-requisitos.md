@@ -59,7 +59,7 @@ Os seis serviços do percurso aparecem nos requisitos, cada um dentro de algo qu
 
 As listas aceitas, que tornam o RF-05 verificável:
 
-- **Estações:** as estações das linhas 7 a 13, cada uma pelo nome oficial. A lista de partida é a que o CPTM SOS já usa. Na revisão de 11/11/2026, dois nomes da Linha 8 foram corrigidos (Amador Bueno e Ambuitá) e a estação Cimenrita entrou, e a lista passou a ter 98 estações; a conferência completa com a relação oficial das operadoras continua pendente.
+- **Estações:** as estações das linhas 7 a 13, cada uma pelo nome oficial. A lista de partida é a que o CPTM SOS já usa. Na revisão de 11/11/2026, dois nomes da Linha 8 foram corrigidos (Amador Bueno e Ambuitá) e a estação Cimenrita entrou, e a lista passou a ter 98 estações; em 14/11/2026 a lista foi conferida por pesquisa na web: Mendes-Vila Natal passou a Bruno Covas-Mendes/Vila Natal, e a Luz e a Palmeiras-Barra Funda tiveram as linhas atualizadas (Linha 7 e Linha 11, desde agosto de 2025). A conferência completa com a relação oficial das operadoras continua pendente.
 - **Tipos de problema:** iluminação precária; área isolada; sem agente de segurança; equipamento de segurança quebrado (câmera, interfone, botão de emergência); outro.
 - **Faixas de horário:** madrugada (0h–6h); manhã (6h–12h); tarde (12h–18h); noite (18h–24h).
 

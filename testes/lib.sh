@@ -38,10 +38,12 @@ posta_relato() { # código de envio, estação, tipo, faixa
 consulta() { # estação -> código HTTP
   curl -s -o "$TMP/resp.json" -w "%{http_code}" "$URL/relatos?estacao=$1&limite=100"
 }
-confirma_api() { # estação, dia_protocolo -> código HTTP
+confirma_api() { # estação, dia_protocolo, [código da confirmação] -> código HTTP
+  # Sem o terceiro argumento, cada chamada é um toque novo (código novo)
+  local cod="${3:-$(python3 -c 'import uuid; print(uuid.uuid4())' 2>/dev/null || python -c 'import uuid; print(uuid.uuid4())')}"
   curl -s -o "$TMP/resp.json" -w "%{http_code}" -X POST "$URL/confirmacoes" \
     -H "Content-Type: application/json" \
-    -d "{\"estacao_id\": \"$1\", \"dia_protocolo\": \"$2\"}"
+    -d "{\"estacao_id\": \"$1\", \"dia_protocolo\": \"$2\", \"codigo_confirmacao\": \"$cod\"}"
 }
 
 # --- acesso direto ao DynamoDB, para montar cenários que a API não monta
@@ -64,6 +66,7 @@ limpa_estacao() { # apaga todos os relatos de uma estação (só no emulador)
     --query "Items[].[estacao_id.S,dia_protocolo.S]" --output text | tr -d '\r' |
     "$PY" testes/lote.py apagar "$TABELA" "$TMP" |
     while read -r lote; do
+      lote=${lote%$'\r'}   # o Python do Windows termina a linha com \r
       aws_local dynamodb batch-write-item --request-items "file://$lote" >/dev/null
     done
   rm -f "$TMP"/lote-*.json

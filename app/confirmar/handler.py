@@ -1,16 +1,19 @@
 """Função confirmar: soma uma confirmação a um relato de até 30 dias (RF-04).
 
 A página manda a chave do relato, que a consulta já devolve em cada item:
-{"estacao_id": "BRS", "dia_protocolo": "2026-11-05#9c1e5a7b2f40d863"}.
+{"estacao_id": "BRS", "dia_protocolo": "2026-11-05#9c1e5a7b2f40d863",
+"codigo_confirmacao": "<UUID gerado pela página para este toque>"}.
 
 A soma é uma atualização condicional (docs/02-arquitetura.md, seção 5.2): o
 DynamoDB só soma se o relato existir e tiver sido enviado há no máximo 30
 dias. Relato que passou disso é recusado com a mensagem de expirado, e o
 número dele não muda (US-03, cenário 2).
 
-Fica de fora do recorte, como diz a seção 8: o código de cada confirmação
-(RNF-04), que impediria o reenvio de somar duas vezes, e o limite de uma
-confirmação a cada 10 minutos.
+O reenvio da mesma confirmação soma uma vez só (RNF-04): a página manda um
+código por toque, repetido se ela precisar tentar de novo, e a tabela guarda o
+código da última confirmação (ultimo_codigo_confirmacao). Com o mesmo código, a
+função devolve 200 com o total atual, sem somar. Fica de fora do recorte o
+limite de uma confirmação a cada 10 minutos.
 
 O registro (print) leva só a estação e o protocolo, nunca o evento.
 """
@@ -77,7 +80,21 @@ def le_chave(event):
     if not isinstance(dia_protocolo, str) or not DIA_PROTOCOLO.match(dia_protocolo.strip()):
         raise Recusa("dia_protocolo", "campo obrigatório ausente ou inválido: dia_protocolo")
 
-    return {"estacao_id": estacao_id.strip(), "dia_protocolo": dia_protocolo.strip()}
+    codigo = dados.get("codigo_confirmacao")
+    if not isinstance(codigo, str) or not 8 <= len(codigo.strip()) <= 100:
+        raise Recusa("codigo_confirmacao", "campo obrigatório ausente ou inválido: codigo_confirmacao")
+
+    return {"estacao_id": estacao_id.strip(), "dia_protocolo": dia_protocolo.strip()}, codigo.strip()
+
+
+def reenvio(estacao_id, protocolo, item):
+    """A mesma confirmação chegou de novo: devolve o total, sem somar (RNF-04)."""
+    registra(resultado="reenvio", estacao_id=estacao_id, protocolo=protocolo)
+    return resposta(200, {
+        "protocolo": protocolo,
+        "confirmacoes": int(item.get("confirmacoes", 0)),
+        "ultima_confirmacao_em": item.get("ultima_confirmacao_em"),
+    })
 
 
 def expirado(protocolo):
@@ -90,7 +107,7 @@ def expirado(protocolo):
 
 def lambda_handler(event, context):
     try:
-        chave = le_chave(event)
+        chave, codigo_confirmacao = le_chave(event)
     except Recusa as r:
         registra(resultado="recusado", campo=r.campo)
         return resposta(400, {"erro": r.mensagem, "campo": r.campo})
@@ -108,26 +125,35 @@ def lambda_handler(event, context):
         if item.get("enviado_em", "") < limite:
             registra(resultado="expirado", estacao_id=chave["estacao_id"], protocolo=protocolo)
             return expirado(protocolo)
+        if item.get("ultimo_codigo_confirmacao") == codigo_confirmacao:
+            return reenvio(chave["estacao_id"], protocolo, item)
 
         # 2. Somar 1, só se o relato ainda existir e ainda tiver até 30 dias
         #    no instante da gravação (a condição é conferida pelo DynamoDB)
         novo = tabela.update_item(
             Key=chave,
             UpdateExpression="SET confirmacoes = if_not_exists(confirmacoes, :zero) + :um, "
-                             "ultima_confirmacao_em = :agora",
-            ConditionExpression="attribute_exists(dia_protocolo) AND enviado_em >= :limite",
+                             "ultima_confirmacao_em = :agora, ultimo_codigo_confirmacao = :codigo",
+            ConditionExpression="attribute_exists(dia_protocolo) AND enviado_em >= :limite "
+                                "AND (attribute_not_exists(ultimo_codigo_confirmacao) "
+                                "OR ultimo_codigo_confirmacao <> :codigo)",
             ExpressionAttributeValues={
                 ":zero": 0,
                 ":um": 1,
                 ":agora": agora.strftime(FORMATO_DATA),
                 ":limite": limite,
+                ":codigo": codigo_confirmacao,
             },
             ReturnValues="UPDATED_NEW",
         )["Attributes"]
     except ClientError as e:
         codigo = e.response.get("Error", {}).get("Code", "")
         if codigo == "ConditionalCheckFailedException":
-            # Expirou entre a leitura e a gravação
+            # Dois toques iguais ao mesmo tempo (o outro somou primeiro) ou
+            # expirou entre a leitura e a gravação
+            atual = tabela.get_item(Key=chave).get("Item") or {}
+            if atual.get("ultimo_codigo_confirmacao") == codigo_confirmacao:
+                return reenvio(chave["estacao_id"], protocolo, atual)
             registra(resultado="expirado", estacao_id=chave["estacao_id"], protocolo=protocolo)
             return expirado(protocolo)
         registra(resultado="erro", estacao_id=chave["estacao_id"], protocolo=protocolo, codigo=codigo)

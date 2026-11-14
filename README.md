@@ -15,7 +15,8 @@ inseguras, e quem vai passar por ali consulta o que já foi relatado.
 docs/           documentos de cada sprint
 apresentacoes/  apresentações das sprints, editáveis
 infra/          scripts de provisionamento, 01 a 08, e o openapi.yaml da API
-app/            as três funções (gravar, consultar, confirmar) e a página (site/)
+app/            as três funções (gravar, consultar, confirmar) e a página (site/);
+                cptm-sos/ é a cópia do app original, só de referência, e não entra no deploy
 eventos/        eventos para testar as funções pela linha de comando
 demo/           página de demonstração da Sprint 3, antes de existir a API
 testes/         testes de aceite (Sprint 5)
@@ -30,7 +31,13 @@ testes/         testes de aceite (Sprint 5)
 | AWS CLI v2 | o `lstk aws` chama o AWS CLI da máquina | `aws --version` |
 | zip, curl, Python 3 | empacotar as funções, chamar a API, apoiar os testes | `zip -v`, `curl --version`, `python3 --version` |
 
-No Windows, rode tudo no Git Bash. Versões usadas pela equipe: [preencher: saída dos comandos da última coluna].
+No Windows, rode tudo no **Git Bash** (o PowerShell não executa os `.sh`) e deixe o
+`lstk.exe` numa pasta que esteja no PATH, como `C:\lstk`; depois de mexer no PATH,
+feche e abra o terminal. O Docker Desktop precisa estar aberto.
+
+Versões usadas pela equipe (Windows 11, Git Bash): Docker 29.8.0, lstk 1.4.3,
+AWS CLI 2.37.0, curl 8.21.0, Python 3.11.9. O `zip` não vem no Git Bash; sem ele,
+os scripts empacotam as funções com `python -m zipfile`, então não precisa instalar.
 
 ## Como rodar
 
@@ -101,7 +108,7 @@ cat saida.json
 Com a aplicação no ar (`./infra/deploy.sh`), na raiz do repositório:
 
 ```bash
-./testes/executar.sh   # os 6 cenários da Sprint 1 e os RNF-01, 02, 04 e 05: OK ou FALHOU
+./testes/executar.sh   # os 6 cenários da Sprint 1 e os RNF-01, 02, 04 e 05: OK ou FALHOU (40 verificações)
 ./testes/medir.sh      # o RNF-03: o p95 da consulta, com 300 relatos
 ```
 
@@ -117,4 +124,4 @@ O resultado de cada sprint está em `docs/`.
 | 2 | [Documento de arquitetura](docs/02-arquitetura.md) · [versão Word](docs/02-arquitetura.docx) · [diagrama](docs/diagrama.md) · [apresentação](apresentacoes/sprint-2.pptx) | entregue · revisado pela professora · ajustes feitos |
 | 3 | [Scripts de provisionamento](infra/) · [função registrar](app/gravar/) · [demonstração](demo/) · [apresentação](apresentacoes/sprint-3.pdf) | feita |
 | 4 | [API](infra/openapi.yaml) · [funções consultar](app/consultar/) e [confirmar](app/confirmar/) · [página](app/site/index.html) · deploy completo · [apresentação](apresentacoes/sprint-4.pptx) | feita |
-| 5 | [Documento de validação](docs/03-validacao.md) · [testes de aceite](testes/executar.sh) · [medição do tempo](testes/medir.sh) | testes rodados em 05/11/2026: 39 passaram, 0 falharam, RNF-04 fora do recorte; p95 de 33 ms · faltam as homologações e o fechamento |
+| 5 | [Documento de validação](docs/03-validacao.md) · [testes de aceite](testes/executar.sh) · [medição do tempo](testes/medir.sh) | RNF-04 implementado; testes rodados em 14/11/2026: 40 passaram, 0 falharam; p95 de 159 ms · faltam as homologações e o fechamento |

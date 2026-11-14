@@ -9,8 +9,7 @@
 #       ./testes/executar.sh
 #
 # Cada verificação mostra OK ou FALHOU; a última linha traz "passaram:" e
-# "falharam:". O RNF-04 está fora do recorte (docs/02-arquitetura.md, seção 8):
-# é conferido e mostrado como FORA DO RECORTE, sem entrar na conta.
+# "falharam:". O RNF-04 (reenvio da confirmação) entra na conta como os demais.
 #
 # Atenção: apaga e recria os relatos das estações Tatuapé (TTP), Luz (LUZ) e
 # Botujuru (BTJ), para montar os cenários. Só mexe no LocalStack local.
@@ -181,16 +180,12 @@ confere "RNF-05" "visíveis em até 10 segundos (levou ${ESPERA} s, contando os 
   "$([ "$ESPERA" -le 10 ] && echo sim || echo "nao, ${ESPERA} s")"
 
 # ---------------------------------------------------------------- RNF-04
-secao "RNF-04: 5 reenvios da mesma confirmação somam 1 (fora do recorte)"
+secao "RNF-04: 5 reenvios da mesma confirmação somam 1"
 ANTES=$(confirmacoes_de LUZ "$(dia 5)#$(protocolo b2)")
-for i in 1 2 3 4 5; do confirma_api LUZ "$(dia 5)#$(protocolo b2)" >/dev/null; done
+CODIGO_CONF="rnf04-$(date +%s)-reenvio"
+for i in 1 2 3 4 5; do confirma_api LUZ "$(dia 5)#$(protocolo b2)" "$CODIGO_CONF" >/dev/null; done
 SOMOU=$(( $(confirmacoes_de LUZ "$(dia 5)#$(protocolo b2)") - ANTES ))
-if [ "$SOMOU" -eq 1 ]; then
-  confere "RNF-04" "5 reenvios da mesma confirmação somam 1" "1" "$SOMOU"
-else
-  echo "  FORA DO RECORTE  RNF-04  os 5 reenvios somaram $SOMOU, e não 1: o código da confirmação não foi implementado (docs/02-arquitetura.md, seção 8)"
-  FORA=$((FORA + 1))
-fi
+confere "RNF-04" "5 reenvios da mesma confirmação somam 1" "1" "$SOMOU"
 
 # ---------------------------------------------------------------- fim
 for E in TTP LUZ BTJ; do limpa_estacao "$E"; done

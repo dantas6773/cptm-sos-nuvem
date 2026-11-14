@@ -5,7 +5,7 @@ Entregável da Sprint 2, no formato do Template 2. As seções têm os mesmos n�
 Projeto: CPTM SOS · Relatos por estação\
 Cenário oficial escolhido: nenhum; ideia própria da equipe, aprovada pela professora\
 Data: 11/11/2026\
-Versão: 1.6
+Versão: 1.7
 
 ## 1. Requisitos não funcionais
 
@@ -238,7 +238,7 @@ A página recarrega a consulta: um GET em `/relatos?estacao=BRS` chega à funç�
 
 A confirmação chega à função `confirmar`, que soma 1 ao relato numa atualização condicional, só se ele tiver até 30 dias (RF-04); se tiver mais, a resposta diz que o relato expirou.
 
-Ficam especificados e fora do recorte das Sprints 3 e 4 (seção 8): a conferência do código da confirmação (RNF-04), o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função.
+O código da confirmação (RNF-04) foi implementado depois da Sprint 4 (versão 1.7): a página manda um código por toque, repetido se ela tentar de novo, e a função `confirmar` só soma se ele for diferente do último guardado no relato. Ficam especificados e fora do recorte (seção 8): o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função.
 
 ### 5.3 O que acontece se uma caixa cair
 
@@ -268,7 +268,7 @@ Ficam especificados e fora do recorte das Sprints 3 e 4 (seção 8): a conferên
 | Relato | `enviado_em` | texto, data e hora em ISO 8601, UTC | sim, gerado |
 | Relato | `confirmacoes` | número | sim, começa em 0 |
 | Relato | `ultima_confirmacao_em` | texto, data e hora em ISO 8601, UTC | não: gravado a cada confirmação |
-| Relato | `ultimo_codigo_confirmacao` | texto, UUID gerado pela página para cada confirmação | não: só com o RNF-04, especificado e fora do recorte (seção 8) |
+| Relato | `ultimo_codigo_confirmacao` | texto, UUID gerado pela página para cada confirmação | não: gravado a cada confirmação, para reconhecer o reenvio (RNF-04) |
 
 O relato não guarda o nome da estação, só o código. O nome que aparece na tela vem da lista de estações (seção 6.3).
 
@@ -359,8 +359,8 @@ Prioridade não é ordem de construção. A US-02 está acima da US-03, porque a
 | Item | Resposta |
 |---|---|
 | O que será implementado nas Sprints 3 e 4 | Toda a prioridade alta e a confirmação: RF-01 a RF-05, US-01 a US-03, RNF-01, RNF-02, RNF-03 e RNF-05. Na Sprint 3, o caminho da gravação: RF-01, RF-02, RF-05, RNF-01, RNF-02 e RNF-05. Na Sprint 4, nesta ordem: RF-04 e US-03; depois RF-03, US-02 e RNF-03; e a US-01, que só se completa com a página. |
-| O que fica especificado e não implementado | Do backlog, o RNF-04: o reenvio de uma confirmação pode somar duas vezes. Do desenho, duas proteções da seção 9: o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função; a página continua limpando a foto. Continuam fora do escopo, como na Sprint 1: botão de emergência e localização em tempo real; conta e autenticação; denúncia de crime ou de pessoa; moderação; envio dos relatos à operadora; e a consulta por linha. |
-| Por que este corte | Por orientação da professora, o recorte tem de caber no tempo das Sprints 3 e 4. Fica toda a prioridade alta e a confirmação, que é o que separa o problema recorrente do caso isolado. O RNF-01, o RNF-03 e o RNF-05 entram porque custam pouco: uma condição na gravação, nenhum código além da chave, e uma linha de registro. O que saiu protege contra casos raros ou contra abuso deliberado, e volta na matriz de rastreabilidade da Sprint 5. |
+| O que fica especificado e não implementado | Do desenho, duas proteções da seção 9: o limite de uma confirmação a cada 10 minutos e a conferência do EXIF na função; a página continua limpando a foto. Continuam fora do escopo, como na Sprint 1: botão de emergência e localização em tempo real; conta e autenticação; denúncia de crime ou de pessoa; moderação; envio dos relatos à operadora; e a consulta por linha. |
+| Por que este corte | Por orientação da professora, o recorte tem de caber no tempo das Sprints 3 e 4. Fica toda a prioridade alta e a confirmação, que é o que separa o problema recorrente do caso isolado. O RNF-01, o RNF-03 e o RNF-05 entram porque custam pouco: uma condição na gravação, nenhum código além da chave, e uma linha de registro. O RNF-04, que ficou de fora das Sprints 3 e 4, foi implementado na versão 1.7. O que continua fora protege contra abuso deliberado, e volta na matriz de rastreabilidade da Sprint 5. |
 
 Na Sprint 3, cada estação da lista recebeu o seu código fixo, e a partir daí o código não muda; o nome pode mudar. A conferência completa da lista com a relação oficial das operadoras ainda está pendente: na revisão de 11/11/2026, dois nomes foram corrigidos e uma estação entrou (documento de requisitos, seção 2).
 
@@ -370,7 +370,7 @@ Na Sprint 3, cada estação da lista recebeu o seu código fixo, e a partir daí
 |---|---|---|
 | Estilo arquitetural: Distributed | Implicit Invocation: a chegada da foto ao S3 dispara a função que limpa a foto e grava o relato | A foto ficaria guardada com a localização do aparelho até ser limpa (RD-01), e a passageira não receberia o protocolo na mesma resposta (US-01). |
 | Chave de partição: `estacao_id`, o código fixo da estação | O nome da estação como chave de partição | O nome muda: depois de uma renomeação, os relatos antigos ficariam sob o nome velho, e a consulta pelo nome novo viria vazia. |
-| Recorte de implementação: a prioridade alta e a confirmação | Os treze itens do backlog, com o RNF-04 e as proteções desta tabela | Não cabe no tempo das Sprints 3 e 4. O que ficou de fora protege contra casos raros ou contra abuso deliberado. |
+| Recorte de implementação: a prioridade alta e a confirmação | Os treze itens do backlog, com o RNF-04 e as proteções desta tabela, de uma vez | Não cabia no tempo das Sprints 3 e 4. O RNF-04 entrou depois, na versão 1.7; o que continua fora protege contra abuso deliberado. |
 | Os RNFs são a qualidade dos cinco RFs da Sprint 1, um para um | Escolher os RNFs por categoria de nuvem, independentemente dos RFs | Com um RNF por RF, todo requisito funcional tem um número que o confere. Foi a orientação da professora. |
 | O registro leva só campos nomeados, e o registro de acesso do API Gateway fica desligado | Registrar o evento inteiro, com `print(event)` | O evento traz o IP e o navegador de quem chamou; registrá-lo quebraria o RD-01 sem ninguém perceber. |
 | A página limpa a foto antes de enviar | A função limpa a foto, com uma biblioteca de imagens | A biblioteca precisaria ser empacotada com a função, e a página já redesenha a foto para reduzi-la, o que tira o EXIF. A conferência do EXIF na função fica especificada e fora do recorte. |
@@ -405,3 +405,5 @@ Ajuste da equipe, sem devolutiva (05/11/2026): o documento passou a registrar a 
 Ajuste da equipe, sem devolutiva (11/11/2026): a lista de estações passou de 97 para 98, com a inclusão de Cimenrita, na Linha 8 (seção 9), e o fim da seção 8 passou a dizer que a conferência completa da lista ainda está pendente. Versão do documento: 1.6.
 
 A revisão foi feita com a professora, e os ajustes que ela pediu são os registrados acima.
+
+Ajuste da equipe, sem devolutiva (14/11/2026): o RNF-04 foi implementado (`codigo_confirmacao` na página, na API e na função `confirmar`, com atualização condicional) e saiu da lista do que fica especificado e não implementado. Versão do documento: 1.7.

@@ -5,50 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CPTM SOS · Relatos por estação</title>
 <style>
-  :root { --azul:#2340BF; --laranja:#E84E1B; --amarelo:#FDC13A; --creme:#F3EBDD; --areia:#E6D7BD; --verde:#2E6B45; --texto:#1E1714; --marrom:#6B5E52; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--creme); color:var(--texto); font:16px/1.45 -apple-system, "Segoe UI", Roboto, sans-serif; }
-  header { background:var(--azul); color:var(--creme); padding:22px 32px; }
-  header .trilha { font:13px ui-monospace, Menlo, monospace; color:var(--amarelo); }
-  header h1 { margin:6px 0 0; font:700 30px Georgia, serif; }
-  header h1 span { background:var(--laranja); color:var(--texto); padding:2px 12px; border-radius:4px; }
-  header p { margin:8px 0 0; }
+  /* Mesma identidade do app CPTM SOS (app/cptm-sos/assets/css): azul do cabeçalho,
+     vermelho CPTM nos botões principais, fundo cinza-claro, cartões brancos de
+     cantos arredondados e a fonte Inter, servida pelo próprio bucket do site. */
+  @font-face { font-family:"Inter"; font-style:normal; font-weight:100 900; font-display:swap; src:url("inter-latin.woff2") format("woff2"); }
+  :root { --azul:#1B4680; --vermelho:#ED1C24; --noite:#141A2E; --fundo:#DADDE3; --suave:#F4F4F4; --borda:#DADDE3; --cinza:#6B6E76; --verde:#1E9E57; --texto:#141A2E; }
+  * { box-sizing: border-box; font-family:"Inter", -apple-system, "Segoe UI", Roboto, sans-serif; }
+  body { margin:0; background:var(--fundo); color:var(--texto); font-size:16px; line-height:1.45; }
+  header { background:var(--azul); color:#fff; padding:22px 32px; display:flex; align-items:center; gap:16px; }
+  header .marca { flex:none; width:48px; height:42px; }
+  header .trilha { font-size:13px; font-weight:500; color:rgba(255,255,255,.75); }
+  header h1 { margin:4px 0 0; font-size:28px; font-weight:700; }
+  header h1 span { color:#fff; font-style:italic; margin-right:6px; }
+  header p { margin:6px 0 0; color:rgba(255,255,255,.9); }
   main { display:grid; grid-template-columns: minmax(320px, 440px) 1fr; gap:24px; padding:24px 32px; }
   /* No celular, a consulta vem primeiro: a lista é lida em pé, com uma mão ocupada */
-  @media (max-width: 900px) { main { grid-template-columns:1fr; padding:16px; } #secao-consulta { order:-1; } }
-  section { background:#fff; border-radius:12px; padding:20px 22px; }
-  h2 { margin:0 0 12px; font:700 22px Georgia, serif; }
-  label { display:block; margin:12px 0 4px; font:13px ui-monospace, Menlo, monospace; color:var(--marrom); }
-  select, textarea, input[type=file] { width:100%; font:inherit; padding:10px; border:1px solid var(--areia); border-radius:8px; background:#fff; min-height:44px; }
+  @media (max-width: 900px) { main { grid-template-columns:1fr; padding:16px; } #secao-consulta { order:-1; } header { padding:18px 16px; } }
+  section { background:#fff; border-radius:20px; padding:22px 24px; box-shadow:0 5px 15px rgba(100,100,111,.25); }
+  h2 { margin:0 0 12px; font-size:21px; font-weight:700; color:var(--azul); }
+  label { display:block; margin:14px 0 4px; font-size:13px; font-weight:600; color:var(--cinza); }
+  select, textarea, input[type=file] { width:100%; font:inherit; padding:10px 12px; border:1px solid var(--borda); border-radius:12px; background:#fff; min-height:44px; color:var(--texto); }
+  select:focus, textarea:focus, input:focus, button:focus-visible { outline:3px solid rgba(27,70,128,.35); outline-offset:1px; }
   textarea { min-height:70px; resize:vertical; }
-  .aviso { margin-top:10px; padding:10px 12px; background:var(--areia); border-radius:8px; font-size:14px; }
+  .aviso { margin-top:12px; padding:10px 14px; background:#FFD5D7; border-radius:12px; font-size:14px; }
   .botoes { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; align-items:center; }
-  .botoes .rotulo { font:12px ui-monospace, Menlo, monospace; color:var(--marrom); width:100%; margin-top:6px; }
-  button { font:600 15px inherit; padding:10px 14px; min-height:44px; border:0; border-radius:8px; cursor:pointer; }
-  .principal { background:var(--laranja); color:var(--texto); }
-  .secundario { background:var(--areia); color:var(--texto); }
+  .botoes .rotulo { font-size:12px; font-weight:600; color:var(--cinza); width:100%; margin-top:6px; }
+  button { font:600 15px "Inter", sans-serif; padding:10px 16px; min-height:44px; border:0; border-radius:16px; cursor:pointer; }
+  .principal { background:var(--vermelho); color:#fff; }
+  .secundario { background:var(--suave); color:var(--noite); border:1px solid var(--borda); }
   button:disabled { opacity:.55; cursor:wait; }
-  #previa { margin-top:10px; max-width:100%; max-height:180px; border-radius:8px; display:none; }
-  .resposta { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:15px; display:none; }
-  .r201 { background:#dcefe2; } .r200 { background:#fff3cf; } .r400, .rerro { background:#fbdcd2; }
-  .codigo { font:700 20px ui-monospace, Menlo, monospace; }
+  #previa { margin-top:10px; max-width:100%; max-height:180px; border-radius:12px; display:none; }
+  .resposta { margin-top:14px; padding:12px 14px; border-radius:12px; font-size:15px; display:none; }
+  .r201 { background:#d9f1e3; } .r200 { background:#FFF3CF; } .r400, .rerro { background:#FFD5D7; }
+  .codigo { font:700 20px "Inter", sans-serif; letter-spacing:.02em; }
   .lista { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:14px; margin-top:14px; }
-  .relato { background:var(--creme); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; }
-  .relato img { width:100%; height:150px; object-fit:cover; display:block; background:var(--areia); }
-  .relato .corpo { padding:10px 12px; font-size:14px; flex:1; display:flex; flex-direction:column; gap:4px; }
-  .relato .tipo { font-weight:700; font-size:15px; }
-  .relato .confirmar { margin-top:auto; background:var(--azul); color:var(--creme); width:100%; }
+  .relato { background:var(--suave); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+  .relato img { width:100%; height:150px; object-fit:cover; display:block; background:var(--fundo); }
+  .relato .corpo { padding:12px 14px; font-size:14px; flex:1; display:flex; flex-direction:column; gap:4px; }
+  .relato .tipo { font-weight:700; font-size:15px; color:var(--azul); }
+  .relato .confirmar { margin-top:auto; background:var(--azul); color:#fff; width:100%; }
   .relato .retorno { font-size:13px; }
-  .etiqueta { display:inline-block; font:12px ui-monospace, Menlo, monospace; background:var(--areia); border-radius:4px; padding:1px 6px; margin:4px 4px 0 0; }
-  .vazio { margin-top:14px; padding:14px; background:var(--areia); border-radius:10px; }
-  .nota { margin-top:10px; font:12px ui-monospace, Menlo, monospace; color:var(--marrom); overflow-wrap:anywhere; }
+  .etiqueta { display:inline-block; font-size:12px; font-weight:600; background:#fff; color:var(--azul); border:1px solid var(--borda); border-radius:999px; padding:1px 9px; margin:4px 4px 0 0; }
+  .vazio { margin-top:14px; padding:14px; background:var(--suave); border-radius:16px; }
+  .nota { margin-top:10px; font-size:12px; color:var(--cinza); overflow-wrap:anywhere; }
 </style>
 </head>
 <body>
 <header>
-  <div class="trilha">cptm sos · sprint 4 · relatos por estação</div>
-  <h1><span>CPTM SOS</span> Relatos por estação</h1>
-  <p>Saber, antes de chegar, o que outras passageiras já perceberam numa estação.</p>
+  <svg class="marca" viewBox="0 0 245 216" fill="#FFFFFF" fill-rule="evenodd" role="img" aria-label="CPTM"><path d="M78.0 0.0L139.0 1.0L244.0 107.0L183.0 169.0L124.0 169.0L185.0 107.0L79.0 1.0Z M62.0 46.0L121.0 46.0L60.0 108.0L167.0 215.0L107.0 215.0L0.0 108.0L61.0 47.0Z"/></svg>
+  <div>
+    <div class="trilha">relatos por estação</div>
+    <h1><span>CPTM</span>SOS</h1>
+    <p>Saber, antes de chegar, o que outras passageiras já perceberam numa estação.</p>
+  </div>
 </header>
 <main>
   <section id="secao-relato">
@@ -110,6 +119,7 @@ const seguro = (u) => !HTTPS ? u : String(u ?? "")
   .replace(/^http:\/\//, "https://");
 const API = typeof URL_API === "string" ? seguro(URL_API.replace(/\/$/, "")) : null;
 const VAZIO = "Nenhum relato nos últimos 30 dias. Isso não quer dizer que a estação seja segura.";
+const codigosConfirmacao = new Map();   // um código por relato, repetido no reenvio (RNF-04)
 let ultimoEnvio = null;   // o mesmo código de envio, para reenviar sem duplicar (RNF-01)
 
 // Código aleatório de cada envio, no formato UUID. Não usa crypto.randomUUID,
@@ -254,7 +264,11 @@ $("relatos").addEventListener("click", async (ev) => {
   const botao = ev.target.closest("button.confirmar");
   if (!botao) return;
   botao.disabled = true;
-  const { status, corpo } = await postJson("/confirmacoes", { estacao_id: botao.dataset.estacao, dia_protocolo: botao.dataset.chave });
+  // Mesmo código se a passageira tocar de novo depois de uma falha de rede
+  const chave = botao.dataset.chave;
+  if (!codigosConfirmacao.has(chave)) codigosConfirmacao.set(chave, novoCodigo());
+  const { status, corpo } = await postJson("/confirmacoes", { estacao_id: botao.dataset.estacao, dia_protocolo: chave, codigo_confirmacao: codigosConfirmacao.get(chave) });
+  if (status !== 0) codigosConfirmacao.delete(chave);   // respondeu: o próximo toque é outra confirmação
   if (status === 200) { listaRelatos(); return; }
   botao.closest(".corpo").querySelector(".retorno").textContent = corpo.erro || `erro ${status}`;
   botao.disabled = status !== 0;
