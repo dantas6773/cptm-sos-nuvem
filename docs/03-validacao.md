@@ -199,11 +199,22 @@ Data: [preencher]
 | Alguma linha da matriz não bateu? | [preencher] |
 | Em que ponto travou? | [preencher] |
 
+### Registro prévio, da própria equipe (14/11/2026)
+
+Antes da homologação, rodamos o projeto em um notebook com Windows, no Git Bash, seguindo o README. O que encontramos:
+
+- O README não diz que o `lstk` precisa estar no PATH do terminal. Instalado em uma pasta qualquer, o terminal do VS Code não o encontrava (`lstk` não reconhecido).
+- No Windows os scripts só rodam no Git Bash, e o README só diz isso de passagem. O PowerShell não executa os `.sh`.
+- O `testes/executar.sh` e o `testes/medir.sh` falhavam na preparação, com `Unable to load paramfile file://...lote-NN.json\r`: o Python do Windows termina a linha com `\r` e o nome do arquivo chegava ao AWS CLI com esse caractere. A correção está em `testes/lib.sh` e `testes/medir.sh` (uma linha, `lote=${lote%$'\r'}`).
+- Com o `executar.sh` corrigido: 39 passaram, 0 falharam, 1 fora do recorte (RNF-04), antes da implementação do RNF-04.
+- O `medir.sh` deu p95 de 715 ms nesse notebook, acima dos 500 ms do RNF-03. Mediana de 114 ms e 28 das 30 consultas abaixo de 175 ms; as duas mais lentas (715 e 727 ms) é que definiram o p95. [preencher: se rodou de novo e o resultado]
+
 ### 5.1 O que foi corrigido depois da homologação
 
 | O que foi apontado | O que foi mudado |
 |---|---|
-| [preencher, ou "não se aplica: a homologação não apontou nada"] | [preencher] |
+| O `\r` nos testes, no Windows (registro prévio) | uma linha em `testes/lib.sh` e em `testes/medir.sh` |
+| O README não diz que o `lstk` precisa estar no PATH nem que no Windows se usa o Git Bash (registro prévio) | README foi atualizado |
 
 ## 6. Homologação realizada
 
@@ -228,15 +239,15 @@ Escolhemos não identificar quem confirma (RD-01), então o risco de confirmaç�
 
 ### 8.1 O que funcionou melhor do que o esperado
 
-[preencher: escreva com as suas palavras, a partir do que você viu rodar.]
+A aplicação funciona de forma prática e intuitiva, é possível adicionar imagens e descrições, com horário e a estação para servir de alerta para os outros passageiros. A reconstrução da aplicação com o `destroy.sh` seguido do  `deploy.sh` colocou no ar bucket, tabela, três papéis, três funções, API e página em menos de um minuto (46,6 s no registro da Sprint 5), e isso tornou o ambiente efêmero do LocalStack um problema pequeno.
 
 ### 8.2 O que deu mais trabalho do que o esperado
 
-[preencher.]
+- **Fazer o projeto rodar em outro computador.** Instalar o `lstk` e colocá-lo no PATH, usar o Git Bash no Windows e o OneDrive atrapalhando as pastas deu mais trabalho do que o código das funções.
 
 ### 8.3 O que você faria diferente se recomeçasse
 
-[preencher: uma decisão específica de projeto, e não uma intenção genérica de organização.]
+- **Escrever o `README` e os testes já para dois sistemas** (Windows e Mac), em vez de descobrir as diferenças na hora de apresentar.
 
 ## 9. Repositório
 
