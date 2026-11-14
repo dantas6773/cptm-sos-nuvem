@@ -66,6 +66,7 @@ limpa_estacao() { # apaga todos os relatos de uma estação (só no emulador)
     --query "Items[].[estacao_id.S,dia_protocolo.S]" --output text | tr -d '\r' |
     "$PY" testes/lote.py apagar "$TABELA" "$TMP" |
     while read -r lote; do
+      lote=${lote%$'\r'}   # o Python do Windows termina a linha com \r
       aws_local dynamodb batch-write-item --request-items "file://$lote" >/dev/null
     done
   rm -f "$TMP"/lote-*.json

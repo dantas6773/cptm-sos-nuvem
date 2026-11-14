@@ -22,6 +22,7 @@ echo "Preparando: $RELATOS relatos na estação $ESTACAO (10 por dia, nos últim
 limpa_estacao "$ESTACAO"
 "$PY" testes/lote.py semear "$TABELA" "$ESTACAO" "$RELATOS" "$TMP" |
   while read -r lote; do
+    lote=${lote%$'\r'}   # o Python do Windows termina a linha com \r
     aws_local dynamodb batch-write-item --request-items "file://$lote" >/dev/null
   done
 rm -f "$TMP"/lote-*.json
